@@ -1,8 +1,10 @@
 const app = require('express')()
 const controller = require("./PhotoController")
+const multer = require("multer");
+const upload = multer();
 
-app.route("/").get(controller.getPhotos).post(controller.addPhoto);
+
+app.route("/").get(controller.getPhotos).post(upload.single('photo'), controller.addPhoto);
 
 
-//mongodb+srv://root:<password>@cluster0.00lht.mongodb.net/<dbname>?retryWrites=true&w=majority
 module.exports = app
