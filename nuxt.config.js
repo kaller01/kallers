@@ -36,6 +36,8 @@ export default {
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+
+    '@nuxtjs/device',
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
@@ -44,7 +46,22 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+
+    'nuxt-i18n',
+
   ],
+
+  i18n: {
+    strategy: 'prefix_except_default',
+    defaultLocale: 'en',
+    seo: false, //https://i18n.nuxtjs.org/seo#improving-performance
+    langDir: 'lang/',
+    lazy: true,
+    locales: [
+      { code: 'sv', iso: 'sv-SE', file: 'sv.js'},
+      { code: 'en', iso: 'en-US', file: 'en.js' },
+    ],
+  },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {},
@@ -56,13 +73,15 @@ export default {
       dark: true,
       themes: {
         dark: {
-          primary: colors.blue.darken2,
-          accent: colors.grey.darken3,
+          base: colors.purple.base,
+          primary: colors.lightGreen.darken1,
+          accent: colors.red.darken3,
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
-          success: colors.green.accent3
+          success: colors.green.accent3,
+          background: colors.purple.base,
         }
       }
     }

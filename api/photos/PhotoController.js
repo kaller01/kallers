@@ -5,22 +5,28 @@ const fetch = require("node-fetch");
 
 module.exports = {
   getPhotos: async (req, res) => {
-    const photos = await Photo.find();
+    const photos = await Photo.find().sort('-date');
     res.json(photos);
   },
   addPhoto: async (req, res) => {
-    let photo;
     const form = new FormData();
     form.append("Authorization", keys.photohost.token);
     form.append("fileToUpload", req.file.buffer, req.file.originalname);
     fetch(keys.photohost.host, {
       method: "POST",
       body: form
-    }).then(res => res.json())
-    .then(data => {
-        photo = new Photo(data);
+    })
+      .then(res => res.json())
+      .then(data => {
+        res.json(data);
+        // data.date = new Date(data.date);
+
+        const photo = new Photo(data);
         photo.save();
-        res.json(data)
-    });
+      
+      });
+  },
+  editPhoto: async (req, res) => {
+
   }
 };

@@ -17,11 +17,14 @@
     "form-data": "^3.0.0",
     "mongoose": "^5.11.15",
     "multer": "^1.4.2",
-    "nuxt": "^2.14.6"
+    "nuxt": "^2.14.6",
+    "nuxt-i18n": "^6.20.0",
+    "vue-masonry-wall": "^0.3.1"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.6",
     "@nuxt/typescript-build": "^2.0.3",
+    "@nuxtjs/device": "^2.0.0",
     "@nuxtjs/vuetify": "^1.11.2"
   }
 }
