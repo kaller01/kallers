@@ -169,7 +169,7 @@ export default {
         },
         {
           name: "navs.dashboard",
-          to: "/admin"
+          to: "/dashboard"
         }
       ]
     };

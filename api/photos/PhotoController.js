@@ -5,7 +5,7 @@ const fetch = require("node-fetch");
 
 module.exports = {
   getPhotos: async (req, res) => {
-    const photos = await Photo.find().sort('-date');
+    const photos = await Photo.find().sort("-date");
     res.json(photos);
   },
   addPhoto: async (req, res) => {
@@ -23,10 +23,13 @@ module.exports = {
 
         const photo = new Photo(data);
         photo.save();
-      
       });
   },
   editPhoto: async (req, res) => {
-
+    
+  },
+  deletePhoto: async (req,res) => {
+    await Photo.deleteOne({filename: req.params.filename});
+    res.json({filename: req.params.filename});
   }
 };
