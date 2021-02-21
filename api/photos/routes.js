@@ -5,7 +5,7 @@ const upload = multer();
 
 
 app.route("/").get(controller.getPhotos).post(upload.single('photo'), controller.addPhoto);
-app.route("/:filename").delete(controller.deletePhoto)
+app.route("/:id").delete(controller.deletePhoto).patch(controller.updatePhoto)
 
 
 module.exports = app

@@ -18,7 +18,7 @@ export const actions = {
   async getPhotos({commit}) {
       //TODO make it use baseurl, should be easier?
       const photos = await axios.get("http://localhost:3000/api/photos");
-      console.log(photos.data)
+      // console.log(photos.data)
       commit('SET_PHOTOS', photos.data);
   }
 };

@@ -18,8 +18,8 @@
                   <v-file-input multiple @change="fileChange"></v-file-input>
                 </v-col>
                 <v-col lg="3" cols="12">
-                  <v-btn x-large @click="uploadAll" color="primary"
-                    >Upload photo</v-btn
+                  <v-btn x-large block @click="uploadAll" color="primary"
+                    >Upload photos</v-btn
                   >
                 </v-col>
               </v-row>
@@ -29,74 +29,7 @@
       </v-col>
       <v-col cols="12">
         <v-card>
-          <v-data-table
-            :headers="headers"
-            :items="photos"
-            :items-per-page="100"
-            hide-default-footer
-            show-expand
-            item-key="_id"
-          >
-            <template v-slot:expanded-item="{ item }">
-              <div class="d-block d-md-flex" style="width: 1000px">
-                <div
-                  :class="{
-                    expandedtext: $vuetify.breakpoint.mdAndUp,
-                    'pa-2': true
-                  }"
-                >
-                  <v-btn color="error" @click="deletePhoto(item.filename)">
-                    Delete
-                  </v-btn>
-                </div>
-                <v-spacer></v-spacer>
-                <div>
-                  <img :src="item.paths.w400" style="width: 330px" /> <br />
-                  <v-chip
-                    class="ma-0"
-                    color="primary"
-                    :href="item.paths.original"
-                    target="_blank"
-                    >Original</v-chip
-                  >
-                  <v-chip
-                    class="ma-0"
-                    color="primary"
-                    :href="item.paths.w1080"
-                    target="_blank"
-                    >1080w</v-chip
-                  >
-                  <v-chip
-                    class="ma-0"
-                    color="primary"
-                    :href="item.paths.h1080"
-                    target="_blank"
-                    >1080h</v-chip
-                  >
-                  <v-chip
-                    class="ma-0"
-                    color="primary"
-                    :href="item.paths.w400"
-                    target="_blank"
-                    >400w</v-chip
-                  >
-                  <v-chip
-                    class="ma-0"
-                    color="primary"
-                    :href="item.paths.h400"
-                    target="_blank"
-                    >400h</v-chip
-                  >
-                </div>
-              </div>
-            </template>
-            <template v-slot:item.photo="{ item }">
-              <img :src="item.paths.h400" style="height: 60px" />
-            </template>
-            <template v-slot:item.dim="{ item }"
-              >{{ item.width }} x {{ item.height }}</template
-            >
-          </v-data-table>
+          <PhotoTable @delete="deletePhoto" @edit="openEditor"></PhotoTable>
         </v-card>
       </v-col>
     </v-row>
@@ -110,14 +43,24 @@
     >
       {{ snackbar.text }}
     </v-snackbar>
+
+    <v-dialog v-model="dialog" persistent max-width="900px"> 
+      <PhotoEditor :photo="selectedPhoto" @close="dialog=false" @update="updatePhoto"></PhotoEditor>
+    </v-dialog>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import { mapMutations } from "vuex";
+import PhotoTable from "@/components/PhotoTable";
+import PhotoEditor from '~/components/PhotoEditor.vue';
 
 export default {
+  components: {
+    PhotoTable,
+    PhotoEditor
+  },
   computed: {
     photos() {
       return this.$store.state.photos;
@@ -127,13 +70,8 @@ export default {
     return {
       files: [],
       snackbars: [],
-      headers: [
-        { text: "Photo", value: "photo" },
-        { text: "Filename", value: "filename" },
-        { text: "Date", value: "date", align: "center" },
-        { text: "Lens shoot with", value: "lens", align: "center" },
-        { text: "width", value: "dim", align: "center" }
-      ]
+      dialog: false,
+      selectedPhoto: {}
     };
   },
   methods: {
@@ -157,6 +95,10 @@ export default {
           });
       }
     },
+    openEditor(photo){
+      this.selectedPhoto = {...photo};
+      this.dialog = true;
+    },
     uploadAll() {
       this.addSnackbar("Uploading files", "warning");
       this.files.forEach(file => {
@@ -170,9 +112,12 @@ export default {
         show: true
       });
     },
-    deletePhoto(filename) {
-      axios.delete("/api/photos/" + filename);
-      this.addSnackbar("Deleted "+filename, "error");
+    deletePhoto(photo) {
+      axios.delete("/api/photos/" + photo._id);
+      this.addSnackbar("Deleted " + photo.filename, "error");
+    },
+    updatePhoto(photo){
+      axios.patch("/api/photos/" + photo._id, photo);
     }
   }
 };

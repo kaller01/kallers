@@ -25,11 +25,12 @@ module.exports = {
         photo.save();
       });
   },
-  editPhoto: async (req, res) => {
-    
+  updatePhoto: async (req, res) => {
+    await Photo.findOneAndUpdate({_id: req.params.id}, req.body);
+    res.sendStatus(200)
   },
   deletePhoto: async (req,res) => {
-    await Photo.deleteOne({filename: req.params.filename});
-    res.json({filename: req.params.filename});
+    await Photo.deleteOne({_id: req.params.id});
+    res.sendStatus(200)
   }
 };
