@@ -1,11 +1,15 @@
-const app = require('express')()
-const controller = require("./PhotoController")
+const app = require("express")();
+const photos = require("./controller");
 const multer = require("multer");
 const upload = multer();
 
+app
+  .route("/")
+  .get(photos.all)
+  .post(upload.single("photo"), photos.add);
+app
+  .route("/:id")
+  .delete(photos.delete)
+  .patch(photos.update);
 
-app.route("/").get(controller.getPhotos).post(upload.single('photo'), controller.addPhoto);
-app.route("/:id").delete(controller.deletePhoto).patch(controller.updatePhoto)
-
-
-module.exports = app
+module.exports = app;

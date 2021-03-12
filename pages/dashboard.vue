@@ -8,7 +8,7 @@
           {{ photos.length }} Photos in Database
         </h1>
       </v-col>
-      <v-col>
+      <v-col cols="12">
         <v-card>
           <v-card-text class="display-2">Add photo to Database</v-card-text>
           <v-form>
@@ -25,6 +25,18 @@
               </v-row>
             </v-container>
           </v-form>
+        </v-card>
+      </v-col>
+      <v-col>
+        <v-card>
+          <v-btn x-large block @click="addLocationDialog = true" color="primary"
+            >Add location
+          </v-btn>
+        </v-card>
+      </v-col>
+      <v-col cols="12">
+        <v-card>
+          <location-table @edit="editLocation"></location-table>
         </v-card>
       </v-col>
       <v-col cols="12">
@@ -44,8 +56,20 @@
       {{ snackbar.text }}
     </v-snackbar>
 
-    <v-dialog v-model="dialog" persistent max-width="900px"> 
-      <PhotoEditor :photo="selectedPhoto" @close="dialog=false" @update="updatePhoto"></PhotoEditor>
+    <v-dialog v-model="dialog" persistent max-width="900px">
+      <PhotoEditor
+        :photo="selectedPhoto"
+        @close="dialog = false"
+        @update="updatePhoto"
+      ></PhotoEditor>
+    </v-dialog>
+
+    <v-dialog v-model="addLocationDialog" max-width="900px">
+      <location-editor
+        @close="addLocationDialog = false"
+        @save="saveLocation"
+        :location="selectedLocation"
+      ></location-editor>
     </v-dialog>
   </div>
 </template>
@@ -54,16 +78,21 @@
 import axios from "axios";
 import { mapMutations } from "vuex";
 import PhotoTable from "@/components/PhotoTable";
-import PhotoEditor from '~/components/PhotoEditor.vue';
+import PhotoEditor from "~/components/PhotoEditor.vue";
+import LocationEditor from "~/components/LocationEditor.vue";
 
 export default {
   components: {
     PhotoTable,
-    PhotoEditor
+    PhotoEditor,
+    LocationEditor
   },
   computed: {
     photos() {
       return this.$store.state.photos;
+    },
+    locations() {
+      return this.$store.state.locations;
     }
   },
   data() {
@@ -71,7 +100,9 @@ export default {
       files: [],
       snackbars: [],
       dialog: false,
-      selectedPhoto: {}
+      addLocationDialog: false,
+      selectedPhoto: {},
+      selectedLocation: {}
     };
   },
   methods: {
@@ -95,8 +126,8 @@ export default {
           });
       }
     },
-    openEditor(photo){
-      this.selectedPhoto = {...photo};
+    openEditor(photo) {
+      this.selectedPhoto = { ...photo };
       this.dialog = true;
     },
     uploadAll() {
@@ -116,8 +147,28 @@ export default {
       axios.delete("/api/photos/" + photo._id);
       this.addSnackbar("Deleted " + photo.filename, "error");
     },
-    updatePhoto(photo){
-      axios.patch("/api/photos/" + photo._id, photo);
+    async updatePhoto(photo) {
+      this.addSnackbar("Updating " + photo.filename, "warning");
+      await this.$axios.patch("/api/photos/" + photo._id, photo);
+      this.addSnackbar("Updated " + photo.filename, "success");
+      this.dialog = false;
+    },
+    saveLocation(location) {
+      if (location._id);
+      else this.addLocation(location);
+    },
+    async addLocation(location) {
+      this.addLocationDialog = false;
+      this.addSnackbar("Adding location...", "warning");
+      await this.$axios.post("/api/locations/", location);
+      this.addSnackbar("Added location", "success");
+    },
+    async editLocation(location) {
+      const fullLocation = await this.$axios.get(
+        "/api/locations/" + location._id
+      );
+      this.selectedLocation = fullLocation.data;
+      this.addLocationDialog = true;
     }
   }
 };

@@ -1,24 +1,29 @@
-import axios from "axios";
-
-
 export const state = () => ({
-  photos: []
+  photos: [],
+  locations: []
 });
 
 export const mutations = {
   SET_PHOTOS(state, photos) {
     state.photos = photos;
+  },
+  SET_LOCATIONS(state, locations) {
+    state.locations = locations;
   }
 };
 
 export const actions = {
   async nuxtServerInit({ dispatch }) {
-    await dispatch('getPhotos');
+    const promises = [dispatch("getPhotos"), dispatch("getLocations")];
+    await Promise.all(promises);
   },
-  async getPhotos({commit}) {
-      //TODO make it use baseurl, should be easier?
-      const photos = await axios.get("http://localhost:3000/api/photos");
-      // console.log(photos.data)
-      commit('SET_PHOTOS', photos.data);
+  async getPhotos({ commit }) {
+    //Nuxt axios make magic with internal call
+    const photos = await this.$axios.get("/api/photos");
+    commit("SET_PHOTOS", photos.data);
+  },
+  async getLocations({ commit }) {
+    const locations = await this.$axios.get("/api/locations");
+    commit("SET_LOCATIONS", locations.data);
   }
 };

@@ -24,8 +24,11 @@
                 </v-col>
                 <v-col cols="12" sm="6">
                   <v-select
-                    :items="['Omberg', 'Ågelsjön', 'Viggeby',]"
+                    item-text="title"
+                    item-value="_id"
+                    :items="locations"
                     label="Location"
+                    v-model="photo.location"
                   ></v-select>
                 </v-col>
                 <v-col cols="12" sm="6">
@@ -47,18 +50,17 @@
                 </v-col> </v-row
             ></v-col>
             <v-col cols="6">
-                <v-img :src="photo.paths.w400"></v-img>
+              <v-img :src="photo.paths.w400"></v-img>
             </v-col>
           </v-row>
         </v-container>
-        <small>*indicates required field</small>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue darken-1" text @click="$emit('close')">
           Close
         </v-btn>
-        <v-btn color="blue darken-1" text @click="$emit('update',photo)">
+        <v-btn color="blue darken-1" text @click="$emit('update', photo)">
           Save
         </v-btn>
       </v-card-actions>
@@ -71,11 +73,16 @@ export default {
   props: {
     photo: Object
   },
-  methods: {
-      prepareData(){
-          console.log(this.photo)
-      }
+  computed: {
+    locations() {
+      return this.$store.state.locations;
+    }
   },
+  methods: {
+    prepareData() {
+      console.log(this.photo);
+    }
+  }
 };
 </script>
 
