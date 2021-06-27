@@ -43,7 +43,9 @@
         >
           <div>
             <v-autocomplete
-              :items="locationNames"
+              :items="locations"
+              item-text="title"
+              item-value="title"
               @change="locationSearched"
               v-model="selectedLocation"
               label="Search location..."
@@ -68,10 +70,11 @@
           <v-hover v-slot:default="{ hover }">
             <v-card
               :class="`elevation-${hover ? 24 : 0}`"
-              :to="'/' + $i18n.locale + '/locations/' + location.title"
+              :to="localePath('/locations/' + location.title)"
             >
               <v-img
                 :aspect-ratio="7 / 4"
+                :src="location.cover.paths.h400"
                 class="imgtext"
                 gradient="to top right, rgba(0,0,0,.3), rgba(0,0,0,.3)"
               >
@@ -108,7 +111,6 @@ export default {
   name: "Locations",
   data() {
     return {
-      locationNames: [],
       selectedLocation: "",
       order: {
         reverse: "",
@@ -126,16 +128,10 @@ export default {
     }
   },
   methods: {
-    getNames() {
-      this.locations.map(object => {
-        this.locationNames.push(object.name);
-      });
-    },
     locationSearched() {
-      console.log("LOCATION SELECTED", this.selectedLocation);
       if (this.selectedLocation) {
         this.$router.push(
-          "/" + this.$i18n.locale + "/locations/" + this.selectedLocation
+          this.localePath("/locations/" + this.selectedLocation)
         );
       }
     },
@@ -159,18 +155,7 @@ export default {
       }
     }
   },
-  mounted() {
-    // this.getNames();
-    console.log(this.locations);
-  }
-  //   watch: {
-  //     locations: {
-  //       handler: function(val, oldVal) {
-  //         console.log(val);
-  //         // this.getNames();
-  //       }
-  //     }
-  //   }
+  mounted() {}
 };
 </script>
 

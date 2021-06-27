@@ -5,6 +5,11 @@ app
   .route("/")
   .get(locations.all)
   .post(locations.add);
-app.route("/:id").get(locations.find);
+
+app
+  .route("/:id")
+  .get(locations.find)
+  .patch(locations.update)
+  .delete(locations.delete);
 
 module.exports = app;

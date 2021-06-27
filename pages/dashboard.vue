@@ -8,7 +8,7 @@
           {{ photos.length }} Photos in Database
         </h1>
       </v-col>
-      <v-col cols="12">
+      <v-col cols="6">
         <v-card>
           <v-card-text class="display-2">Add photo to Database</v-card-text>
           <v-form>
@@ -27,28 +27,36 @@
           </v-form>
         </v-card>
       </v-col>
-      <v-col>
+      <v-col cols="6">
         <v-card>
+          <location-table @edit="editLocation"></location-table>
           <v-btn x-large block @click="addLocationDialog = true" color="primary"
+            >Add location
+          </v-btn>
+        </v-card>
+      </v-col>
+      <v-col cols="6">
+        <v-card>
+          <collection-table @edit="editCollection"></collection-table>
+          <v-btn x-large block @click="collectionDialog = true" color="primary"
             >Add location
           </v-btn>
         </v-card>
       </v-col>
       <v-col cols="12">
         <v-card>
-          <location-table @edit="editLocation"></location-table>
-        </v-card>
-      </v-col>
-      <v-col cols="12">
-        <v-card>
-          <PhotoTable @delete="deletePhoto" @edit="openEditor"></PhotoTable>
+          <PhotoTable
+            @delete="deletePhoto"
+            @edit="openEditor"
+            v-model="selectedPhotos"
+          ></PhotoTable>
         </v-card>
       </v-col>
     </v-row>
 
     <v-snackbar
       v-for="snackbar in snackbars"
-      v-bind:key="snackbar.text"
+      v-bind:key="snackbar.text + new Date().getTime()"
       v-model="snackbar.show"
       :timeout="2000"
       :color="snackbar.color"
@@ -68,8 +76,89 @@
       <location-editor
         @close="addLocationDialog = false"
         @save="saveLocation"
+        @delete="deleteLocation"
         :location="selectedLocation"
       ></location-editor>
+    </v-dialog>
+
+    <v-dialog v-model="collectionDialog" max-width="900px">
+      <collection-editor
+        :collection="selectedCollection"
+        @close="collectionDialog = false"
+        @save="saveCollection"
+      >
+      </collection-editor>
+    </v-dialog>
+
+    <div class="hover" v-show="selectedPhotos.length > 0">
+      <v-speed-dial open-on-hover>
+        <template v-slot:activator>
+          <v-btn color="primary" dark fab large>
+            <span>
+              {{ selectedPhotos.length }}
+            </span>
+          </v-btn>
+        </template>
+
+        <v-btn fab dark small color="warning" @click="selectedPhotosDialog = true">
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+        <v-btn fab dark small color="danger" @click="selectedLocationsDialog = true">
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+      </v-speed-dial>
+    </div>
+
+    <v-dialog v-model="selectedPhotosDialog" width="600px">
+      <div>
+        <v-card width="600px">
+          <v-card-text>
+            <v-select
+              item-text="title"
+              item-value="_id"
+              :items="collections"
+              label="Collections"
+              multiple
+              v-model="selectedCollections"
+            ></v-select>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" @click="selectedPhotosDialog = false" text>
+              Close
+            </v-btn>
+            <v-btn color="blue darken-1" text @click="applyCollections">
+              Save
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </div>
+    </v-dialog>
+
+
+    <v-dialog v-model="selectedLocationsDialog" width="600px">
+      <div>
+        <v-card width="600px">
+          <v-card-text>
+            <v-select
+              item-text="title"
+              item-value="_id"
+              :items="locations"
+              label="Locations"
+              v-model="selectedLocations"
+            ></v-select>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" @click="selectedLocationsDialog = false" text>
+              Close
+            </v-btn>
+            <v-btn color="blue darken-1" text @click="applyLocations">
+              Save
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </div>
     </v-dialog>
   </div>
 </template>
@@ -80,12 +169,16 @@ import { mapMutations } from "vuex";
 import PhotoTable from "@/components/PhotoTable";
 import PhotoEditor from "~/components/PhotoEditor.vue";
 import LocationEditor from "~/components/LocationEditor.vue";
+import CollectionEditor from "~/components/CollectionEditor.vue";
+import CollectionTable from "~/components/CollectionTable.vue";
 
 export default {
   components: {
     PhotoTable,
     PhotoEditor,
-    LocationEditor
+    LocationEditor,
+    CollectionEditor,
+    CollectionTable
   },
   computed: {
     photos() {
@@ -93,6 +186,9 @@ export default {
     },
     locations() {
       return this.$store.state.locations;
+    },
+    collections() {
+      return this.$store.state.collections;
     }
   },
   data() {
@@ -101,8 +197,15 @@ export default {
       snackbars: [],
       dialog: false,
       addLocationDialog: false,
+      collectionDialog: false,
       selectedPhoto: {},
-      selectedLocation: {}
+      selectedLocation: {},
+      selectedCollection: {},
+      selectedCollections: [],
+      selectedPhotos: [],
+      selectedLocations: {},
+      selectedLocationsDialog: false,
+      selectedPhotosDialog: false
     };
   },
   methods: {
@@ -154,7 +257,8 @@ export default {
       this.dialog = false;
     },
     saveLocation(location) {
-      if (location._id);
+      console.log(location);
+      if (location._id) this.updateLocation(location);
       else this.addLocation(location);
     },
     async addLocation(location) {
@@ -169,9 +273,78 @@ export default {
       );
       this.selectedLocation = fullLocation.data;
       this.addLocationDialog = true;
+    },
+    async updateLocation(location) {
+      this.addLocationDialog = false;
+      this.addSnackbar("Updating location...", "warning");
+      await this.$axios.patch("/api/locations/" + location._id, location);
+      this.addSnackbar("Updated location", "success");
+    },
+    async deleteLocation(location) {
+      this.addLocationDialog = false;
+      this.addSnackbar("Deleting location...", "warning");
+      await this.$axios.delete("/api/locations/" + location._id);
+      this.addSnackbar("Deleted location", "error");
+    },
+    saveCollection(collection) {
+      console.log(collection);
+      if (collection._id) this.updateCollection(collection);
+      else this.addCollection(collection);
+    },
+    async addCollection(collection) {
+      this.collectionDialog = false;
+      this.addSnackbar("Adding collection...", "warning");
+      await this.$axios.post("/api/collections/", collection);
+      this.addSnackbar("Added collection", "success");
+    },
+    async editCollection(collection) {
+      const fullCollection = await this.$axios.get(
+        "/api/collections/" + collection._id
+      );
+      this.selectedCollection = fullCollection.data;
+      this.collectionDialog = true;
+    },
+    async updateCollection(collection) {
+      this.collectionDialog = false;
+      this.addSnackbar("Updating collection...", "warning");
+      await this.$axios.patch("/api/Collections/" + collection._id, collection);
+      this.addSnackbar("Updated collection", "success");
+    },
+
+    async deleteCollection(collection) {
+      this.collectionDialog = false;
+      this.addSnackbar("Deleting collection...", "warning");
+      await this.$axios.delete("/api/collections/" + collection._id);
+      this.addSnackbar("Deleted collection", "error");
+    },
+    async applyCollections(){
+      this.selectedPhotos.forEach(photo => {
+        photo.collections = photo.collections.concat(this.selectedCollections)
+        this.updatePhoto(photo)
+      })
+      this.selectedPhotosDialog = false
+    },
+    async applyLocations(){
+      this.selectedPhotos.forEach(photo => {
+        console.log(photo)
+        photo.location = this.selectedLocations
+        this.updatePhoto(photo)
+      })
+      this.selectedLocationsDialog = false
     }
   }
 };
 </script>
 
-<style scoped></style>
+<style>
+.hover {
+  bottom: 10px;
+  left: 95%;
+  position: sticky;
+  margin: 16px;
+  width: 30px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+}
+</style>

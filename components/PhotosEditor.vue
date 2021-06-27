@@ -2,33 +2,20 @@
   <div>
     <v-card>
       <v-card-title>
-        <span class="headline">{{ photo.filename }}</span>
+        <span class="headline"></span>
       </v-card-title>
       <v-card-text>
         <v-container>
           <v-row>
             <v-col cols="6"
               ><v-row>
-                <v-col cols="12">
-                  <v-text-field
-                    label="Title"
-                    v-model="photo.title"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                  <v-textarea
-                    label="Description"
-                    v-model="photo.description"
-                    required
-                  ></v-textarea>
-                </v-col>
                 <v-col cols="12" sm="6">
                   <v-select
                     item-text="title"
                     item-value="_id"
                     :items="locations"
                     label="Location"
-                    v-model="photo.location"
+                    v-model="selectedlocation"
                   ></v-select>
                 </v-col>
                 <v-col cols="12" sm="6">
@@ -38,13 +25,10 @@
                     :items="collections"
                     label="Collections"
                     multiple
-                    v-model="photo.collections"
+                    v-model="selectedcollections"
                   ></v-select>
                 </v-col> </v-row
             ></v-col>
-            <v-col cols="6">
-              <v-img :src="photo.paths.w400"></v-img>
-            </v-col>
           </v-row>
         </v-container>
       </v-card-text>
@@ -64,7 +48,7 @@
 <script>
 export default {
   props: {
-    photo: Object
+    photos: Array
   },
   computed: {
     locations() {
@@ -73,6 +57,12 @@ export default {
     collections() {
       return this.$store.state.collections;
     }
+  },
+  data() {
+      return {
+          selectedcollections: [],
+          selectedlocation: {}
+      }
   },
   methods: {
     prepareData() {

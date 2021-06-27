@@ -4,7 +4,6 @@ const PhotoSchema = mongoose.Schema({
   filename: String,
   title: String,
   description: String,
-  tags: [String],
   paths: {
     original: String,
     preview: String,
@@ -17,6 +16,12 @@ const PhotoSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "locations"
   },
+  collections: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "collections"
+    }
+  ],
   date: Date,
   shutterspeed: String,
   aperture: String,

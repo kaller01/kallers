@@ -6,7 +6,12 @@ const LocationSchema = mongoose.Schema({
   cover: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "photos"
-  }
+  },
+  rating: Number,
+  album: String,
+  youtube: [
+    String
+  ],
 });
 
 module.exports = mongoose.model("locations", LocationSchema);
