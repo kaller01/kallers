@@ -73,9 +73,8 @@
 
 <script>
 import ArrayEditor from './ArrayEditor.vue';
-import JsonEditor from './JsonEditor.vue';
 export default {
-  components: { JsonEditor, ArrayEditor },
+  components: { ArrayEditor },
   props: {
     location: Object
   },

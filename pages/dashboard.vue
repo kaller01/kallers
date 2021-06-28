@@ -39,7 +39,7 @@
         <v-card>
           <collection-table @edit="editCollection"></collection-table>
           <v-btn x-large block @click="collectionDialog = true" color="primary"
-            >Add location
+            >Add collection
           </v-btn>
         </v-card>
       </v-col>
@@ -74,7 +74,8 @@
 
     <v-dialog v-model="addLocationDialog" max-width="900px">
       <location-editor
-        @close="addLocationDialog = false"
+        v-if="addLocationDialog"
+        @close="close"
         @save="saveLocation"
         @delete="deleteLocation"
         :location="selectedLocation"
@@ -84,7 +85,7 @@
     <v-dialog v-model="collectionDialog" max-width="900px">
       <collection-editor
         :collection="selectedCollection"
-        @close="collectionDialog = false"
+        @close="close"
         @save="saveCollection"
       >
       </collection-editor>
@@ -94,17 +95,43 @@
       <v-speed-dial open-on-hover>
         <template v-slot:activator>
           <v-btn color="primary" dark fab large>
-            <span>
-              {{ selectedPhotos.length }}
-            </span>
+            <v-icon>mdi-plus</v-icon>
           </v-btn>
         </template>
 
-        <v-btn fab dark small color="warning" @click="selectedPhotosDialog = true">
-          <v-icon>mdi-plus</v-icon>
+        <v-btn
+          fab
+          dark
+          small
+          color="primary"
+          @click="selectedLocationsDialog = true"
+        >
+          <v-icon>mdi-map-marker-plus</v-icon>
         </v-btn>
-        <v-btn fab dark small color="danger" @click="selectedLocationsDialog = true">
-          <v-icon>mdi-plus</v-icon>
+        <v-btn
+          fab
+          dark
+          small
+          color="error"
+        >
+          <v-icon>mdi-map-marker-remove</v-icon>
+        </v-btn>
+        <v-btn
+          fab
+          dark
+          small
+          color="primary"
+          @click="selectedPhotosDialog = true"
+        >
+          <v-icon>mdi-database-plus</v-icon>
+        </v-btn>
+        <v-btn
+          fab
+          dark
+          small
+          color="error"
+        >
+          <v-icon>mdi-database-remove</v-icon>
         </v-btn>
       </v-speed-dial>
     </div>
@@ -124,7 +151,11 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" @click="selectedPhotosDialog = false" text>
+            <v-btn
+              color="blue darken-1"
+              @click="selectedPhotosDialog = false"
+              text
+            >
               Close
             </v-btn>
             <v-btn color="blue darken-1" text @click="applyCollections">
@@ -134,7 +165,6 @@
         </v-card>
       </div>
     </v-dialog>
-
 
     <v-dialog v-model="selectedLocationsDialog" width="600px">
       <div>
@@ -150,7 +180,11 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" @click="selectedLocationsDialog = false" text>
+            <v-btn
+              color="blue darken-1"
+              @click="selectedLocationsDialog = false"
+              text
+            >
               Close
             </v-btn>
             <v-btn color="blue darken-1" text @click="applyLocations">
@@ -275,6 +309,7 @@ export default {
       this.addLocationDialog = true;
     },
     async updateLocation(location) {
+      this.selectedLocation = {}
       this.addLocationDialog = false;
       this.addSnackbar("Updating location...", "warning");
       await this.$axios.patch("/api/locations/" + location._id, location);
@@ -287,6 +322,7 @@ export default {
       this.addSnackbar("Deleted location", "error");
     },
     saveCollection(collection) {
+      this.selectedCollection = {}
       console.log(collection);
       if (collection._id) this.updateCollection(collection);
       else this.addCollection(collection);
@@ -298,10 +334,12 @@ export default {
       this.addSnackbar("Added collection", "success");
     },
     async editCollection(collection) {
+      console.log(collection)
       const fullCollection = await this.$axios.get(
         "/api/collections/" + collection._id
       );
       this.selectedCollection = fullCollection.data;
+      console.log(this.selectedCollection)
       this.collectionDialog = true;
     },
     async updateCollection(collection) {
@@ -317,20 +355,33 @@ export default {
       await this.$axios.delete("/api/collections/" + collection._id);
       this.addSnackbar("Deleted collection", "error");
     },
-    async applyCollections(){
+    async applyCollections() {
       this.selectedPhotos.forEach(photo => {
-        photo.collections = photo.collections.concat(this.selectedCollections)
-        this.updatePhoto(photo)
-      })
-      this.selectedPhotosDialog = false
+        photo.collections = photo.collections.concat(this.selectedCollections);
+        this.updatePhoto(photo);
+      });
+      this.selectedPhotosDialog = false;
     },
-    async applyLocations(){
+    async applyLocations() {
       this.selectedPhotos.forEach(photo => {
-        console.log(photo)
-        photo.location = this.selectedLocations
-        this.updatePhoto(photo)
-      })
-      this.selectedLocationsDialog = false
+        console.log(photo);
+        photo.location = this.selectedLocations;
+        this.updatePhoto(photo);
+      });
+      
+      this.selectedLocationsDialog = false;
+    },
+    close(){
+      this.selectedLocationsDialog = false;
+      this.selectedPhotosDialog = false;
+      this.addLocationDialog = false;
+      this.collectionDialog = false;
+      this.dialog = false;
+      this.selectedPhoto = {}
+      this.selectedLocation = {}
+      this.selectedCollection = {}
+      this.selectedCollections = []
+      this.selectedLocations = []
     }
   }
 };

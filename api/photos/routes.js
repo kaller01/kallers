@@ -9,6 +9,7 @@ app
   .post(upload.single("photo"), photos.add);
 app
   .route("/:id")
+  .get(photos.find)
   .delete(photos.delete)
   .patch(photos.update);
 

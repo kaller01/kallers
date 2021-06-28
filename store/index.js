@@ -1,5 +1,6 @@
 export const state = () => ({
   photos: [],
+  photo: {},
   locations: [],
   location: {},
   collections: [],
@@ -8,6 +9,9 @@ export const state = () => ({
 export const mutations = {
   SET_PHOTOS(state, value) {
     state.photos = value;
+  },
+  SET_PHOTO(state, value) {
+    state.photo = value;
   },
   SET_LOCATIONS(state, value) {
     state.locations = value;

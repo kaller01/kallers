@@ -14,7 +14,7 @@
         <template v-slot:activator="{ on }">
           <v-btn
             v-on="on"
-            :href="'https://www.google.com/maps/search/?api=1&query=' + location.name"
+            :href="'https://www.google.com/maps/search/?api=1&query=' + location.title"
             v-show="!$vuetify.breakpoint.smAndDown"
             height="36px"
             v-if="$vuetify.breakpoint.xlOnly"
@@ -26,7 +26,7 @@
             <v-icon class="pa-0">mdi-google-maps</v-icon>
           </v-btn>
         </template>
-        <span>Open {{location.name}} in google maps</span>
+        <span>Open {{location.title}} in google maps</span>
       </v-tooltip>
       <v-tooltip bottom v-if="location.googlealbum">
         <template v-slot:activator="{ on }">
