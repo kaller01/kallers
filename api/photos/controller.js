@@ -26,7 +26,7 @@ module.exports = {
       });
   },
   find: async (req, res) => {
-    let photo = await Photo.findOne({ filename: req.params.id });
+    let photo = await Photo.findOne({ filename: req.params.id }).populate({path : 'location',populate : {path : 'cover', select: "paths" }}).populate({path : 'collections',populate : {path : 'cover', select: "paths" }})
     // Finds photo which has a date less than current file.
     // https://stackoverflow.com/questions/9153329/how-to-fetch-next-and-previous-item-of-the-current-one-with-mongoose
     let next = await Photo.findOne({date: {$lt: photo.date}}).sort({date: -1});

@@ -55,7 +55,9 @@
     <v-main>
       <v-container>
         <div class="nav-spacer"></div>
-        <nuxt />
+        <keep-alive>
+          <nuxt />
+        </keep-alive>
       </v-container>
     </v-main>
 
@@ -82,24 +84,25 @@
             <span>{{ icon.type }}</span>
           </v-tooltip>
         </v-card-text>
-        <v-card-text class="white--text pt-0 pb-9">{{$t("footer.about")}}</v-card-text>
+        <v-card-text class="white--text pt-0 pb-9">{{
+          $t("footer.about")
+        }}</v-card-text>
       </v-card>
     </v-footer>
   </v-app>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations } from "vuex";
 
 export default {
   methods: {
     test() {
-
       console.log(this.photos);
     }
   },
   computed: {
-    photos (){
+    photos() {
       return this.$store.state.photos;
     }
   },
@@ -147,10 +150,10 @@ export default {
         }
       ],
       navs: [
-        {
-          name: "navs.portfolio",
-          to: "/"
-        },
+        // {
+        //   name: "navs.portfolio",
+        //   to: "/"
+        // },
         {
           name: "navs.photography",
           to: "/photography"
@@ -159,14 +162,14 @@ export default {
           name: "navs.locations",
           to: "/locations"
         },
-        {
-          name: "navs.contact",
-          to: "/contact"
-        },
-        {
-          name: "navs.prints",
-          to: "/prints"
-        },
+        // {
+        //   name: "navs.contact",
+        //   to: "/contact"
+        // },
+        // {
+        //   name: "navs.prints",
+        //   to: "/prints"
+        // },
         {
           name: "navs.dashboard",
           to: "/dashboard"

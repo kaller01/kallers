@@ -198,7 +198,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import { mapMutations } from "vuex";
 import PhotoTable from "@/components/PhotoTable";
 import PhotoEditor from "~/components/PhotoEditor.vue";
@@ -281,7 +280,7 @@ export default {
       });
     },
     deletePhoto(photo) {
-      axios.delete("/api/photos/" + photo._id);
+      this.$axios.delete("/api/photos/" + photo._id);
       this.addSnackbar("Deleted " + photo.filename, "error");
     },
     async updatePhoto(photo) {

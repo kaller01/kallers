@@ -3,6 +3,7 @@ const app = require("express")();
 const photosRoute = require("./photos/routes");
 const locationsRoute = require("./locations/routes");
 const collectionsRoute = require("./collections/routes")
+const authRoute = require("./auth/routes")
 const morgan = require("morgan");
 require("../config/mongoose-setup");
 
@@ -15,5 +16,6 @@ app.all("/getJSON", (req, res) => {
 app.use("/photos", photosRoute);
 app.use("/locations", locationsRoute);
 app.use("/collections", collectionsRoute);
+app.use("/auth", authRoute)
 
 module.exports = app;

@@ -1,11 +1,20 @@
 module.exports = {
-    mongodb: {
-        user: "root",
-        password: "kallersdatabase",
-        connect: "mongodb+srv://server:root@cluster0.00lht.mongodb.net/main?retryWrites=true&w=majority",
-    },
-    photohost:{
-        token: "Token le1yabsfpgg9oc04g2a4",
-        host: "https://photos.kallers.se/"
-    } 
-}
+  mongodb: {
+    user: process.env.DBUSER,
+    password: process.env.DBPASS,
+    connect: process.env.DBLINK
+  },
+  photohost: {
+    //Shush no telling anyone!
+    token: process.env.PHOTOTOKEN,
+    host: process.env.PHOTOHOST
+  },
+  JWT: process.env.JWTKEY,
+  bcrypt: {
+    salt: process.env.SALT,
+    hash: {
+      admin: process.env.ADMINHASH,
+      guest: process.env.GUESTHASH
+    }
+  }
+};
