@@ -16,7 +16,7 @@ export default {
   serverMiddleware: [{ path: "/api", handler: "~/api" }],
 
   env: {
-    baseUrl: process.env.BASE_URL || "http://localhost:3000"
+    baseUrl: process.env.BASE_URL || ""
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
@@ -62,7 +62,7 @@ export default {
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
-    baseURL: process.env.BASE_URL || "http://localhost:3000" // Used as fallback if no runtime config is provided
+    baseURL: process.env.BASE_URL || "" // Used as fallback if no runtime config is provided
   },
 
   publicRuntimeConfig: {
