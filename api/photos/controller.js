@@ -20,6 +20,7 @@ module.exports = {
     })
       .then(res => res.json())
       .then(data => {
+        console.log(data)
         res.json(data);
         const photo = new Photo(data);
         photo.save();

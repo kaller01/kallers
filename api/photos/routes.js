@@ -7,7 +7,7 @@ const upload = multer();
 app
   .route("/")
   .get(photos.all)
-  .post(auth.verify,upload.single("photo"), photos.add);
+  .post(upload.single("photo"), photos.add);
 app
   .route("/:id")
   .get(photos.find)

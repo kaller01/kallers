@@ -38,9 +38,10 @@
     <v-navigation-drawer app v-model="drawer" temporary>
       <v-list nav>
         <v-list-item-group>
-          <v-list-item v-for="nav in navs" :to="'/' + nav.to" :key="nav.to">
+          <v-list-item v-for="nav in navs" :to="localePath(nav.to)" :key="nav.to">
             <v-list-item-title class="title font-weight-light">{{
               $t(nav.name)
+              
             }}</v-list-item-title>
           </v-list-item>
         </v-list-item-group>

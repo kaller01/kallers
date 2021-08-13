@@ -11,7 +11,6 @@ module.exports = {
     });
   },
   add: async (req, res) => {
-      console.log(process.env.TEST)
     const password = req.body.password;
     const user = req.body.user;
     if (user === "admin" || user === "guest") {
