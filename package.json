@@ -26,12 +26,13 @@
     "net": "^1.0.2",
     "nuxt": "^2.14.6",
     "nuxt-i18n": "^6.20.0",
-    "vue-masonry-wall": "^0.3.1"
+    "vue-masonry-wall": "^0.3.1",
+    "@nuxtjs/vuetify": "^1.11.2"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.6",
     "@nuxt/typescript-build": "^2.0.3",
-    "@nuxtjs/device": "^2.0.0",
-    "@nuxtjs/vuetify": "^1.11.2"
+    "@nuxtjs/device": "^2.0.0"
+    
   }
 }
