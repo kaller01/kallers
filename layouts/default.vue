@@ -154,10 +154,10 @@ export default {
         }
       ],
       navs: [
-        // {
-        //   name: "navs.portfolio",
-        //   to: "/"
-        // },
+        {
+          name: "navs.portfolio",
+          to: "/"
+        },
         {
           name: "navs.photography",
           to: "/photography"
