@@ -2,9 +2,7 @@
   <v-app dark class="ma-0 fill-height">
     <v-main class="ma-0 fill-height">
       <v-container fluid class="fill-height ma-0 pa-0">
-        <v-container fluid class="ma-0 pa-0" >
-          <nuxt />
-        </v-container>
+        <nuxt />
       </v-container>
     </v-main>
   </v-app>
@@ -17,8 +15,10 @@ export default {};
 <style>
 body {
   margin: 0;
+  background-color: #121212;
 }
+
 .test {
-    height: 100%;
+  height: 100%;
 }
 </style>

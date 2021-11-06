@@ -1,20 +1,20 @@
 <template>
-  <div class="max">
-    <article class="ma-0 max">
-      <v-row class="ma-0 max" align="start" justify="center">
-        <v-col cols="12" class="max">
-          <v-row class="ma-0 max" align="start" justify="center">
-            <v-col cols="12" md="6" lg="8" xl="9" class="d-flex justify-center max">
-              <v-img
+  <div>
+    <article class="ma-0 main">
+      <v-row class="ma-0" align="start" justify="center">
+        <v-col cols="12" class="noscroll">
+          <v-row class="ma-0 noscroll" align="start" justify="center">
+            <v-col cols="9" class="d-flex justify-center noscroll">
+              <img
                 :src="photo.paths.h1080"
                 :lazy-src="photo.paths.preview"
-                class="pa-1 max"
+                class="white1 pa-1"
                 contain
               />
             </v-col>
 
-            <v-col cols="12" md="6" lg="4" xl="3" class="sidescroll">
-              <v-card>
+            <v-col cols="3">
+              <v-card class="ml-12">
                 <v-card-title>
                   <h1>
                     {{ photo.title || photo.filename }}
@@ -184,9 +184,7 @@ export default {
 
 <style scoped>
 .max {
-  width: 100% !important;
-  height: 100% !important;
-  max-height: 100vh;
+  height: 100vh;
 }
 .limit {
   max-width: 100% !important;
@@ -197,8 +195,10 @@ export default {
 }
 .white1 {
   background-color: white;
+  max-height: 95vh;
+  max-width: 100%;
+  /* max-height: 100%; */
 }
-
 .exit {
   top: 0;
   position: absolute;
@@ -206,22 +206,21 @@ export default {
   font: 50px;
 }
 
-.image {
-  object-fit: contain;
-  max-width: 100%;
-}
-
 .sidescroll {
-  height: 100%;
-  overflow-y: scroll;
+
 }
 
-.sidescroll::-webkit-scrollbar {
-  width: 0px;
+.noscroll {
+  max-height: 100%;
+  overflow: hidden;
 }
 
 .main {
-  height: 100%;
-  background-color: pink;
+  overflow: hidden;
+}
+
+body {
+    overflow: hidden;
+    height: 100vh;
 }
 </style>
