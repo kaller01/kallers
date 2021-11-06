@@ -108,12 +108,7 @@
         >
           <v-icon>mdi-map-marker-plus</v-icon>
         </v-btn>
-        <v-btn
-          fab
-          dark
-          small
-          color="error"
-        >
+        <v-btn fab dark small color="error">
           <v-icon>mdi-map-marker-remove</v-icon>
         </v-btn>
         <v-btn
@@ -125,12 +120,7 @@
         >
           <v-icon>mdi-database-plus</v-icon>
         </v-btn>
-        <v-btn
-          fab
-          dark
-          small
-          color="error"
-        >
+        <v-btn fab dark small color="error">
           <v-icon>mdi-database-remove</v-icon>
         </v-btn>
       </v-speed-dial>
@@ -249,11 +239,14 @@ export default {
     },
     photoUpload(file) {
       if (file) {
+        const myHeaders = new Headers();
+        myHeaders.append('Authorization', localStorage.auth);
         const form = new FormData();
         form.append("photo", file);
         fetch("/api/photos", {
           method: "POST",
-          body: form
+          body: form,
+          headers: myHeaders,
         })
           .then(res => res.json())
           .then(data => {
@@ -308,7 +301,7 @@ export default {
       this.addLocationDialog = true;
     },
     async updateLocation(location) {
-      this.selectedLocation = {}
+      this.selectedLocation = {};
       this.addLocationDialog = false;
       this.addSnackbar("Updating location...", "warning");
       await this.$axios.patch("/api/locations/" + location._id, location);
@@ -321,7 +314,7 @@ export default {
       this.addSnackbar("Deleted location", "error");
     },
     saveCollection(collection) {
-      this.selectedCollection = {}
+      this.selectedCollection = {};
       console.log(collection);
       if (collection._id) this.updateCollection(collection);
       else this.addCollection(collection);
@@ -333,12 +326,12 @@ export default {
       this.addSnackbar("Added collection", "success");
     },
     async editCollection(collection) {
-      console.log(collection)
+      console.log(collection);
       const fullCollection = await this.$axios.get(
         "/api/collections/" + collection._id
       );
       this.selectedCollection = fullCollection.data;
-      console.log(this.selectedCollection)
+      console.log(this.selectedCollection);
       this.collectionDialog = true;
     },
     async updateCollection(collection) {
@@ -346,6 +339,7 @@ export default {
       this.addSnackbar("Updating collection...", "warning");
       await this.$axios.patch("/api/Collections/" + collection._id, collection);
       this.addSnackbar("Updated collection", "success");
+       this.$store.dispatch("getCollections")
     },
 
     async deleteCollection(collection) {
@@ -353,6 +347,7 @@ export default {
       this.addSnackbar("Deleting collection...", "warning");
       await this.$axios.delete("/api/collections/" + collection._id);
       this.addSnackbar("Deleted collection", "error");
+      this.$store.dispatch("getCollections")
     },
     async applyCollections() {
       this.selectedPhotos.forEach(photo => {
@@ -367,22 +362,27 @@ export default {
         photo.location = this.selectedLocations;
         this.updatePhoto(photo);
       });
-      
+
       this.selectedLocationsDialog = false;
     },
-    close(){
+    close() {
       this.selectedLocationsDialog = false;
       this.selectedPhotosDialog = false;
       this.addLocationDialog = false;
       this.collectionDialog = false;
       this.dialog = false;
-      this.selectedPhoto = {}
-      this.selectedLocation = {}
-      this.selectedCollection = {}
-      this.selectedCollections = []
-      this.selectedLocations = []
+      this.selectedPhoto = {};
+      this.selectedLocation = {};
+      this.selectedCollection = {};
+      this.selectedCollections = [];
+      this.selectedLocations = [];
     }
-  }
+  },
+  mounted() {
+     if(localStorage.auth) {
+      this.$axios.setHeader("Authorization", localStorage.auth);
+    } else this.$router.push("/login")
+  },
 };
 </script>
 

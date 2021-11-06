@@ -58,7 +58,9 @@ export default {
         password: this.password
       };
       this.$axios.post("/api/auth", data).then(respone => {
-        this.$axios.setHeader("Authorization", respone.data);
+        const auth = respone.data;
+        this.$axios.setHeader("Authorization", auth);
+        localStorage.auth = auth;
         this.$router.push(this.localePath("/dashboard/"));
       });
     }

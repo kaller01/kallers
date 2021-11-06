@@ -16,14 +16,16 @@ export default {
   serverMiddleware: [{ path: "/api", handler: "~/api" }],
 
   env: {
-    baseUrl: process.env.BASE_URL
+    baseUrl: process.env.BROWSER_BASE_URL || ""
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [],
+  plugins: [
+    { ssr: false, src: '~plugins/setup' }
+  ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -62,7 +64,7 @@ export default {
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
-    baseURL: process.env.BASE_URL // Used as fallback if no runtime config is provided
+    baseURL: process.env.BROWSER_BASE_URL || ""
   },
 
   publicRuntimeConfig: {
