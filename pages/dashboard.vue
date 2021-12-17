@@ -201,7 +201,7 @@ export default {
     PhotoEditor,
     LocationEditor,
     CollectionEditor,
-    CollectionTable
+    CollectionTable,
   },
   computed: {
     photos() {
@@ -212,7 +212,7 @@ export default {
     },
     collections() {
       return this.$store.state.collections;
-    }
+    },
   },
   data() {
     return {
@@ -228,7 +228,7 @@ export default {
       selectedPhotos: [],
       selectedLocations: {},
       selectedLocationsDialog: false,
-      selectedPhotosDialog: false
+      selectedPhotosDialog: false,
     };
   },
   methods: {
@@ -240,7 +240,7 @@ export default {
     photoUpload(file) {
       if (file) {
         const myHeaders = new Headers();
-        myHeaders.append('Authorization', localStorage.auth);
+        myHeaders.append("Authorization", localStorage.auth);
         const form = new FormData();
         form.append("photo", file);
         fetch("/api/photos", {
@@ -248,10 +248,11 @@ export default {
           body: form,
           headers: myHeaders,
         })
-          .then(res => res.json())
-          .then(data => {
+          .then((res) => res.json())
+          .then((data) => {
             console.log(data);
             this.addSnackbar(data.filename + " has been uploaded", "primary");
+            this.$store.dispatch("getPhotos");
           });
       }
     },
@@ -261,7 +262,7 @@ export default {
     },
     uploadAll() {
       this.addSnackbar("Uploading files", "warning");
-      this.files.forEach(file => {
+      this.files.forEach((file) => {
         this.photoUpload(file);
       });
     },
@@ -269,18 +270,20 @@ export default {
       this.snackbars.push({
         text,
         color,
-        show: true
+        show: true,
       });
     },
     deletePhoto(photo) {
       this.$axios.delete("/api/photos/" + photo._id);
       this.addSnackbar("Deleted " + photo.filename, "error");
+      this.$store.dispatch("getPhotos");
     },
     async updatePhoto(photo) {
       this.addSnackbar("Updating " + photo.filename, "warning");
       await this.$axios.patch("/api/photos/" + photo._id, photo);
       this.addSnackbar("Updated " + photo.filename, "success");
       this.dialog = false;
+      this.$store.dispatch("getPhotos");
     },
     saveLocation(location) {
       console.log(location);
@@ -292,6 +295,7 @@ export default {
       this.addSnackbar("Adding location...", "warning");
       await this.$axios.post("/api/locations/", location);
       this.addSnackbar("Added location", "success");
+      this.$store.dispatch("getLocations");
     },
     async editLocation(location) {
       const fullLocation = await this.$axios.get(
@@ -299,6 +303,7 @@ export default {
       );
       this.selectedLocation = fullLocation.data;
       this.addLocationDialog = true;
+      this.$store.dispatch("getLocations");
     },
     async updateLocation(location) {
       this.selectedLocation = {};
@@ -306,12 +311,14 @@ export default {
       this.addSnackbar("Updating location...", "warning");
       await this.$axios.patch("/api/locations/" + location._id, location);
       this.addSnackbar("Updated location", "success");
+      this.$store.dispatch("getLocations");
     },
     async deleteLocation(location) {
       this.addLocationDialog = false;
       this.addSnackbar("Deleting location...", "warning");
       await this.$axios.delete("/api/locations/" + location._id);
       this.addSnackbar("Deleted location", "error");
+      this.$store.dispatch("getLocations");
     },
     saveCollection(collection) {
       this.selectedCollection = {};
@@ -324,6 +331,7 @@ export default {
       this.addSnackbar("Adding collection...", "warning");
       await this.$axios.post("/api/collections/", collection);
       this.addSnackbar("Added collection", "success");
+      this.$store.dispatch("getCollections");
     },
     async editCollection(collection) {
       console.log(collection);
@@ -333,13 +341,14 @@ export default {
       this.selectedCollection = fullCollection.data;
       console.log(this.selectedCollection);
       this.collectionDialog = true;
+      this.$store.dispatch("getCollections");
     },
     async updateCollection(collection) {
       this.collectionDialog = false;
       this.addSnackbar("Updating collection...", "warning");
       await this.$axios.patch("/api/Collections/" + collection._id, collection);
       this.addSnackbar("Updated collection", "success");
-       this.$store.dispatch("getCollections")
+      this.$store.dispatch("getCollections");
     },
 
     async deleteCollection(collection) {
@@ -347,17 +356,17 @@ export default {
       this.addSnackbar("Deleting collection...", "warning");
       await this.$axios.delete("/api/collections/" + collection._id);
       this.addSnackbar("Deleted collection", "error");
-      this.$store.dispatch("getCollections")
+      this.$store.dispatch("getCollections");
     },
     async applyCollections() {
-      this.selectedPhotos.forEach(photo => {
+      this.selectedPhotos.forEach((photo) => {
         photo.collections = photo.collections.concat(this.selectedCollections);
         this.updatePhoto(photo);
       });
       this.selectedPhotosDialog = false;
     },
     async applyLocations() {
-      this.selectedPhotos.forEach(photo => {
+      this.selectedPhotos.forEach((photo) => {
         console.log(photo);
         photo.location = this.selectedLocations;
         this.updatePhoto(photo);
@@ -376,12 +385,12 @@ export default {
       this.selectedCollection = {};
       this.selectedCollections = [];
       this.selectedLocations = [];
-    }
+    },
   },
   mounted() {
-     if(localStorage.auth) {
+    if (localStorage.auth) {
       this.$axios.setHeader("Authorization", localStorage.auth);
-    } else this.$router.push("/login")
+    } else this.$router.push("/login");
   },
 };
 </script>

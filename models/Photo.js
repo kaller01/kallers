@@ -10,24 +10,28 @@ const PhotoSchema = mongoose.Schema({
     h400: String,
     w400: String,
     h1080: String,
-    w1080: String
+    w1080: String,
   },
   location: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "locations"
+    ref: "locations",
   },
   collections: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "collections"
-    }
+      ref: "collections",
+    },
   ],
   date: Date,
   shutterspeed: String,
   aperture: String,
   width: Number,
   height: Number,
-  lens: String
+  lens: String,
+  prints: {
+    type: Number,
+    default: 0,
+  },
 });
 
 module.exports = mongoose.model("photos", PhotoSchema);

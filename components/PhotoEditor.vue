@@ -40,6 +40,13 @@
                     multiple
                     v-model="photo.collections"
                   ></v-select>
+                </v-col>
+                <v-col>
+                  <v-text-field
+                    label="Amount of prints"
+                    v-model="photo.prints"
+                    type="number"
+                  ></v-text-field>
                 </v-col> </v-row
             ></v-col>
             <v-col cols="6">
@@ -64,7 +71,7 @@
 <script>
 export default {
   props: {
-    photo: Object
+    photo: Object,
   },
   computed: {
     locations() {
@@ -72,13 +79,13 @@ export default {
     },
     collections() {
       return this.$store.state.collections;
-    }
+    },
   },
   methods: {
     prepareData() {
       console.log(this.photo);
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -1,4 +1,6 @@
 // import colors from "vuetify/es5/util/colors";
+  
+import colors from 'vuetify/lib/util/colors'
 
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
@@ -83,17 +85,17 @@ export default {
     theme: {
       dark: true,
       themes: {
-        // dark: {
-        //   base: colors.purple.base,
-        //   primary: colors.lightGreen.darken1,
-        //   accent: colors.red.darken3,
-        //   secondary: colors.amber.darken3,
-        //   info: colors.teal.lighten1,
-        //   warning: colors.amber.base,
-        //   error: colors.deepOrange.accent4,
-        //   success: colors.green.accent3,
-        //   background: colors.purple.base
-        // }
+        dark: {
+          base: colors.purple.base,
+          primary: colors.lightGreen.darken1,
+          accent: colors.red.darken3,
+          secondary: colors.amber.darken3,
+          info: colors.teal.lighten1,
+          warning: colors.amber.base,
+          error: colors.deepOrange.accent4,
+          success: colors.green.accent3,
+          background: colors.purple.base
+        }
       }
     }
   },

@@ -23,10 +23,9 @@
           <div
             :class="{
               expandedtext: $vuetify.breakpoint.mdAndUp,
-              'pa-2': true
+              'pa-2': true,
             }"
-          >
-          </div>
+          ></div>
           <v-spacer></v-spacer>
           <div>
             <img :src="item.paths.w400" style="width: 330px" /> <br />
@@ -73,9 +72,7 @@
       <v-icon small class="mr-2" @click="$emit('edit', item)">
         mdi-pencil
       </v-icon>
-      <v-icon small @click="$emit('delete', item)">
-        mdi-delete
-      </v-icon>
+      <v-icon small @click="$emit('delete', item)"> mdi-delete </v-icon>
     </template>
   </v-data-table>
 </template>
@@ -85,36 +82,37 @@ export default {
   computed: {
     photos() {
       return this.$store.state.photos;
-    }
+    },
   },
   props: {
-    value: Array
+    value: Array,
   },
   data() {
     return {
       headers: [
         { text: "Photo", value: "photo" },
         { text: "Filename", value: "filename" },
-        { text: "", value: "actions"},
+        { text: "", value: "actions" },
         { text: "Date", value: "date", align: "center" },
         { text: "Lens shoot with", value: "lens", align: "center" },
         { text: "width", value: "dim", align: "center" },
-        
-        { text: "", value: "data-table-expand" }
+        { text: "Prints", value: "prints" },
+
+        { text: "", value: "data-table-expand" },
       ],
       expanded: [],
-      selected: []
+      selected: [],
     };
   },
   methods: {
-    update: function(){
-      console.log(this.selected)
-      this.$emit('input', this.selected)
-    }
+    update: function () {
+      console.log(this.selected);
+      this.$emit("input", this.selected);
+    },
   },
   created() {
     this.selected = this.value;
-  }
+  },
 };
 </script>
 
