@@ -7,7 +7,7 @@
     "build": "nuxt-ts build",
     "start": "nuxt-ts start",
     "generate": "nuxt-ts generate",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "vue add vuetify & npm run build"
   },
   "dependencies": {
     "@nuxt/typescript-runtime": "^2.0.0",
