@@ -1,28 +1,12 @@
 <template>
   <div>
-    <!-- <masonry-wall
+    <masonry-wall
       :items="photos"
-      :ssr-columns="1"
-      :column-width="300"
-      :gap="16"
+      :ssr-columns="4"
+      :column-width="400"
+      :gap="8"
     >
       <template #default="{ item }">
-        <article @click="test(item.filename)">
-          <img
-            :src="item.paths.w400"
-            :lazy-src="item.paths.preview"
-            :aspect-ratio="item.width / item.height"
-            class="photo"
-          />
-        </article>
-      </template>
-    </masonry-wall> -->
-    <vue-masonry-wall
-      :items="photos"
-      :options="{ width: 400, padding: 4 }"
-      :ssr="{ columns: 4 }"
-    >
-      <template v-slot:default="{ item }">
         <article @click="test(item.filename)">
           <v-img
             :src="item.paths.w400"
@@ -32,14 +16,14 @@
           />
         </article>
       </template>
-    </vue-masonry-wall>
+    </masonry-wall>
   </div>
 </template>
 
 <script>
 import { mapMutations } from "vuex";
-import VueMasonryWall from "vue-masonry-wall";
-// import MasonryWall from '@yeger/vue-masonry-wall'
+// import VueMasonryWall from "vue-masonry-wall";
+import MasonryWall from "@yeger/vue2-masonry-wall";
 
 export default {
   computed: {
@@ -47,7 +31,7 @@ export default {
       return this.$store.state.photos;
     },
   },
-  components: { VueMasonryWall },
+  components: { MasonryWall },
   methods: {
     test: function (name) {
       name = name.replace(".jpg", "");
@@ -59,11 +43,12 @@ export default {
 </script>
 
 <style scoped>
-/* .photo {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    line-height: 0;
-    display: block;
-  } */
+
+ .photo {
+    /* object-fit: cover; */
+    /* width: 100%; */
+    /* height: 100%; */
+    /* line-height: 0; */
+    /* display: block; */
+  } 
 </style>

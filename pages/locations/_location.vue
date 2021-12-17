@@ -75,6 +75,23 @@
                   </div>
                 </template>
               </vue-masonry-wall> -->
+              <masonry-wall
+                :items="location.photos"
+                :ssr-columns="2"
+                :column-width="400"
+                :gap="8"
+              >
+                <template #default="{ item }">
+                  <div>
+                    <v-img
+                      :aspect-ratio="item.width / item.height"
+                      :v-if="item"
+                      :src="item.paths.w400 || ''"
+                      :lazy-src="item.paths.preview || ''"
+                    />
+                  </div>
+                </template>
+              </masonry-wall>
             </v-card>
           </div>
         </v-col>
@@ -99,7 +116,7 @@
             ></v-autocomplete>
           </div>
           <locationText :location="location"></locationText>
-         
+
           <v-card
             dark
             class="my-4"
@@ -126,7 +143,8 @@
 <script>
 import LocationHeader from "~/components/locationHeader.vue";
 // import VueMasonryWall from "vue-masonry-wall";
-import LocationText from '~/components/locationText.vue';
+import LocationText from "~/components/locationText.vue";
+import MasonryWall from "@yeger/vue2-masonry-wall";
 export default {
   name: "Location",
   async middleware({ store, route, app }) {
@@ -146,14 +164,14 @@ export default {
     },
     location() {
       return this.$store.state.location;
-    }
+    },
   },
   data() {
     return {
-      selectedLocation: ""
+      selectedLocation: "",
     };
   },
-  components: { LocationHeader, LocationText },
+  components: { LocationHeader, LocationText, MasonryWall },
   methods: {
     openInMaps() {
       window.open(
@@ -168,12 +186,12 @@ export default {
           this.localePath("/locations/" + this.selectedLocation)
         );
       }
-    }
+    },
   },
   created() {
     console.log("CREATED", this.location);
     this.selectedLocation = this.$route.params.location;
-  }
+  },
 };
 </script>
 
