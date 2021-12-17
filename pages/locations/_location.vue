@@ -59,7 +59,7 @@
           ></location-header>
           <div>
             <v-card dark class="pa-2" :v-if="location.photos.size > 0">
-              <vue-masonry-wall
+              <!-- <vue-masonry-wall
                 :items="location.photos"
                 :options="{ width: 400, padding: 4 }"
               >
@@ -74,7 +74,7 @@
                     />
                   </div>
                 </template>
-              </vue-masonry-wall>
+              </vue-masonry-wall> -->
             </v-card>
           </div>
         </v-col>
@@ -125,7 +125,7 @@
 
 <script>
 import LocationHeader from "~/components/locationHeader.vue";
-import VueMasonryWall from "vue-masonry-wall";
+// import VueMasonryWall from "vue-masonry-wall";
 import LocationText from '~/components/locationText.vue';
 export default {
   name: "Location",
@@ -153,7 +153,7 @@ export default {
       selectedLocation: ""
     };
   },
-  components: { LocationHeader, VueMasonryWall, LocationText },
+  components: { LocationHeader, LocationText },
   methods: {
     openInMaps() {
       window.open(

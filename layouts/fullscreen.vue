@@ -2,7 +2,9 @@
   <v-app dark class="ma-0 fill-height">
     <v-main class="ma-0 fill-height">
       <v-container fluid class="fill-height ma-0 pa-0">
-        <nuxt />
+        <keep-alive>
+          <nuxt />
+        </keep-alive>
       </v-container>
     </v-main>
   </v-app>

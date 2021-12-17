@@ -1,4 +1,4 @@
-import colors from "vuetify/es5/util/colors";
+// import colors from "vuetify/es5/util/colors";
 
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
@@ -16,16 +16,14 @@ export default {
   serverMiddleware: [{ path: "/api", handler: "~/api" }],
 
   env: {
-    baseUrl: process.env.BROWSER_BASE_URL || ""
+    baseUrl: process.env.BASE_URL
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [
-    { ssr: false, src: '~plugins/setup' }
-  ],
+  plugins: [],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -64,7 +62,7 @@ export default {
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
-    baseURL: process.env.BROWSER_BASE_URL || ""
+    baseURL: process.env.BASE_URL // Used as fallback if no runtime config is provided
   },
 
   publicRuntimeConfig: {
@@ -85,17 +83,17 @@ export default {
     theme: {
       dark: true,
       themes: {
-        dark: {
-          base: colors.purple.base,
-          primary: colors.lightGreen.darken1,
-          accent: colors.red.darken3,
-          secondary: colors.amber.darken3,
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3,
-          background: colors.purple.base
-        }
+        // dark: {
+        //   base: colors.purple.base,
+        //   primary: colors.lightGreen.darken1,
+        //   accent: colors.red.darken3,
+        //   secondary: colors.amber.darken3,
+        //   info: colors.teal.lighten1,
+        //   warning: colors.amber.base,
+        //   error: colors.deepOrange.accent4,
+        //   success: colors.green.accent3,
+        //   background: colors.purple.base
+        // }
       }
     }
   },
