@@ -6,6 +6,7 @@ export const state = () => ({
   collection: {},
   collections: [],
   portfolio: [],
+  masonry: [],
 });
 
 export const mutations = {
@@ -29,6 +30,9 @@ export const mutations = {
   },
   SET_PORTFOLIO(state, value) {
     state.portfolio = value;
+  },
+  SET_MASONRY(state, value) {
+    state.masonry = value;
   },
 };
 
@@ -60,9 +64,7 @@ export const actions = {
   },
   async getPortfolio({ commit }) {
     console.log("Updating portfolio...");
-    const response = await this.$axios.get(
-      "/api/collections/61bdc6582b73c000163f264f"
-    );
+    const response = await this.$axios.get("/api/collections/portfolio");
     commit("SET_PORTFOLIO", response.data.photos);
   },
 };

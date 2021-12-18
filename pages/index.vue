@@ -8,6 +8,7 @@
         hide-delimiter-background
         delimiter-icon="mdi-minus"
         vertical
+        v-model="model"
       >
         <v-carousel-item
           v-for="photo in horizontalPhotos"
@@ -45,6 +46,18 @@
         />
       </template>
     </masonry-wall>
+
+    <!-- <v-tooltip right color="transparent">
+      <template v-slot:activator="{ on }">
+        <v-btn class="mx-4 white--text" target="_blank" icon v-on="on">
+          <v-icon size="24px">mdi-instagram</v-icon>
+        </v-btn>
+      </template>
+      <v-card>
+        hello world!
+        <v-img src="https://photos.kallers.se/400w/_MK20430.jpg"> </v-img>
+      </v-card>
+    </v-tooltip> -->
   </div>
 </template>
 
@@ -70,6 +83,7 @@ export default {
   data() {
     return {
       windowHeight: 1000,
+      model: 0,
     };
   },
   mounted() {
@@ -81,6 +95,22 @@ export default {
     onResize() {
       this.windowHeight = window.innerHeight;
     },
+    keyhandler(e) {
+      switch (e.key) {
+        case "ArrowLeft":
+          this.model--;
+          break;
+        case "ArrowRight":
+          this.model++;
+          break;
+      }
+    },
+  },
+  beforeMount() {
+    window.addEventListener("keydown", this.keyhandler);
+  },
+  beforeDestroy() {
+    window.removeEventListener("keydown", this.keyhandler);
   },
 };
 </script>

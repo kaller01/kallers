@@ -44,7 +44,7 @@
                     <v-col v-if="photo.location">
                       <span class="headline"> Photograph taken in </span>
                       <v-card
-                        :to="localePath('/locations/' + photo.location.title)"
+                        :to="localePath('/locations/' + photo.location.link)"
                       >
                         <v-img
                           :aspect-ratio="7 / 4"
@@ -92,7 +92,7 @@
                     <v-col cols="12">
                       <span class="headline"> Collections including </span>
                       <v-card
-                        :to="localePath('/locations/')"
+                        :to="localePath('/album/' + collection.link)"
                         v-for="collection in photo.collections"
                         v-bind:key="collection._id"
                         class="mb-2"

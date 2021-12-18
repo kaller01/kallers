@@ -4,8 +4,8 @@
       <masonry-wall
         v-if="$vuetify.breakpoint.mdAndUp"
         :items="photos"
-        :ssr-columns="4"
-        :column-width="400"
+        :ssr-columns="6"
+        :column-width="300"
         :gap="12"
       >
         <template #default="{ item }">

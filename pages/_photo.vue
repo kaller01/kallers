@@ -42,7 +42,7 @@ export default {
     },
     photo() {
       return this.$store.state.photo;
-    }
+    },
   },
   components: { photography },
   methods: {
@@ -55,7 +55,7 @@ export default {
     next() {
       this.goto(this.photo.next);
     },
-    goto: function(name) {
+    goto: function (name) {
       name = name.replace(".jpg", "");
       console.log(name);
       this.$router.push(this.localePath("/photography/" + name));
@@ -72,14 +72,14 @@ export default {
           this.next();
           break;
       }
-    }
+    },
   },
   beforeMount() {
     window.addEventListener("keydown", this.keyhandler);
   },
   beforeDestroy() {
     window.removeEventListener("keydown", this.keyhandler);
-  }
+  },
 };
 </script>
 
