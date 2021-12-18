@@ -70,7 +70,7 @@
           <v-hover v-slot:default="{ hover }">
             <v-card
               :class="`elevation-${hover ? 24 : 0}`"
-              :to="localePath('/locations/' + location.title)"
+              :to="localePath('/locations/' + location.link)"
             >
               <v-img
                 :aspect-ratio="7 / 4"
@@ -79,7 +79,13 @@
                 gradient="to top right, rgba(0,0,0,.3), rgba(0,0,0,.3)"
               >
                 <div
-                  class="d-flex align-center justify-center flex-column fill-height"
+                  class="
+                    d-flex
+                    align-center
+                    justify-center
+                    flex-column
+                    fill-height
+                  "
                   color="white"
                 >
                   <p class="display-2 font-weight-light white--text ma-0">
@@ -115,8 +121,8 @@ export default {
       order: {
         reverse: "",
         justify: "start",
-        icon: "mdi-sort-descending"
-      }
+        icon: "mdi-sort-descending",
+      },
     };
   },
   computed: {
@@ -125,13 +131,18 @@ export default {
     },
     locations() {
       return this.$store.state.locations;
-    }
+    },
   },
   methods: {
     locationSearched() {
       if (this.selectedLocation) {
         this.$router.push(
-          this.localePath("/locations/" + this.selectedLocation)
+          this.localePath(
+            "/locations/" +
+              this.locations.find(
+                (location) => location.title == this.selectedLocation
+              ).link
+          )
         );
       }
     },
@@ -153,9 +164,9 @@ export default {
         }
         return 0;
       }
-    }
+    },
   },
-  mounted() {}
+  mounted() {},
 };
 </script>
 

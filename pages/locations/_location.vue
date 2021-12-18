@@ -166,7 +166,12 @@ export default {
     locationSearched() {
       if (this.selectedLocation) {
         this.$router.push(
-          this.localePath("/locations/" + this.selectedLocation)
+          this.localePath(
+            "/locations/" +
+              this.locations.find(
+                (location) => location.title == this.selectedLocation
+              ).link
+          )
         );
       }
     },

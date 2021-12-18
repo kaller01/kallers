@@ -3,6 +3,7 @@ export const state = () => ({
   photo: {},
   locations: [],
   location: {},
+  collection: {},
   collections: [],
   portfolio: [],
 });
@@ -19,6 +20,9 @@ export const mutations = {
   },
   SET_LOCATION(state, value) {
     state.location = value;
+  },
+  SET_COLLECTION(state, value) {
+    state.collection = value;
   },
   SET_COLLECTIONS(state, value) {
     state.collections = value;

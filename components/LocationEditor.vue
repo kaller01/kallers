@@ -16,6 +16,12 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12">
+                  <v-text-field
+                    label="Link"
+                    v-model="location.link"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12">
                   <v-textarea
                     label="Description"
                     v-model="location.description"
@@ -72,11 +78,11 @@
 </template>
 
 <script>
-import ArrayEditor from './ArrayEditor.vue';
+import ArrayEditor from "./ArrayEditor.vue";
 export default {
   components: { ArrayEditor },
   props: {
-    location: Object
+    location: Object,
   },
 };
 </script>

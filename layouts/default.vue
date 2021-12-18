@@ -157,6 +157,10 @@ export default {
           name: "navs.locations",
           to: "/locations",
         },
+        {
+          name: "navs.album",
+          to: "/album",
+        },
         // {
         //   name: "navs.contact",
         //   to: "/contact"

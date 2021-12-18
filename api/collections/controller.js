@@ -10,9 +10,9 @@ module.exports = {
   find: async (req, res) => {
     let collection;
     if (ObjectId.isValid(req.params.id))
-        collection = await Collection.findById(req.params.id);
-    else collection = await Collection.findOne({ title: req.params.id });
-    const photos = await Photo.find({ collections: collection._id});
+      collection = await Collection.findById(req.params.id);
+    else collection = await Collection.findOne({ link: req.params.id });
+    const photos = await Photo.find({ collections: collection._id });
     collection = collection.toObject();
     collection.photos = photos;
     res.json(collection);
@@ -29,5 +29,5 @@ module.exports = {
   delete: async (req, res) => {
     await Collection.deleteOne({ _id: req.params.id });
     res.sendStatus(200);
-  }
+  },
 };

@@ -188,7 +188,6 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
 import PhotoTable from "@/components/PhotoTable";
 import PhotoEditor from "~/components/PhotoEditor.vue";
 import LocationEditor from "~/components/LocationEditor.vue";

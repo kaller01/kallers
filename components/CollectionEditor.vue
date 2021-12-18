@@ -16,6 +16,12 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12">
+                  <v-text-field
+                    label="Link"
+                    v-model="collection.link"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12">
                   <v-textarea
                     label="Description"
                     v-model="collection.description"
@@ -37,8 +43,8 @@
                     </template>
                   </v-select>
                 </v-col>
-                </v-row
-            ></v-col>
+              </v-row></v-col
+            >
           </v-row>
         </v-container>
       </v-card-text>
@@ -61,7 +67,7 @@
 <script>
 export default {
   props: {
-    collection: Object
+    collection: Object,
   },
 };
 </script>
