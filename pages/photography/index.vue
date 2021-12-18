@@ -1,34 +1,30 @@
 <template>
   <div>
     <v-container fluid>
-      <masonry-wall
-        v-if="$vuetify.breakpoint.mdAndUp"
-        :items="photos"
-        :ssr-columns="6"
-        :column-width="300"
-        :gap="12"
-      >
-        <template #default="{ item }">
-          <article @click="test(item.filename)">
-            <v-img
-              :src="item.paths.w400"
-              :lazy-src="item.paths.preview"
-              :aspect-ratio="item.width / item.height"
-              class="photo"
-            />
-          </article>
-        </template>
-      </masonry-wall>
-      <div v-else>
-        <article v-for="item in photos" v-bind:key="item._id" class="mb-4">
-          <v-img
-            :src="item.paths.w400"
-            :lazy-src="item.paths.preview"
-            :aspect-ratio="item.width / item.height"
-            class="photo"
-          />
-        </article>
-      </div>
+      <transition name="fade">
+        <photo-grid
+          :masonry="masonry[3]"
+          v-show="loadingDone && $vuetify.breakpoint.xlOnly"
+        ></photo-grid>
+      </transition>
+      <transition name="fade">
+        <photo-grid
+          :masonry="masonry[2]"
+          v-show="loadingDone && $vuetify.breakpoint.lgOnly"
+        ></photo-grid>
+      </transition>
+      <transition name="fade">
+        <photo-grid
+          :masonry="masonry[1]"
+          v-show="loadingDone && $vuetify.breakpoint.mdOnly"
+        ></photo-grid>
+      </transition>
+      <transition name="fade">
+        <photo-grid
+          :masonry="masonry[0]"
+          v-show="loadingDone && $vuetify.breakpoint.smAndDown"
+        ></photo-grid>
+      </transition>
     </v-container>
   </div>
 </template>
@@ -43,6 +39,9 @@ export default {
     photos() {
       return this.$store.state.photos;
     },
+    masonry() {
+      return this.$store.state.masonry;
+    },
   },
   components: { MasonryWall },
   methods: {
@@ -51,6 +50,14 @@ export default {
       console.log(name);
       this.$router.push(this.localePath("/photography/" + name));
     },
+  },
+  data() {
+    return {
+      loadingDone: false,
+    };
+  },
+  mounted() {
+    this.loadingDone = true;
   },
 };
 </script>

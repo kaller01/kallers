@@ -8,7 +8,7 @@ app
   .route("/")
   .get(photos.all)
   .post(auth.verify, upload.single("photo"), photos.add);
-app.route("/masonry/:n").get(photos.masonry);
+app.route("/masonry").get(photos.masonry);
 app
   .route("/:id")
   .get(photos.find)

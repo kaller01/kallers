@@ -43,6 +43,7 @@ export const actions = {
       dispatch("getLocations"),
       dispatch("getCollections"),
       dispatch("getPortfolio"),
+      dispatch("getMasonry"),
     ];
     await Promise.all(promises);
   },
@@ -66,5 +67,10 @@ export const actions = {
     console.log("Updating portfolio...");
     const response = await this.$axios.get("/api/collections/portfolio");
     commit("SET_PORTFOLIO", response.data.photos);
+  },
+  async getMasonry({ commit }) {
+    console.log("Updating masonry...");
+    const response = await this.$axios.get("/api/photos/masonry");
+    commit("SET_MASONRY", response.data);
   },
 };
