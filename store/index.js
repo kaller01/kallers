@@ -4,6 +4,7 @@ export const state = () => ({
   locations: [],
   location: {},
   collections: [],
+  portfolio: [],
 });
 
 export const mutations = {
@@ -21,28 +22,43 @@ export const mutations = {
   },
   SET_COLLECTIONS(state, value) {
     state.collections = value;
-  }
+  },
+  SET_PORTFOLIO(state, value) {
+    state.portfolio = value;
+  },
 };
 
 export const actions = {
   async nuxtServerInit({ dispatch }) {
-    const promises = [dispatch("getPhotos"), dispatch("getLocations"), dispatch("getCollections")];
+    const promises = [
+      dispatch("getPhotos"),
+      dispatch("getLocations"),
+      dispatch("getCollections"),
+      dispatch("getPortfolio"),
+    ];
     await Promise.all(promises);
   },
   async getPhotos({ commit }) {
     //Nuxt axios make magic with internal call
-    console.log("Updating photos...")
+    console.log("Updating photos...");
     const response = await this.$axios.get("/api/photos");
     commit("SET_PHOTOS", response.data);
   },
   async getLocations({ commit }) {
-    console.log("Updating locations...")
+    console.log("Updating locations...");
     const response = await this.$axios.get("/api/locations");
     commit("SET_LOCATIONS", response.data);
   },
   async getCollections({ commit }) {
-    console.log("Updating collections...")
+    console.log("Updating collections...");
     const response = await this.$axios.get("/api/collections");
     commit("SET_COLLECTIONS", response.data);
+  },
+  async getPortfolio({ commit }) {
+    console.log("Updating portfolio...");
+    const response = await this.$axios.get(
+      "/api/collections/61bdc6582b73c000163f264f"
+    );
+    commit("SET_PORTFOLIO", response.data.photos);
   },
 };

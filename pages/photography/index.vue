@@ -1,22 +1,24 @@
 <template>
   <div>
-    <masonry-wall
-      :items="photos"
-      :ssr-columns="4"
-      :column-width="400"
-      :gap="8"
-    >
-      <template #default="{ item }">
-        <article @click="test(item.filename)">
-          <v-img
-            :src="item.paths.w400"
-            :lazy-src="item.paths.preview"
-            :aspect-ratio="item.width / item.height"
-            class="photo"
-          />
-        </article>
-      </template>
-    </masonry-wall>
+    <v-container fluid>
+      <masonry-wall
+        :items="photos"
+        :ssr-columns="4"
+        :column-width="400"
+        :gap="12"
+      >
+        <template #default="{ item }">
+          <article @click="test(item.filename)">
+            <v-img
+              :src="item.paths.w400"
+              :lazy-src="item.paths.preview"
+              :aspect-ratio="item.width / item.height"
+              class="photo"
+            />
+          </article>
+        </template>
+      </masonry-wall>
+    </v-container>
   </div>
 </template>
 
@@ -43,12 +45,11 @@ export default {
 </script>
 
 <style scoped>
-
- .photo {
-    /* object-fit: cover; */
-    /* width: 100%; */
-    /* height: 100%; */
-    /* line-height: 0; */
-    /* display: block; */
-  } 
+.photo {
+  /* object-fit: cover; */
+  /* width: 100%; */
+  /* height: 100%; */
+  /* line-height: 0; */
+  /* display: block; */
+}
 </style>

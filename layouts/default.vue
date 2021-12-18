@@ -49,29 +49,19 @@
           </v-list-item>
         </v-list-item-group>
       </v-list>
-      <!-- <template v-slot:append>
-        <div class="pa-10">
-          <v-btn block>Logout</v-btn>
-        </div>
-      </template>-->
     </v-navigation-drawer>
-    <!-- <div class="navspacer"></div> -->
     <v-main>
-      <v-container>
-        <div class="nav-spacer"></div>
-        <keep-alive>
-          <nuxt />
-        </keep-alive>
-      </v-container>
+      <div class="nav-spacer"></div>
+      <keep-alive>
+        <nuxt />
+      </keep-alive>
     </v-main>
 
     <v-footer padless class="mt-12 d-flex justify-center darken">
       <v-card flat tile class="white--text pb-1 text-center">
         <nuxt-link :to="switchLocalePath('en')">English</nuxt-link>
         <nuxt-link :to="switchLocalePath('sv')">Swedish</nuxt-link>
-        <v-btn @click="test">
-          test
-        </v-btn>
+        <v-btn @click="test"> test </v-btn>
         <v-card-text class="pb-2">
           <v-tooltip top v-for="icon in icons" :key="icon.link">
             <template v-slot:activator="{ on }">
@@ -103,12 +93,12 @@ export default {
   methods: {
     test() {
       console.log(this.photos);
-    }
+    },
   },
   computed: {
     photos() {
       return this.$store.state.photos;
-    }
+    },
   },
   data() {
     return {
@@ -121,50 +111,49 @@ export default {
           text: "kallercreations",
           link: "https://www.instagram.com/kallercreations/",
           color: "purple darken-1",
-          type: "Instagram"
+          type: "Instagram",
         },
         {
           icon: "mdi-email-outline",
           text: "fotograf@kallers.se",
           link: "mailto:fotograf@kallers.se",
           color: "amber darken-1",
-          type: "Email"
+          type: "Email",
         },
         {
           icon: "mdi-facebook",
           text: "Kaller Creations",
           link: "https://www.facebook.com/kallercreations/",
           color: "primary",
-          type: "Facebook"
+          type: "Facebook",
         },
         {
           icon: "mdi-youtube",
           text: "Martin Kaller",
-          link:
-            "https://www.youtube.com/channel/UCOzKsFDGejQsLdklgMvm72A?view_as=subscriber",
+          link: "https://www.youtube.com/channel/UCOzKsFDGejQsLdklgMvm72A?view_as=subscriber",
           color: "red",
-          type: "Youtube"
+          type: "Youtube",
         },
         {
           icon: "mdi-google-maps",
           text: "Local guide",
           link: "https://www.google.se/maps/contrib/106633097459000923158",
           color: "green darken-1",
-          type: "Local guide"
-        }
+          type: "Local guide",
+        },
       ],
       navs: [
         {
           name: "navs.portfolio",
-          to: "/"
+          to: "/",
         },
         {
           name: "navs.photography",
-          to: "/photography"
+          to: "/photography",
         },
         {
           name: "navs.locations",
-          to: "/locations"
+          to: "/locations",
         },
         // {
         //   name: "navs.contact",
@@ -176,9 +165,9 @@ export default {
         // },
         {
           name: "navs.dashboard",
-          to: "/dashboard"
-        }
-      ]
+          to: "/dashboard",
+        },
+      ],
     };
   },
   head() {
@@ -186,7 +175,7 @@ export default {
   },
   created() {
     this.tab = "/" + this.$nuxt.$route.path;
-  }
+  },
 };
 </script>
 
