@@ -1,46 +1,74 @@
 <template>
   <div>
-    <v-row>
-      <v-col
-        v-for="(photos, index) in masonry"
-        v-bind:key="index"
-        class="ma-0 pa-0"
-      >
-        <article v-for="photo in photos" v-bind:key="photo._id" class="pa-2">
-          <v-img
-            :src="photo.paths.w400"
-            :lazy-src="photo.paths.preview"
-            :aspect-ratio="photo.width / photo.height"
-          />
-        </article>
-      </v-col>
-    </v-row>
+    <transition name="fade">
+      <photo-grid
+        :masonry="masonry[3]"
+        v-show="loadingDone && $vuetify.breakpoint.xlOnly"
+      ></photo-grid>
+    </transition>
+    <transition name="fade">
+      <photo-grid
+        :masonry="masonry[2]"
+        v-show="loadingDone && $vuetify.breakpoint.lgOnly"
+      ></photo-grid>
+    </transition>
+    <transition name="fade">
+      <photo-grid
+        :masonry="masonry[1]"
+        v-show="loadingDone && $vuetify.breakpoint.mdOnly"
+      ></photo-grid>
+    </transition>
+    <transition name="fade">
+      <photo-grid
+        :masonry="masonry[0]"
+        v-show="loadingDone && $vuetify.breakpoint.smAndDown"
+      ></photo-grid>
+    </transition>
   </div>
 </template>
 
 <script>
 export default {
+  loading: false,
   async middleware({ store, route, app, $device }) {
-    let n =
-      ($device.isMobile && 1) ||
-      ($device.isTablet && 3) ||
-      ($device.isDesktop && 6) ||
-      3;
-    console.log("HELLLOOOO" + n);
-    const photos = (await app.$axios.get("/api/photos/masonry/" + n)).data;
+    const photos = (await app.$axios.get("/api/photos/masonry/1")).data;
     store.commit("SET_MASONRY", photos);
   },
   computed: {
     masonry() {
       return this.$store.state.masonry;
     },
+    size() {
+      switch (this.$vuetify.breakpoint.name) {
+        case "xs":
+          return 0;
+        case "sm":
+          return 0;
+        case "md":
+          return 1;
+        case "lg":
+          return 2;
+        case "xl":
+          return 3;
+      }
+    },
   },
   data() {
     return {
       photos: [],
+      xl: false,
+      lg: this.$device.isDesktop,
+      md: this.$device.isTablet,
+      sm: this.$device.isMobile,
+      loadingDone: false,
     };
   },
-  methods: {},
+  methods: {
+    resize() {},
+  },
+  mounted() {
+    this.loadingDone = true;
+  },
 };
 </script>
 

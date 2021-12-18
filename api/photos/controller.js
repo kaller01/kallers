@@ -28,21 +28,25 @@ module.exports = {
   },
   masonry: async (req, res) => {
     const photos = await Photo.find().sort("-date");
-    const n = req.params.n;
-    const heightMap = [];
-    const masonry = [];
-    for (let i = 0; i < n; i++) {
-      heightMap[i] = 0;
-      masonry[i] = [];
-    }
 
-    photos.forEach((photo) => {
-      let i = heightMap.indexOf(Math.min(...heightMap));
-      heightMap[i] += photo.height / photo.width;
-      masonry[i].push(photo);
+    const sizes = [1, 3, 4, 6];
+    const result = [];
+    sizes.forEach((n) => {
+      const heightMap = [];
+      const masonry = [];
+      for (let i = 0; i < n; i++) {
+        heightMap[i] = 0;
+        masonry[i] = [];
+      }
+      photos.forEach((photo) => {
+        let i = heightMap.indexOf(Math.min(...heightMap));
+        heightMap[i] += photo.height / photo.width;
+        masonry[i].push(photo);
+      });
+      result.push(masonry);
     });
-    console.log(heightMap);
-    res.json(masonry);
+
+    res.json(result);
   },
   find: async (req, res) => {
     let photo = await Photo.findOne({ filename: req.params.id })
