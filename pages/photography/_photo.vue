@@ -4,7 +4,13 @@
       <v-row class="ma-0 max" align="start" justify="center">
         <v-col cols="12" class="max">
           <v-row class="ma-0 max" align="start" justify="center">
-            <v-col cols="12" md="6" lg="8" xl="9" class="d-flex justify-center max">
+            <v-col
+              cols="12"
+              md="6"
+              lg="8"
+              xl="9"
+              class="d-flex justify-center max"
+            >
               <v-img
                 :src="photo.paths.h1080"
                 :lazy-src="photo.paths.preview"
@@ -36,9 +42,7 @@
                     </v-col>
 
                     <v-col v-if="photo.location">
-                      <span class="headline">
-                        Photograph taken in
-                      </span>
+                      <span class="headline"> Photograph taken in </span>
                       <v-card
                         :to="localePath('/locations/' + photo.location.title)"
                       >
@@ -48,11 +52,22 @@
                           gradient="to top right, rgba(0,0,0,.3), rgba(0,0,0,.3)"
                         >
                           <div
-                            class="d-flex align-center justify-center flex-column fill-height"
+                            class="
+                              d-flex
+                              align-center
+                              justify-center
+                              flex-column
+                              fill-height
+                            "
                             color="white"
                           >
                             <p
-                              class="display-2 font-weight-light white--text ma-0"
+                              class="
+                                display-2
+                                font-weight-light
+                                white--text
+                                ma-0
+                              "
                             >
                               {{ photo.location.title }}
                             </p>
@@ -75,9 +90,7 @@
                     </v-col>
                     <v-col cols="12"> </v-col>
                     <v-col cols="12">
-                      <span class="headline">
-                        Collections including
-                      </span>
+                      <span class="headline"> Collections including </span>
                       <v-card
                         :to="localePath('/locations/')"
                         v-for="collection in photo.collections"
@@ -90,11 +103,23 @@
                           gradient="to top right, rgba(0,0,0,.3), rgba(0,0,0,.3)"
                         >
                           <div
-                            class="d-flex align-center justify-center flex-column fill-height"
+                            class="
+                              d-flex
+                              align-center
+                              justify-center
+                              flex-column
+                              fill-height
+                            "
                             color="white"
                           >
                             <p
-                              class="display-2 font-weight-light white--text ma-0 text-center"
+                              class="
+                                display-2
+                                font-weight-light
+                                white--text
+                                ma-0
+                                text-center
+                              "
                             >
                               {{ collection.title }}
                             </p>
@@ -141,7 +166,7 @@ export default {
     },
     photo() {
       return this.$store.state.photo;
-    }
+    },
   },
   components: { photography },
   methods: {
@@ -154,7 +179,7 @@ export default {
     next() {
       this.goto(this.photo.next);
     },
-    goto: function(name) {
+    goto: function (name) {
       name = name.replace(".jpg", "");
       console.log(name);
       this.$router.push(this.localePath("/photography/" + name));
@@ -171,14 +196,14 @@ export default {
           this.next();
           break;
       }
-    }
+    },
   },
   beforeMount() {
     window.addEventListener("keydown", this.keyhandler);
   },
   beforeDestroy() {
     window.removeEventListener("keydown", this.keyhandler);
-  }
+  },
 };
 </script>
 

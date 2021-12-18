@@ -59,25 +59,8 @@
           ></location-header>
           <div>
             <v-card dark class="pa-2" :v-if="location.photos.size > 0">
-              <!-- <vue-masonry-wall
-                :items="location.photos"
-                :options="{ width: 400, padding: 4 }"
-              >
-                <template v-slot:default="{ item }">
-                  <div>
-                    <v-img
-                      :aspect-ratio="item.width / item.height"
-                      :v-if="item"
-                      :src="item.paths.w400 || ''"
-                      :lazy-src="item.paths.preview || ''"
-                      class="photo"
-                    />
-                  </div>
-                </template>
-              </vue-masonry-wall> -->
               <masonry-wall
                 :items="location.photos"
-                :ssr-columns="2"
                 :column-width="400"
                 :gap="8"
               >

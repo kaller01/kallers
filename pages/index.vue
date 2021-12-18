@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container fill-height fluid pa-0>
+    <v-container fill-height fluid pa-0 mb-8>
       <v-carousel
         :height="windowHeight - 64"
         cycle
@@ -12,17 +12,21 @@
         <v-carousel-item
           v-for="photo in horizontalPhotos"
           v-bind:key="photo._id"
-          :src="photo.paths.h1080"
-          transition="fade-transition"
         >
-          <v-overlay value="true" absolute> </v-overlay>
+          <v-img
+            :src="photo.paths.h1080"
+            :lazy-src="photo.paths.preview"
+            :height="windowHeight - 64"
+          >
+            <v-overlay value="true" absolute> </v-overlay>
+          </v-img>
         </v-carousel-item>
       </v-carousel>
 
       <v-container fill-height fluid class="title">
         <v-row align="center" justify="center">
           <v-col class="d-flex flex-column">
-            <div class="text-lg-h1 text-h2 text-center">Martin Kaller's</div>
+            <div class="text-lg-h1 text-h2 text-center">Martin Kaller</div>
             <div class="text-lg-h2 text-h3 font-weight-thin text-center">
               LANDSCAPE PHOTOGRAPHY
             </div>
@@ -69,7 +73,14 @@ export default {
     };
   },
   mounted() {
+    this.$vuetify.goTo(0);
     this.windowHeight = window.innerHeight;
+    window.addEventListener("resize", this.onResize);
+  },
+  methods: {
+    onResize() {
+      this.windowHeight = window.innerHeight;
+    },
   },
 };
 </script>

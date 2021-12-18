@@ -2,6 +2,7 @@
   <div>
     <v-container fluid>
       <masonry-wall
+        v-if="$vuetify.breakpoint.mdAndUp"
         :items="photos"
         :ssr-columns="4"
         :column-width="400"
@@ -18,6 +19,16 @@
           </article>
         </template>
       </masonry-wall>
+      <div v-else>
+        <article v-for="item in photos" v-bind:key="item._id" class="mb-4">
+          <v-img
+            :src="item.paths.w400"
+            :lazy-src="item.paths.preview"
+            :aspect-ratio="item.width / item.height"
+            class="photo"
+          />
+        </article>
+      </div>
     </v-container>
   </div>
 </template>
