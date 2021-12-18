@@ -2,7 +2,7 @@
   <div>
     <v-container fill-height fluid pa-0>
       <v-carousel
-        :height="$vuetify.breakpoint.lgAndUp ? 800 : 600"
+        :height="windowHeight - 64"
         cycle
         :show-arrows="false"
         hide-delimiter-background
@@ -12,10 +12,10 @@
         <v-carousel-item
           v-for="photo in horizontalPhotos"
           v-bind:key="photo._id"
+          :src="photo.paths.h1080"
+          transition="fade-transition"
         >
-          <v-parallax :src="photo.paths.h1080" dark height="800">
-            <v-overlay value="true" absolute> </v-overlay>
-          </v-parallax>
+          <v-overlay value="true" absolute> </v-overlay>
         </v-carousel-item>
       </v-carousel>
 
@@ -32,7 +32,7 @@
       </v-container>
     </v-container>
 
-    <masonry-wall :items="photos" :ssr-columns="4" :column-width="500" :gap="8">
+    <masonry-wall :items="photos" :column-width="500" :gap="8">
       <template #default="{ item }">
         <v-img
           :src="item.paths.w1080"
@@ -62,6 +62,14 @@ export default {
           (photo.width < photo.height && this.$vuetify.breakpoint.mdAndDown)
       );
     },
+  },
+  data() {
+    return {
+      windowHeight: 1000,
+    };
+  },
+  mounted() {
+    this.windowHeight = window.innerHeight;
   },
 };
 </script>

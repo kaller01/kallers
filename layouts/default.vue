@@ -1,7 +1,7 @@
 <template>
   <v-app dark>
     <v-app-bar height="64" fixed class="hidden-sm-and-down darken">
-      <v-toolbar-title>Kaller Creations</v-toolbar-title>
+      <v-toolbar-title class="font-weight-light">Martin Kaller</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -52,9 +52,11 @@
     </v-navigation-drawer>
     <v-main>
       <div class="nav-spacer"></div>
-      <keep-alive>
-        <nuxt />
-      </keep-alive>
+      <v-container fluid pa-0>
+        <keep-alive>
+          <nuxt />
+        </keep-alive>
+      </v-container>
     </v-main>
 
     <v-footer padless class="mt-12 d-flex justify-center darken">
