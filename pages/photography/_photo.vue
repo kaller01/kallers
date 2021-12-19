@@ -12,6 +12,10 @@
               class="d-flex justify-center max"
             >
               <v-img
+                v-touch="{
+                  left: () => prev(),
+                  right: () => next(),
+                }"
                 :src="photo.paths.h1080"
                 :lazy-src="photo.paths.preview"
                 class="pa-1 max"
@@ -199,6 +203,7 @@ export default {
       this.goto(this.photo.prev);
     },
     next() {
+      // console.log("hello????");
       this.goto(this.photo.next);
     },
     goto: function (name) {

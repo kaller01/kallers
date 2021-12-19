@@ -5,7 +5,7 @@
       v-bind:key="index"
       class="ma-0 pa-0"
     >
-      <article v-for="photo in photos" v-bind:key="photo._id" class="pa-2">
+      <article v-for="photo in photos" v-bind:key="photo._id" class="pa-1">
         <v-img
           @click="test(photo.filename)"
           :src="photo.paths.w400"

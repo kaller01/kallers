@@ -18,15 +18,15 @@
       <transition name="fade">
         <photo-grid
           :masonry="masonry[1]"
-          v-show="$vuetify.breakpoint.mdOnly"
+          v-show="$vuetify.breakpoint.mdAndDown"
         ></photo-grid>
       </transition>
-      <transition name="fade">
+      <!-- <transition name="fade">
         <photo-grid
           :masonry="masonry[0]"
           v-show="$vuetify.breakpoint.smAndDown"
         ></photo-grid>
-      </transition>
+      </transition> -->
     </v-container>
   </div>
 </template>

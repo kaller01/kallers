@@ -7,7 +7,6 @@
         :show-arrows="false"
         hide-delimiter-background
         delimiter-icon="mdi-minus"
-        vertical
         v-model="model"
       >
         <v-carousel-item
