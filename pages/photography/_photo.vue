@@ -13,8 +13,8 @@
             >
               <v-img
                 v-touch="{
-                  left: () => prev(),
-                  right: () => next(),
+                  left: () => next(),
+                  right: () => prev(),
                 }"
                 :src="photo.paths.h1080"
                 :lazy-src="photo.paths.preview"
