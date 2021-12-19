@@ -27,7 +27,7 @@ module.exports = {
       });
   },
   masonry: async (req, res) => {
-    const photos = await Photo.find().sort("-date");
+    const photos = await Photo.find({ show: { $ne: false } }).sort("-date");
 
     const sizes = [1, 3, 4, 6];
     const result = [];

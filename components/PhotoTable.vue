@@ -14,6 +14,12 @@
     <template v-slot:item.photo="{ item }">
       <img :src="item.paths.h400" style="height: 60px" />
     </template>
+    <template v-slot:item.filename="{ item }">
+      <span v-if="item.show">{{ item.filename }}</span>
+      <span v-else class="text-decoration-line-through">{{
+        item.filename
+      }}</span>
+    </template>
     <template v-slot:item.dim="{ item }"
       >{{ item.width }} x {{ item.height }}</template
     >

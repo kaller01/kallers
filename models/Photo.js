@@ -28,6 +28,10 @@ const PhotoSchema = mongoose.Schema({
   width: Number,
   height: Number,
   lens: String,
+  show: {
+    type: Boolean,
+    default: true,
+  },
   prints: {
     type: Number,
     default: 0,

@@ -86,6 +86,7 @@
       <collection-editor
         :collection="selectedCollection"
         @close="close"
+        @delete="deleteCollection"
         @save="saveCollection"
       >
       </collection-editor>

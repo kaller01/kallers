@@ -41,12 +41,18 @@
                     v-model="photo.collections"
                   ></v-select>
                 </v-col>
-                <v-col>
+                <v-col cols="4">
                   <v-text-field
                     label="Amount of prints"
                     v-model="photo.prints"
                     type="number"
                   ></v-text-field>
+                </v-col>
+                <v-col>
+                  <v-checkbox
+                    v-model="photo.show"
+                    label="Show photo"
+                  ></v-checkbox>
                 </v-col> </v-row
             ></v-col>
             <v-col cols="6">
