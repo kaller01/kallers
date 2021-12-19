@@ -35,10 +35,10 @@
                       <v-icon>mdi-camera-iris</v-icon> {{ photo.aperture }}
                     </v-col>
                     <v-col cols="12">
-                      {{ photo.description }}
+                      {{ description }}
                     </v-col>
                     <v-col cols="12">
-                      {{ photo.date }}
+                      {{ date }}
                     </v-col>
 
                     <v-col v-if="photo.location">
@@ -167,6 +167,28 @@ export default {
     photo() {
       return this.$store.state.photo;
     },
+    date() {
+      return new Date(this.photo.date).toLocaleDateString("en-SE", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      });
+    },
+    month() {
+      return new Date(this.photo.date).toLocaleDateString("en-SE", {
+        month: "long",
+      });
+    },
+    description() {
+      return (
+        this.photo.description ||
+        (this.photo.location &&
+          `Photograph ${this.photo.filename} was photographed in ${this.photo.location.title} with a ${this.photo.lens} during ${this.month}.`) ||
+        `Photograph ${this.photo.filename} was photographed during ${this.month} with a ${this.photo.lens}.`
+      );
+    },
   },
   components: { photography },
   methods: {
@@ -203,6 +225,33 @@ export default {
   },
   beforeDestroy() {
     window.removeEventListener("keydown", this.keyhandler);
+  },
+  head() {
+    return {
+      title: this.photo.title || this.photo.filename,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: this.description,
+        },
+        {
+          hid: "og:title",
+          name: "og:title",
+          content: this.photo.title || this.photo.filename,
+        },
+        {
+          hid: "og:image",
+          property: "og:image",
+          content: this.photo.paths.w1080,
+        },
+        {
+          hid: "og:description",
+          property: "og:description",
+          content: this.description,
+        },
+      ],
+    };
   },
 };
 </script>

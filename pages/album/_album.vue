@@ -72,6 +72,33 @@ export default {
     console.log("CREATED", this.album);
     this.selectedalbum = this.$route.params.album;
   },
+  head() {
+    return {
+      title: this.album.title,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: this.album.description,
+        },
+        {
+          hid: "og:title",
+          name: "og:title",
+          content: this.album.title,
+        },
+        {
+          hid: "og:image",
+          property: "og:image",
+          content: this.album.cover.paths.w1080,
+        },
+        {
+          hid: "og:description",
+          property: "og:description",
+          content: this.album.description,
+        },
+      ],
+    };
+  },
 };
 </script>
 

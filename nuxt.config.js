@@ -6,11 +6,32 @@ export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     titleTemplate: "%s - kallers",
-    title: "kallers",
+    title: "Martin Kaller Landscape Photography",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "" },
+      {
+        hid: "description",
+        name: "description",
+        content:
+          "Martin Kaller, swedish based landscape photographer sharing his photography journey.",
+      },
+      {
+        hid: "og:description",
+        name: "og:description",
+        content:
+          "Martin Kaller, swedish based landscape photographer sharing his photography journey.",
+      },
+      {
+        hid: "og:site_name",
+        name: "og:site_name",
+        content: "Martin Kaller Landscape Photography",
+      },
+      {
+        hid: "og:image",
+        name: "og:image",
+        content: "https://photos.kallers.se/1080w/_MK24852.jpg",
+      },
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   },

@@ -180,6 +180,33 @@ export default {
     console.log("CREATED", this.location);
     this.selectedLocation = this.$route.params.location;
   },
+  head() {
+    return {
+      title: this.location.title,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: this.location.description,
+        },
+        {
+          hid: "og:title",
+          name: "og:title",
+          content: this.location.title,
+        },
+        {
+          hid: "og:image",
+          property: "og:image",
+          content: this.location.cover.paths.w1080,
+        },
+        {
+          hid: "og:description",
+          property: "og:description",
+          content: this.location.description,
+        },
+      ],
+    };
+  },
 };
 </script>
 

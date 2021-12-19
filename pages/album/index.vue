@@ -96,6 +96,33 @@ export default {
     },
   },
   mounted() {},
+  head() {
+    return {
+      title: "Albums",
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: "A collection of albums.",
+        },
+        {
+          hid: "og:title",
+          name: "og:title",
+          content: "Albums",
+        },
+        {
+          hid: "og:image",
+          property: "og:image",
+          content: "https://photos.kallers.se/assets/album.jpeg",
+        },
+        {
+          hid: "og:description",
+          property: "og:description",
+          content: "A collection of albums.",
+        },
+      ],
+    };
+  },
 };
 </script>
 

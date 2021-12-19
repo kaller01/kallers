@@ -1,28 +1,30 @@
 <template>
   <div>
     <v-container fluid>
+      <!-- This avoids ugly loading, pushes down content so it can't be seen loading, but it's there for SEO reasons.  -->
+      <div class="spacer" v-show="!loadingDone"></div>
       <transition name="fade">
         <photo-grid
           :masonry="masonry[3]"
-          v-show="loadingDone && $vuetify.breakpoint.xlOnly"
+          v-show="$vuetify.breakpoint.xlOnly"
         ></photo-grid>
       </transition>
       <transition name="fade">
         <photo-grid
           :masonry="masonry[2]"
-          v-show="loadingDone && $vuetify.breakpoint.lgOnly"
+          v-show="$vuetify.breakpoint.lgOnly"
         ></photo-grid>
       </transition>
       <transition name="fade">
         <photo-grid
           :masonry="masonry[1]"
-          v-show="loadingDone && $vuetify.breakpoint.mdOnly"
+          v-show="$vuetify.breakpoint.mdOnly"
         ></photo-grid>
       </transition>
       <transition name="fade">
         <photo-grid
           :masonry="masonry[0]"
-          v-show="loadingDone && $vuetify.breakpoint.smAndDown"
+          v-show="$vuetify.breakpoint.smAndDown"
         ></photo-grid>
       </transition>
     </v-container>
@@ -59,15 +61,40 @@ export default {
   mounted() {
     this.loadingDone = true;
   },
+  head() {
+    return {
+      title: "Photography Gallery",
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content:
+            "An photography gallery with the latest of Martin Kaller's landscape photography",
+        },
+        {
+          hid: "og:title",
+          name: "og:title",
+          content: "All of Kaller's landscape photography",
+        },
+        {
+          hid: "og:image",
+          property: "og:image",
+          content: "https://kallers.se/photos/assets/photos.jpeg",
+        },
+        {
+          hid: "og:description",
+          property: "og:description",
+          content:
+            "An photography gallery with the latest of Martin Kaller's landscape photography",
+        },
+      ],
+    };
+  },
 };
 </script>
 
 <style scoped>
-.photo {
-  /* object-fit: cover; */
-  /* width: 100%; */
-  /* height: 100%; */
-  /* line-height: 0; */
-  /* display: block; */
+.spacer {
+  height: 100vh;
 }
 </style>

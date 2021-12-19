@@ -167,6 +167,35 @@ export default {
     },
   },
   mounted() {},
+  head() {
+    return {
+      title: "Locations",
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content:
+            "A collection of photography locations. Including coordinates, images, ratings, videos and tips.",
+        },
+        {
+          hid: "og:title",
+          name: "og:title",
+          content: "Locations",
+        },
+        {
+          hid: "og:image",
+          property: "og:image",
+          content: "https://photos.kallers.se/assets/locations.jpeg",
+        },
+        {
+          hid: "og:description",
+          property: "og:description",
+          content:
+            "A collection of photography locations. Including coordinates, images, ratings, videos and tips.",
+        },
+      ],
+    };
+  },
 };
 </script>
 

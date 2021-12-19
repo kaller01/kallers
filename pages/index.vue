@@ -112,6 +112,23 @@ export default {
   beforeDestroy() {
     window.removeEventListener("keydown", this.keyhandler);
   },
+  head() {
+    return {
+      title: "Portfolio",
+      meta: [
+        {
+          hid: "og:title",
+          name: "og:title",
+          content: "Portfolio",
+        },
+        {
+          hid: "og:image",
+          property: "og:image",
+          content: "https://kallers.se/photos/assets/photos.jpeg",
+        },
+      ],
+    };
+  },
 };
 </script>
 

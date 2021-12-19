@@ -12,8 +12,15 @@ module.exports = {
   find: async (req, res) => {
     let location;
     if (ObjectId.isValid(req.params.id))
-      location = await Location.findById(req.params.id);
-    else location = await Location.findOne({ link: req.params.id });
+      location = await Location.findById(req.params.id).populate(
+        "cover",
+        "paths"
+      );
+    else
+      location = await Location.findOne({ link: req.params.id }).populate(
+        "cover",
+        "paths"
+      );
     const photos = await Photo.find({ location: location._id });
     location = location.toObject();
     location.photos = photos;
