@@ -124,7 +124,7 @@ export default {
         {
           hid: "og:image",
           property: "og:image",
-          content: "https://kallers.se/photos/assets/photos.jpeg",
+          content: "https://kallers.se/photos/assets/portfolio.jpeg",
         },
       ],
     };
