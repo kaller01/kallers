@@ -12,10 +12,6 @@
               class="d-flex justify-center max"
             >
               <v-img
-                v-touch="{
-                  left: () => next(),
-                  right: () => prev(),
-                }"
                 :src="photo.paths.h1080"
                 :lazy-src="photo.paths.preview"
                 class="pa-1 max"
@@ -200,11 +196,11 @@ export default {
       this.$router.push(this.localePath("/photography/"));
     },
     prev() {
-      this.goto(this.photo.prev);
+      // this.goto(this.photo.prev);
     },
     next() {
       // console.log("hello????");
-      this.goto(this.photo.next);
+      // this.goto(this.photo.next);
     },
     goto: function (name) {
       name = name.replace(".jpg", "");
