@@ -25,6 +25,10 @@
                   <h1>
                     {{ photo.title || photo.filename }}
                   </h1>
+                  <v-spacer></v-spacer>
+                  <v-btn :href="photo.paths.original"
+                    ><v-icon>mdi-open-in-new</v-icon></v-btn
+                  >
                 </v-card-title>
                 <v-card-text>
                   <v-row>
