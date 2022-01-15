@@ -10,6 +10,7 @@
     <v-data-table
       :headers="headers"
       :items="tableData"
+      :items-per-page="1000"
       hide-default-footer
       :search="search"
       show-select
