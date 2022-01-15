@@ -38,7 +38,7 @@
           <v-hover v-slot:default="{ hover }">
             <v-card
               :class="`elevation-${hover ? 24 : 0}`"
-              :to="localePath('/album/' + album.link)"
+              :to="localePath('/albums/' + album.link)"
             >
               <v-img
                 :aspect-ratio="7 / 4"
@@ -72,7 +72,7 @@
 
 <script>
 export default {
-  name: "Album",
+  name: "Albums",
   data() {
     return {
       selectedalbum: "",
@@ -91,7 +91,7 @@ export default {
   methods: {
     albumSearched() {
       if (this.selectedalbum) {
-        this.$router.push(this.localePath("/album/" + this.selectedalbum));
+        this.$router.push(this.localePath("/albums/" + this.selectedalbum));
       }
     },
   },

@@ -29,7 +29,7 @@ export default {
     contact: "CONTACT",
     dashboard: "DASHBOARD",
     prints: "PRINTS",
-    album: "Album",
+    album: "ALBUMS",
   },
   home: {
     landscape: {

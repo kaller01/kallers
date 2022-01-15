@@ -64,8 +64,7 @@ export default {
   methods: {
     test: function (name) {
       name = name.replace(".jpg", "");
-      console.log(name);
-      this.$router.push(this.localePath("/photography/" + name));
+      this.$router.push(this.localePath("/albums/"+this.album.link+"/"+name));
     },
   },
   created() {

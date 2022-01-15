@@ -65,14 +65,14 @@
                 :gap="8"
               >
                 <template #default="{ item }">
-                  <div>
+                  <article @click="test(item.filename)">
                     <v-img
                       :aspect-ratio="item.width / item.height"
                       :v-if="item"
                       :src="item.paths.w400 || ''"
                       :lazy-src="item.paths.preview || ''"
                     />
-                  </div>
+                  </article>
                 </template>
               </masonry-wall>
             </v-card>
@@ -156,6 +156,12 @@ export default {
   },
   components: { LocationHeader, LocationText, MasonryWall },
   methods: {
+    test: function (name) {
+      name = name.replace(".jpg", "");
+      this.$router.push(
+        this.localePath("/locations/" + this.location.link + "/" + name)
+      );
+    },
     openInMaps() {
       window.open(
         "https://www.google.com/maps/search/?api=1&query=" +

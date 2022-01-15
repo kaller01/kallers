@@ -159,7 +159,7 @@ export default {
         },
         {
           name: "navs.album",
-          to: "/album",
+          to: "/albums",
         },
         // {
         //   name: "navs.contact",

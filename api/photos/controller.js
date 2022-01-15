@@ -49,7 +49,18 @@ module.exports = {
     res.json(result);
   },
   find: async (req, res) => {
-    let photo = await Photo.findOne({ filename: req.params.id })
+
+    filter = {}
+
+    if (req.query.collection) {
+      filter.collections = req.query.collection;
+    }
+    if (req.query.location) {
+      filter.location = req.query.location;
+    }
+    console.log(filter)
+
+    let photo = await Photo.findOne({ ...{ filename: req.params.id }, ...filter })
       .populate({
         path: "location",
         populate: { path: "cover", select: "paths" },
@@ -58,22 +69,32 @@ module.exports = {
         path: "collections",
         populate: { path: "cover", select: "paths" },
       });
-    // Finds photo which has a date less than current file.
-    // https://stackoverflow.com/questions/9153329/how-to-fetch-next-and-previous-item-of-the-current-one-with-mongoose
-    let next = await Photo.findOne({ date: { $lt: photo.date } }).sort({
-      date: -1,
-    });
-    // Finds photo which has a date grater than current photo.
-    let prev = await Photo.findOne({ date: { $gt: photo.date } }).sort({
-      date: 1,
-    });
-    photo = photo.toObject();
-    if (!next) next = await Photo.findOne().sort({ date: 1 });
-    photo.next = next.filename;
-    if (!prev) prev = await Photo.findOne().sort({ date: -1 });
-    photo.prev = prev.filename;
-    console.log(photo.prev, photo.filename, photo.next);
-    res.json(photo);
+    if (photo) {
+
+      filter.show = { $ne: false };
+      filter.filename = { $ne: photo.filename }
+
+      // Finds photo which has a date less than current file.
+      // https://stackoverflow.com/questions/9153329/how-to-fetch-next-and-previous-item-of-the-current-one-with-mongoose
+      let next = await Photo.findOne({ ...{ date: { $lt: photo.date } }, ...filter }).sort({
+        date: -1,
+      });
+      // Finds photo which has a date grater than current photo.
+      let prev = await Photo.findOne({ ...{ date: { $gt: photo.date } }, ...filter }).sort({
+        date: 1,
+      });
+      photo = photo.toObject();
+      //If next/prev isn't found, loop around.
+      if (!next) next = await Photo.findOne(filter).sort({ date: 1 });
+      photo.next = next.filename;
+      if (!prev) prev = await Photo.findOne(filter).sort({ date: -1 });
+      photo.prev = prev.filename;
+
+      res.json(photo);
+    } else {
+      res.sendStatus(404)
+    }
+
   },
   update: async (req, res) => {
     await Photo.findOneAndUpdate({ _id: req.params.id }, req.body);
