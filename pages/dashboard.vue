@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row>
+    <v-row class="pa-4">
       <v-col cols="4"> </v-col>
       <v-col cols="8">
         <v-spacer></v-spacer>
@@ -8,7 +8,7 @@
           {{ photos.length }} Photos in Database
         </h1>
       </v-col>
-      <v-col cols="6">
+      <v-col cols="12">
         <v-card>
           <v-card-text class="display-2">Add photo to Database</v-card-text>
           <v-form>
@@ -362,6 +362,12 @@ export default {
       this.selectedPhotos.forEach((photo) => {
         photo.collections = photo.collections.concat(this.selectedCollections);
         this.updatePhoto(photo);
+      });
+      this.selectedPhotosDialog = false;
+    },
+    async removeCollections() {
+      this.selectedPhotos.forEach((photo) => {
+        console.log(photo.collections)
       });
       this.selectedPhotosDialog = false;
     },

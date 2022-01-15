@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 
 module.exports = {
   all: async (req, res) => {
-    const photos = await Photo.find().sort("-date");
+    const photos = await Photo.find().populate("location","title").populate("collections","title").sort("-date");
     res.json(photos);
   },
   add: async (req, res) => {
