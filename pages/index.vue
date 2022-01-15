@@ -92,7 +92,9 @@ export default {
   },
   methods: {
     onResize() {
-      this.windowHeight = window.innerHeight;
+      if(window.innerWidth > window.innerHeight){
+        this.windowHeight = window.innerHeight;
+      }
     },
     keyhandler(e) {
       switch (e.key) {

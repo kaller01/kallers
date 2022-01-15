@@ -196,11 +196,10 @@ export default {
       this.$router.push(this.localePath("/photography/"));
     },
     prev() {
-      // this.goto(this.photo.prev);
+      this.goto(this.photo.prev);
     },
     next() {
-      // console.log("hello????");
-      // this.goto(this.photo.next);
+      this.goto(this.photo.next);
     },
     goto: function (name) {
       name = name.replace(".jpg", "");
