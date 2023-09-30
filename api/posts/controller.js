@@ -3,7 +3,7 @@ const ObjectId = require("mongoose").Types.ObjectId;
 
 module.exports = {
   all: async (req, res) => {
-    const posts = await Post.find();
+    const posts = await Post.find().sort("-date");
     res.json(posts);
   },
   find: async (req, res) => {

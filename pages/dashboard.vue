@@ -18,9 +18,7 @@
                   <v-file-input multiple @change="fileChange"></v-file-input>
                 </v-col>
                 <v-col lg="3" cols="12">
-                  <v-btn x-large block @click="uploadAll" color="primary"
-                    >Upload photos</v-btn
-                  >
+                  <v-btn x-large block @click="uploadAll" color="primary">Upload photos</v-btn>
                 </v-col>
               </v-row>
             </v-container>
@@ -30,66 +28,53 @@
       <v-col cols="6">
         <v-card>
           <location-table @edit="editLocation"></location-table>
-          <v-btn x-large block @click="addLocationDialog = true" color="primary"
-            >Add location
+          <v-btn x-large block @click="addLocationDialog = true" color="primary">Add location
           </v-btn>
         </v-card>
       </v-col>
       <v-col cols="6">
         <v-card>
           <collection-table @edit="editCollection"></collection-table>
-          <v-btn x-large block @click="collectionDialog = true" color="primary"
-            >Add collection
+          <v-btn x-large block @click="collectionDialog = true" color="primary">Add collection
+          </v-btn>
+        </v-card>
+      </v-col>
+      <v-col cols="6">
+        <v-card>
+          <post-table @edit="editPost"></post-table>
+          <v-btn x-large block @click="newPost" color="primary">Add Post
           </v-btn>
         </v-card>
       </v-col>
       <v-col cols="12">
         <v-card>
-          <PhotoTable
-            @delete="deletePhoto"
-            @edit="openEditor"
-            v-model="selectedPhotos"
-          ></PhotoTable>
+          <PhotoTable @delete="deletePhoto" @edit="openEditor" v-model="selectedPhotos"></PhotoTable>
         </v-card>
       </v-col>
     </v-row>
 
-    <v-snackbar
-      v-for="snackbar in snackbars"
-      v-bind:key="snackbar.text + new Date().getTime()"
-      v-model="snackbar.show"
-      :timeout="2000"
-      :color="snackbar.color"
-    >
+    <v-snackbar v-for="snackbar in snackbars" v-bind:key="snackbar.text + new Date().getTime()" v-model="snackbar.show"
+      :timeout="2000" :color="snackbar.color">
       {{ snackbar.text }}
     </v-snackbar>
 
     <v-dialog v-model="dialog" persistent max-width="900px">
-      <PhotoEditor
-        :photo="selectedPhoto"
-        @close="dialog = false"
-        @update="updatePhoto"
-      ></PhotoEditor>
+      <PhotoEditor :photo="selectedPhoto" @close="dialog = false" @update="updatePhoto"></PhotoEditor>
     </v-dialog>
 
     <v-dialog v-model="addLocationDialog" max-width="900px">
-      <location-editor
-        v-if="addLocationDialog"
-        @close="close"
-        @save="saveLocation"
-        @delete="deleteLocation"
-        :location="selectedLocation"
-      ></location-editor>
+      <location-editor v-if="addLocationDialog" @close="close" @save="saveLocation" @delete="deleteLocation"
+        :location="selectedLocation"></location-editor>
     </v-dialog>
 
     <v-dialog v-model="collectionDialog" max-width="900px">
-      <collection-editor
-        :collection="selectedCollection"
-        @close="close"
-        @delete="deleteCollection"
-        @save="saveCollection"
-      >
+      <collection-editor :collection="selectedCollection" @close="close" @delete="deleteCollection"
+        @save="saveCollection">
       </collection-editor>
+    </v-dialog>
+
+    <v-dialog v-model="postDialog">
+      <post-editor :post="selectedPost" @save="savePost" @delete="deletePost"></post-editor>
     </v-dialog>
 
     <div class="hover" v-show="selectedPhotos.length > 0">
@@ -100,25 +85,13 @@
           </v-btn>
         </template>
 
-        <v-btn
-          fab
-          dark
-          small
-          color="primary"
-          @click="selectedLocationsDialog = true"
-        >
+        <v-btn fab dark small color="primary" @click="selectedLocationsDialog = true">
           <v-icon>mdi-map-marker-plus</v-icon>
         </v-btn>
         <v-btn fab dark small color="error">
           <v-icon>mdi-map-marker-remove</v-icon>
         </v-btn>
-        <v-btn
-          fab
-          dark
-          small
-          color="primary"
-          @click="selectedPhotosDialog = true"
-        >
+        <v-btn fab dark small color="primary" @click="selectedPhotosDialog = true">
           <v-icon>mdi-database-plus</v-icon>
         </v-btn>
         <v-btn fab dark small color="error">
@@ -131,22 +104,12 @@
       <div>
         <v-card width="600px">
           <v-card-text>
-            <v-select
-              item-text="title"
-              item-value="_id"
-              :items="collections"
-              label="Collections"
-              multiple
-              v-model="selectedCollections"
-            ></v-select>
+            <v-select item-text="title" item-value="_id" :items="collections" label="Collections" multiple
+              v-model="selectedCollections"></v-select>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn
-              color="blue darken-1"
-              @click="selectedPhotosDialog = false"
-              text
-            >
+            <v-btn color="blue darken-1" @click="selectedPhotosDialog = false" text>
               Close
             </v-btn>
             <v-btn color="blue darken-1" text @click="applyCollections">
@@ -161,21 +124,12 @@
       <div>
         <v-card width="600px">
           <v-card-text>
-            <v-select
-              item-text="title"
-              item-value="_id"
-              :items="locations"
-              label="Locations"
-              v-model="selectedLocations"
-            ></v-select>
+            <v-select item-text="title" item-value="_id" :items="locations" label="Locations"
+              v-model="selectedLocations"></v-select>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn
-              color="blue darken-1"
-              @click="selectedLocationsDialog = false"
-              text
-            >
+            <v-btn color="blue darken-1" @click="selectedLocationsDialog = false" text>
               Close
             </v-btn>
             <v-btn color="blue darken-1" text @click="applyLocations">
@@ -194,6 +148,8 @@ import PhotoEditor from "~/components/PhotoEditor.vue";
 import LocationEditor from "~/components/LocationEditor.vue";
 import CollectionEditor from "~/components/CollectionEditor.vue";
 import CollectionTable from "~/components/CollectionTable.vue";
+import PostTable from '~/components/PostTable.vue';
+import PostEditor from '~/components/PostEditor.vue';
 
 export default {
   components: {
@@ -202,6 +158,8 @@ export default {
     LocationEditor,
     CollectionEditor,
     CollectionTable,
+    PostTable,
+    PostEditor,
   },
   computed: {
     photos() {
@@ -213,6 +171,9 @@ export default {
     collections() {
       return this.$store.state.collections;
     },
+    posts() {
+      return this.$state.state.posts;
+    }
   },
   data() {
     return {
@@ -229,6 +190,8 @@ export default {
       selectedLocations: {},
       selectedLocationsDialog: false,
       selectedPhotosDialog: false,
+      selectedPost: {},
+      postDialog: false
     };
   },
   methods: {
@@ -357,6 +320,58 @@ export default {
       await this.$axios.delete("/api/collections/" + collection._id);
       this.addSnackbar("Deleted collection", "error");
       this.$store.dispatch("getCollections");
+    },
+    newPost() {
+      this.selectedPost = {
+        contents: [
+          {
+            type: "MARKDOWN",
+            body: ""
+          },
+          {
+            type: "TIMELINE",
+            events: [
+              {}
+            ]
+          }
+        ]
+      }
+      this.postDialog = true;
+    },
+    savePost(post) {
+      this.selectedPost = {};
+      if (post._id) this.updatePost(post);
+      else this.addPost(post);
+    },
+    async editPost(post) {
+      const response = await this.$axios.get(
+        "/api/posts/" + post._id
+      );
+      this.selectedPost = response.data;
+      this.postDialog = true;
+    },
+    async updatePost(post) {
+      this.selectedPost = {};
+      this.postDialog = false;
+      this.addSnackbar("Updating post...", "warning");
+      await this.$axios.patch("/api/posts/" + post._id, post);
+      this.addSnackbar("Updated post", "success");
+      this.$store.dispatch("getPosts");
+    },
+    async addPost(post) {
+      this.selectedPost = {};
+      this.postDialog = false;
+      this.addSnackbar("Updating post...", "warning");
+      await this.$axios.post("/api/posts/", post);
+      this.addSnackbar("Updated post", "success");
+      this.$store.dispatch("getPosts");
+    },
+    async deletePost(post) {
+      this.postDialog = false;
+      this.addSnackbar("Deleting post...", "warning");
+      await this.$axios.delete("/api/posts/" + post._id);
+      this.addSnackbar("Deleted post", "error");
+      this.$store.dispatch("getPosts");
     },
     async applyCollections() {
       this.selectedPhotos.forEach((photo) => {

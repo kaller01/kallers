@@ -3,7 +3,7 @@
         <v-container>
             <v-row justify="center">
                 <v-col xl="8" lg="10" md="12">
-                    <v-card class="pa-5" v-for="post in posts">
+                    <v-card class="pa-5 mb-3" v-for="post in posts">
                         <post :post="post" />
                     </v-card>
                 </v-col>
