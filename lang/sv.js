@@ -27,6 +27,7 @@ export default {
     photography: "Fotografi",
     locations: "Fotoplatser",
     contact: "Kontakt",
+    newsletter: "Nyhetsbrev",
     album: "Album",
     dashboard: "dashboard",
     prints: "Utskrifter",

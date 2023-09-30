@@ -5,12 +5,7 @@
         <div class="d-flex align-center justify-center ml-3">
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
-              <v-btn
-                @click="sortByRating()"
-                height="48px"
-                class="mr-2 pa-0"
-                v-on="on"
-              >
+              <v-btn @click="sortByRating()" height="48px" class="mr-2 pa-0" v-on="on">
                 <v-icon class="pa-0">mdi-heart</v-icon>
                 <v-icon class="pa-0">{{ order.icon }}</v-icon>
               </v-btn>
@@ -20,14 +15,8 @@
 
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
-              <v-btn
-                href="https://www.google.se/maps/contrib/106633097459000923158"
-                target="_blank"
-                height="48px"
-                class="mr-2 pa-0"
-                v-on="on"
-                color="primary"
-              >
+              <v-btn href="https://www.google.se/maps/contrib/106633097459000923158" target="_blank" height="48px"
+                class="mr-2 pa-0" v-on="on" color="primary">
                 <v-icon>mdi-google-maps</v-icon>
               </v-btn>
             </template>
@@ -35,77 +24,19 @@
           </v-tooltip>
         </div>
         <v-spacer v-show="!$vuetify.breakpoint.smAndDown"></v-spacer>
-        <v-col
-          height="48px"
-          class="ma-0 rounded test pa-0 px-3"
-          :md="6"
-          :lg="4"
-        >
+        <v-col height="48px" class="ma-0 rounded test pa-0 px-3" :md="6" :lg="4">
           <div>
-            <v-autocomplete
-              :items="locations"
-              item-text="title"
-              item-value="title"
-              @change="locationSearched"
-              v-model="selectedLocation"
-              label="Search location..."
-              dense
-              hide-details
-              solo
-              autocomplete="off"
-              height="48px"
-            ></v-autocomplete>
+            <v-autocomplete :items="locations" item-text="title" item-value="title" @change="locationSearched"
+              v-model="selectedLocation" label="Search location..." dense hide-details solo autocomplete="off"
+              height="48px"></v-autocomplete>
           </div>
         </v-col>
       </v-row>
       <v-row :class="'justify-end'">
-        <v-col
-          :cols="12"
-          :md="6"
-          :lg="4"
-          v-for="(location, index) in locations"
-          v-bind:key="index"
-          class="pa-3"
-        >
-          <v-hover v-slot:default="{ hover }">
-            <v-card
-              :class="`elevation-${hover ? 24 : 0}`"
-              :to="localePath('/locations/' + location.link)"
-            >
-              <v-img
-                :aspect-ratio="7 / 4"
-                :src="location.cover.paths.h400"
-                class="imgtext"
-                gradient="to top right, rgba(0,0,0,.3), rgba(0,0,0,.3)"
-              >
-                <div
-                  class="
-                    d-flex
-                    align-center
-                    justify-center
-                    flex-column
-                    fill-height
-                  "
-                  color="white"
-                >
-                  <p class="display-2 font-weight-light white--text ma-0">
-                    {{ location.title }}
-                  </p>
-                  <p class="headline white--text ma-0">{{ location.coords }}</p>
-                  <v-rating
-                    v-model="location.rating"
-                    color="white"
-                    half-increments
-                    background-color="grey"
-                    empty-icon="mdi-heart-outline"
-                    half-icon="mdi-heart-half-full"
-                    full-icon="mdi-heart"
-                    readonly
-                  ></v-rating>
-                </div>
-              </v-img>
-            </v-card>
-          </v-hover>
+        <v-col :cols="12" :md="6" :lg="4" v-for="(location, index) in locations" v-bind:key="index" class="pa-3">
+          <location-preview :location="location">
+
+          </location-preview>
         </v-col>
       </v-row>
     </v-container>
@@ -113,7 +44,9 @@
 </template>
 
 <script>
+import LocationPreview from '~/components/LocationPreview.vue';
 export default {
+  components: { LocationPreview },
   name: "Locations",
   data() {
     return {
@@ -139,9 +72,9 @@ export default {
         this.$router.push(
           this.localePath(
             "/locations/" +
-              this.locations.find(
-                (location) => location.title == this.selectedLocation
-              ).link
+            this.locations.find(
+              (location) => location.title == this.selectedLocation
+            ).link
           )
         );
       }
@@ -166,7 +99,7 @@ export default {
       }
     },
   },
-  mounted() {},
+  mounted() { },
   head() {
     return {
       title: "Locations",
@@ -203,6 +136,7 @@ export default {
 .wrapper {
   margin-top: 50px;
 }
+
 /* * {
   outline: 1px solid black;
 } */
@@ -210,6 +144,7 @@ export default {
   background-color: #f5f5f5;
   border-radius: 4px;
 }
+
 .imgtext {
   /* background: linear-gradient(90deg, rgba(0, 0, 255, 1), rgba(0, 0, 255, 1)); */
 }

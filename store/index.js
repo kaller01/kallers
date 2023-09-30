@@ -7,6 +7,7 @@ export const state = () => ({
   collections: [],
   portfolio: [],
   masonry: [],
+  posts: []
 });
 
 export const mutations = {
@@ -34,6 +35,9 @@ export const mutations = {
   SET_MASONRY(state, value) {
     state.masonry = value;
   },
+  SET_POSTS(state, value) {
+    state.posts = value;
+  }
 };
 
 export const actions = {
@@ -44,6 +48,7 @@ export const actions = {
       dispatch("getCollections"),
       dispatch("getPortfolio"),
       dispatch("getMasonry"),
+      dispatch("getPosts")
     ];
     await Promise.all(promises);
   },
@@ -73,4 +78,9 @@ export const actions = {
     const response = await this.$axios.get("/api/photos/masonry");
     commit("SET_MASONRY", response.data);
   },
+  async getPosts({ commit }) {
+    console.log("Updating posts...")
+    const response = await this.$axios.get("/api/posts");
+    commit("SET_POSTS", response.data);
+  }
 };

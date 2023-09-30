@@ -28,6 +28,7 @@ export default {
     locations: "LOCATIONS",
     contact: "CONTACT",
     dashboard: "DASHBOARD",
+    newsletter: "NEWSLETTER",
     prints: "PRINTS",
     album: "ALBUMS",
   },

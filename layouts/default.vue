@@ -63,7 +63,6 @@
       <v-card flat tile class="white--text pb-1 text-center">
         <nuxt-link :to="switchLocalePath('en')">English</nuxt-link>
         <nuxt-link :to="switchLocalePath('sv')">Swedish</nuxt-link>
-        <v-btn @click="test"> test </v-btn>
         <v-card-text class="pb-2">
           <v-tooltip top v-for="icon in icons" :key="icon.link">
             <template v-slot:activator="{ on }">
@@ -92,11 +91,6 @@
 import { mapMutations } from "vuex";
 
 export default {
-  methods: {
-    test() {
-      console.log(this.photos);
-    },
-  },
   computed: {
     photos() {
       return this.$store.state.photos;
@@ -148,6 +142,10 @@ export default {
         {
           name: "navs.portfolio",
           to: "/",
+        },
+        {
+          name: "navs.newsletter",
+          to: "/newsletter",
         },
         {
           name: "navs.photography",
