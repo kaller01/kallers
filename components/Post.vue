@@ -13,7 +13,7 @@
                 </template>
                 <template v-slot:content>
                     <h2>
-                        {{ getLocation(content.args[0]) }}
+                        {{ getLocation(content.args[0]).title }}
                     </h2>
                     <post-render :markdown="content.body"></post-render>
                 </template>
@@ -25,7 +25,7 @@
                 </template>
                 <template v-slot:content>
                     <h2 class="text-h3">
-                        {{ getLocation(content.args[0]) }}
+                        {{ getLocation(content.args[0]).title }}
                     </h2>
                     <post-render :markdown="content.body"></post-render>
                 </template>
@@ -48,9 +48,10 @@ export default {
     },
     methods: {
         getLocation: function (link) {
-            return this.locations.find(x => x.link === link).title || link
+            return this.locations.find(x => x.link === link) || { title: link }
         },
         splitLayout(input) {
+            if(!input) return [];
             const sections = input.split(/(![A-Z]+\{.+\})|\!END/).filter(Boolean);
 
             const result = [];

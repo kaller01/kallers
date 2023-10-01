@@ -5,6 +5,7 @@
                 <v-col xl="8" lg="10" md="12">
                     <v-card class="pa-5 mb-3" v-for="post in posts">
                         <post :post="post" />
+                        <nuxt-link :to="'/newsletter/'+post.link">{{ post.link }}</nuxt-link>
                     </v-card>
                 </v-col>
             </v-row>

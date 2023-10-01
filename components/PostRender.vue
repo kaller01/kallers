@@ -2,7 +2,7 @@
     <div>
         <div v-for="segment in post">
             <div v-if="segment.type == 'HTML'" v-html="segment.data"></div>
-            <photo-preview v-if="segment.type == 'PHOTO'" :photo="photos.find(x => x.filename == segment.data)"/>
+            <photo-preview v-if="segment.type == 'PHOTO' && getPhoto(segment.data)" :photo="getPhoto(segment.data)"/>
         </div>
     </div>
 </template>
@@ -25,6 +25,9 @@ export default {
         }
     },
     methods: {
+        getPhoto: function (filename) {
+            return this.photos.find(x => x.filename == filename) || false
+        },
         parseMarkdown: function (markdown) {
             // Parse headings
             markdown = markdown.replace(/### (.+?)\n/g, '<h4>$1</h4>');

@@ -7,7 +7,8 @@ export const state = () => ({
   collections: [],
   portfolio: [],
   masonry: [],
-  posts: []
+  posts: [],
+  post: {}
 });
 
 export const mutations = {
@@ -37,6 +38,9 @@ export const mutations = {
   },
   SET_POSTS(state, value) {
     state.posts = value;
+  },
+  SET_POST(state, value) {
+    state.post = value;
   }
 };
 

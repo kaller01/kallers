@@ -4,19 +4,8 @@
       <v-row class="ma-0 max" align="start" justify="center">
         <v-col cols="12" class="max">
           <v-row class="ma-0 max" align="start" justify="center">
-            <v-col
-              cols="12"
-              md="6"
-              lg="8"
-              xl="9"
-              class="d-flex justify-center max"
-            >
-              <v-img
-                :src="photo.paths.h1080"
-                :lazy-src="photo.paths.preview"
-                class="pa-1 max"
-                contain
-              />
+            <v-col cols="12" md="6" lg="8" xl="9" class="d-flex justify-center max">
+              <v-img :src="photo.paths.h1080" :lazy-src="photo.paths.preview" class="pa-1 max" contain />
             </v-col>
 
             <v-col cols="12" md="6" lg="4" xl="3" class="sidescroll">
@@ -26,7 +15,7 @@
                     {{ photo.title || photo.filename }}
                   </h1>
                   <v-spacer></v-spacer>
-                  <v-btn :href="photo.paths.original"><v-icon>mdi-open-in-new</v-icon></v-btn>
+                  <v-btn @click="open"><v-icon>mdi-open-in-new</v-icon></v-btn>
                 </v-card-title>
                 <v-card-text>
                   <v-row>
@@ -45,47 +34,30 @@
 
                     <v-col v-if="photo.location">
                       <span class="headline"> Photograph taken in </span>
-                      <v-card
-                        :to="localePath('/locations/' + photo.location.link)"
-                      >
-                        <v-img
-                          :aspect-ratio="7 / 4"
-                          :src="photo.location.cover.paths.h400"
-                          gradient="to top right, rgba(0,0,0,.3), rgba(0,0,0,.3)"
-                        >
-                          <div
-                            class="
+                      <v-card :to="localePath('/locations/' + photo.location.link)">
+                        <v-img :aspect-ratio="7 / 4" :src="photo.location.cover.paths.h400"
+                          gradient="to top right, rgba(0,0,0,.3), rgba(0,0,0,.3)">
+                          <div class="
                               d-flex
                               align-center
                               justify-center
                               flex-column
                               fill-height
-                            "
-                            color="white"
-                          >
-                            <p
-                              class="
+                            " color="white">
+                            <p class="
                                 display-2
                                 font-weight-light
                                 white--text
                                 ma-0
-                              "
-                            >
+                              ">
                               {{ photo.location.title }}
                             </p>
                             <p class="headline white--text ma-0">
                               {{ photo.location.coords }}
                             </p>
-                            <v-rating
-                              v-model="photo.location.rating"
-                              color="white"
-                              half-increments
-                              background-color="grey"
-                              empty-icon="mdi-heart-outline"
-                              half-icon="mdi-heart-half-full"
-                              full-icon="mdi-heart"
-                              readonly
-                            ></v-rating>
+                            <v-rating v-model="photo.location.rating" color="white" half-increments
+                              background-color="grey" empty-icon="mdi-heart-outline" half-icon="mdi-heart-half-full"
+                              full-icon="mdi-heart" readonly></v-rating>
                           </div>
                         </v-img>
                       </v-card>
@@ -93,36 +65,24 @@
                     <v-col cols="12"> </v-col>
                     <v-col cols="12">
                       <span class="headline"> Collections including </span>
-                      <v-card
-                        :to="localePath('/album/' + collection.link)"
-                        v-for="collection in photo.collections"
-                        v-bind:key="collection._id"
-                        class="mb-2"
-                      >
-                        <v-img
-                          :aspect-ratio="7 / 4"
-                          :src="collection.cover.paths.h400"
-                          gradient="to top right, rgba(0,0,0,.3), rgba(0,0,0,.3)"
-                        >
-                          <div
-                            class="
+                      <v-card :to="localePath('/album/' + collection.link)" v-for="collection in photo.collections"
+                        v-bind:key="collection._id" class="mb-2">
+                        <v-img :aspect-ratio="7 / 4" :src="collection.cover.paths.h400"
+                          gradient="to top right, rgba(0,0,0,.3), rgba(0,0,0,.3)">
+                          <div class="
                               d-flex
                               align-center
                               justify-center
                               flex-column
                               fill-height
-                            "
-                            color="white"
-                          >
-                            <p
-                              class="
+                            " color="white">
+                            <p class="
                                 display-2
                                 font-weight-light
                                 white--text
                                 ma-0
                                 text-center
-                              "
-                            >
+                              ">
                               {{ collection.title }}
                             </p>
                             <p class="headline white--text ma-0"></p>
@@ -193,6 +153,9 @@ export default {
   },
   components: { photography },
   methods: {
+    open: function () {
+      window.open(this.photo.paths.original, '_blank')
+    },
     exit() {
       this.$router.push(this.localePath("/photography/"));
     },
@@ -262,13 +225,16 @@ export default {
   height: 100% !important;
   max-height: 100vh;
 }
+
 .limit {
   max-width: 100% !important;
   max-height: 100% !important;
 }
+
 .test {
   background-color: pink;
 }
+
 .white1 {
   background-color: white;
 }

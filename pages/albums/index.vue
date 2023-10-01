@@ -85,7 +85,7 @@ export default {
   },
   computed: {
     albums() {
-      return this.$store.state.collections;
+      return this.$store.state.collections.filter(x => x.cover !== undefined);
     },
   },
   methods: {

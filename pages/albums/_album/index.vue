@@ -40,10 +40,12 @@ import MasonryWall from "@yeger/vue2-masonry-wall";
 export default {
   name: "album",
   async middleware({ store, route, app }) {
+    // console.log("I AM MIDDLEWARE");
     const album = (
       await app.$axios.get("/api/collections/" + route.params.album)
     ).data;
     store.commit("SET_COLLECTION", album);
+    console.log(album);
   },
   computed: {
     albums() {
@@ -66,6 +68,7 @@ export default {
     },
   },
   created() {
+    console.log("CREATED", this.album);
     this.selectedalbum = this.$route.params.album;
   },
   head() {

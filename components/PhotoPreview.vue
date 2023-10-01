@@ -1,7 +1,7 @@
 <template>
     <v-row class="my-2">
         <v-col cols="12" md="8">
-            <v-img :src="photo.paths.w1080" :lazy-src="photo.paths.preview" contain />
+            <v-img :src="photo.paths.w1080" :lazy-src="photo.paths.preview" @click="open" contain />
         </v-col>
         <v-col cols="12" md="4">
             <v-row>
@@ -41,6 +41,11 @@
 export default {
     props: {
         photo: Object,
+    },
+    methods: {
+        open: function () {
+            window.open(this.photo.paths.original, '_blank')
+        }
     },
     computed: {
         date() {
