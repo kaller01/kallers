@@ -8,7 +8,6 @@
                 <v-col cols="auto">
                     <h2 class="spread pa-0 text-h5">
                         {{ photo.title || photo.filename }}
-                        <v-btn icon :href="photo.paths.original"><v-icon>mdi-open-in-new</v-icon></v-btn>
                     </h2>
                     <span class="caption">
                         {{ date }}

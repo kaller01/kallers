@@ -1,10 +1,22 @@
 const mongoose = require("mongoose");
 
-const LocationSchema = mongoose.Schema({
+const PostSchema = mongoose.Schema({
   title: String,
   link: String,
   date: Date,
-  contents: mongoose.Schema.Types.Mixed
+  content: String,
+  locations: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "locations",
+    },
+  ],
+  photos: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "photos",
+    },
+  ]
 });
 
-module.exports = mongoose.model("posts", LocationSchema);
+module.exports = mongoose.model("posts", PostSchema);
