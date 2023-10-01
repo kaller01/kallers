@@ -16,7 +16,11 @@ const PostSchema = mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "photos",
     },
-  ]
+  ],
+  cover: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "photos",
+  }
 });
 
 module.exports = mongoose.model("posts", PostSchema);

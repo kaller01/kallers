@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-container>
-            <v-row justify="center">
+            <v-row justify="center" v-if="selectedPost">
                 <v-col xl="8" lg="10" md="12">
                     <v-card class="pa-5 mb-3">
                         <post :post="selectedPost"></post>
@@ -29,33 +29,33 @@ export default {
             return this.$store.state.post;
         },
     },
-    // head() {
-    //   return {
-    //     title: this.album.title,
-    //     meta: [
-    //       {
-    //         hid: "description",
-    //         name: "description",
-    //         content: this.album.description,
-    //       },
-    //       {
-    //         hid: "og:title",
-    //         name: "og:title",
-    //         content: this.album.title,
-    //       },
-    //       {
-    //         hid: "og:image",
-    //         property: "og:image",
-    //         content: this.album.cover.paths.w1080,
-    //       },
-    //       {
-    //         hid: "og:description",
-    //         property: "og:description",
-    //         content: this.album.description,
-    //       },
-    //     ],
-    //   };
-    // },
+    head() {
+      return {
+        title: this.selectedPost.title,
+        meta: [
+          {
+            hid: "description",
+            name: "description",
+            content: this.selectedPost.content.replace(/![A-Z]+\((.*)\)/g, "").replace(/![A-Z]+\{(.*)\}/g, "").replace(/!END/g,""),
+          },
+          {
+            hid: "og:title",
+            name: "og:title",
+            content: this.selectedPost.title,
+          },
+          {
+            hid: "og:image",
+            property: "og:image",
+            content: this.selectedPost.cover.paths.w1080,
+          },
+          {
+            hid: "og:description",
+            property: "og:description",
+            content: this.selectedPost.content.replace(/![A-Z]+\((.*)\)/g, "").replace(/![A-Z]+\{(.*)\}/g, "").replace(/!END/g,""),
+          },
+        ],
+      };
+    },
 };
 </script>
   

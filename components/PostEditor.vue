@@ -19,6 +19,17 @@
                                     <v-text-field label="Date" v-model="post.date"></v-text-field>
                                 </v-col>
                                 <v-col cols="12">
+                                    <v-select :items="post.photos" item-value="_id" label="Cover"
+                                        v-model="post.cover">
+                                        <template v-slot:selection="{ item }">
+                                            <img :src="item.paths.preview" />{{ item.filename }}
+                                        </template>
+                                        <template v-slot:item="{ item }">
+                                            <img :src="item.paths.preview" />{{ item.filename }}
+                                        </template>
+                                    </v-select>
+                                </v-col>
+                                <v-col cols="12">
                                     <v-textarea v-model="post.content" label="Markdown" auto-grow></v-textarea>
                                 </v-col>
                             </v-row>

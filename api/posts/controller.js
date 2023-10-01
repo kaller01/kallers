@@ -16,15 +16,15 @@ const findLocations = async (content) => {
 
 module.exports = {
   all: async (req, res) => {
-    const posts = await Post.find().sort("-date");
+    const posts = await Post.find().populate("cover","paths").sort("-date");
     res.json(posts);
   },
   find: async (req, res) => {
     let post;
     if (ObjectId.isValid(req.params.id))
-      post = await Post.findById(req.params.id);
+      post = await Post.findById(req.params.id).populate("cover","paths").populate("photos","paths");
     else
-      post = await Post.findOne({ link: req.params.id });
+      post = await Post.findOne({ link: req.params.id }).populate("cover","paths").populate("photos","paths");
     res.json(post);
   },
   add: async (req, res) => {
