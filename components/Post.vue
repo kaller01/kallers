@@ -51,17 +51,13 @@ export default {
             return this.locations.find(x => x.link === link).title || link
         },
         splitLayout(input) {
-            console.log(JSON.stringify(this.post, null, 4))
             const sections = input.split(/(![A-Z]+\{.+\})|\!END/).filter(Boolean);
 
             const result = [];
             let currentCommand = null;
             let currentArgs = null;
 
-            console.log(sections)
-
             sections.forEach(section => {
-                console.log("TEST", currentCommand, section)
                 if (section.match(/![A-Z]+\{.+\}/)) {
                     const args = section.match(/\{(.*)\}/)[1].split(",")
                     const command = section.match(/!([A-Z]+)\{/)[1]
@@ -83,7 +79,6 @@ export default {
                     })
                 }
             })
-            console.log(result)
             return result;
         }
     }

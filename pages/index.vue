@@ -68,7 +68,6 @@ export default {
   components: { MasonryWall, Socials },
   computed: {
     photos() {
-      console.log(this.$vuetify.breakpoint.mdAndUp);
       return this.$store.state.portfolio;
     },
     horizontalPhotos() {

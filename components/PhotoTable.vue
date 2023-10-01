@@ -135,7 +135,6 @@ export default {
   },
   methods: {
     update: function () {
-      console.log(this.selected);
       this.$emit("input", this.selected);
     },
     getLocation: function (photo) {

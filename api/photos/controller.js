@@ -20,7 +20,6 @@ module.exports = {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         res.json(data);
         const photo = new Photo(data);
         photo.save();
@@ -58,7 +57,6 @@ module.exports = {
     if (req.query.location) {
       filter.location = req.query.location;
     }
-    console.log(filter)
 
     let photo = await Photo.findOne({ ...{ filename: req.params.id }, ...filter })
       .populate({

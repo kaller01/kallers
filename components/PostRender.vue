@@ -47,8 +47,6 @@ export default {
             // Wrap everything in a paragraph tag
             // markdown = `<p>${markdown}</p>`;
 
-            console.log(this.photos.find(x => x.filename === '_MK28844-Pano.jpg'))
-
             return markdown;
         },
         splitMarkdown(html) {

@@ -66,7 +66,6 @@ export default {
   },
   methods: {
     prepareData() {
-      console.log(this.photo);
     }
   }
 };

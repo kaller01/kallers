@@ -159,7 +159,6 @@ export default {
     ).data;
     let next = photo.next;
     let prev = photo.prev;
-    console.log({ next, prev });
     store.commit("SET_PHOTO", photo);
   },
   computed: {
@@ -205,7 +204,6 @@ export default {
     },
     goto: function (name) {
       name = name.replace(".jpg", "");
-      console.log(name);
       this.$router.push(this.localePath("/photography/" + name));
     },
     keyhandler(e) {

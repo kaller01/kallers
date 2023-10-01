@@ -25,7 +25,6 @@ export default {
   methods: {
     parse: function() {
       let json = JSON.parse(this.text);
-      console.log(json);
     }
   },
   created() {

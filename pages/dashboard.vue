@@ -196,8 +196,6 @@ export default {
   },
   methods: {
     fileChange(files) {
-      console.log(files);
-      console.log(this);
       this.files = files;
     },
     photoUpload(file) {
@@ -213,7 +211,6 @@ export default {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
             this.addSnackbar(data.filename + " has been uploaded", "primary");
             this.$store.dispatch("getPhotos");
           });
@@ -249,7 +246,6 @@ export default {
       this.$store.dispatch("getPhotos");
     },
     saveLocation(location) {
-      console.log(location);
       if (location._id) this.updateLocation(location);
       else this.addLocation(location);
     },
@@ -285,7 +281,6 @@ export default {
     },
     saveCollection(collection) {
       this.selectedCollection = {};
-      console.log(collection);
       if (collection._id) this.updateCollection(collection);
       else this.addCollection(collection);
     },
@@ -297,12 +292,10 @@ export default {
       this.$store.dispatch("getCollections");
     },
     async editCollection(collection) {
-      console.log(collection);
       const fullCollection = await this.$axios.get(
         "/api/collections/" + collection._id
       );
       this.selectedCollection = fullCollection.data;
-      console.log(this.selectedCollection);
       this.collectionDialog = true;
       this.$store.dispatch("getCollections");
     },
@@ -382,13 +375,11 @@ export default {
     },
     async removeCollections() {
       this.selectedPhotos.forEach((photo) => {
-        console.log(photo.collections)
       });
       this.selectedPhotosDialog = false;
     },
     async applyLocations() {
       this.selectedPhotos.forEach((photo) => {
-        console.log(photo);
         photo.location = this.selectedLocations;
         this.updatePhoto(photo);
       });

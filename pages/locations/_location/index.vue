@@ -131,12 +131,10 @@ import MasonryWall from "@yeger/vue2-masonry-wall";
 export default {
   name: "Location",
   async middleware({ store, route, app }) {
-    // console.log("I AM MIDDLEWARE");
     const location = (
       await app.$axios.get("/api/locations/" + route.params.location)
     ).data;
     store.commit("SET_LOCATION", location);
-    // console.log(location);
   },
   computed: {
     photos() {

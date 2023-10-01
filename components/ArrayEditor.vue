@@ -34,7 +34,6 @@ export default {
   methods: {
     update: function() {
       this.$emit("input", this.array);
-      console.log(this.array);
     },
     add: function() {
       this.array.push(this.newItem);
