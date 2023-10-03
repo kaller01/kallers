@@ -5,11 +5,17 @@ const ObjectId = require("mongoose").Types.ObjectId;
 
 const findPhotoFilenames = async (content) => {
   const filenames = content.match(/!PHOTO\((.*)\)/g).map(photo => photo.match(/!PHOTO\((.*)\)/)[1])
+  if(!filenames){
+    return Promise.resolve([])
+  }
   return (await Photo.find({ filename: { $in: filenames } })).map(x => x._id);
 }
 
 const findLocations = async (content) => {
   const timelines = content.match(/!TIMELINE\{(.*)\}/g).map(x => x.match(/!TIMELINE\{(.*)\}/)[1]);
+  if(!timelines) {
+    return Promise.resolve([])
+  }
   const locations = timelines.map(x => x.split(",")[0]);
   return (await Location.find({ link: { $in: locations } })).map(x => x._id)
 }
