@@ -114,6 +114,7 @@ export default {
   },
 
   sitemap: {
+    hostname: process.env.BASE_URL,
     defaults: {
       priority: 1,
       changefreq: 'weekly'
