@@ -109,7 +109,7 @@ export default {
 
   privateRuntimeConfig: {
     axios: {
-      baseURL: process.env.BASE_URL,
+      baseURL: process.env.INTERNAL_BASE_URL,
     },
   },
 
@@ -124,7 +124,7 @@ export default {
       '/dashboard',
     ],
     routes: async () => {
-      const baseUrl = process.env.BASE_URL || ''
+      const baseUrl = process.env.INTERNAL_BASE_URL || ''
       const photosRequest = axios.get(baseUrl + '/api/photos')
       const locationRequest = axios.get(baseUrl + '/api/locations');
       const albumsRequest = axios.get(baseUrl + '/api/collections');
