@@ -124,10 +124,11 @@ export default {
       '/dashboard',
     ],
     routes: async () => {
-      const photosRequest = axios.get('/api/photos')
-      const locationRequest = axios.get('/api/locations');
-      const albumsRequest = axios.get('/api/collections');
-      const postsRequest = axios.get('/api/posts')
+      const baseUrl = process.env.BASE_URL || ''
+      const photosRequest = axios.get(baseUrl + '/api/photos')
+      const locationRequest = axios.get(baseUrl + '/api/locations');
+      const albumsRequest = axios.get(baseUrl + '/api/collections');
+      const postsRequest = axios.get(baseUrl + '/api/posts')
       const [photosResp, locationResp, albumsResp, postsResp] = await Promise.all([photosRequest, locationRequest, albumsRequest, postsRequest])
       const photos = photosResp.data.map(p => ({
         url: '/photography/' + p.filename.replace(".jpg", ""),
