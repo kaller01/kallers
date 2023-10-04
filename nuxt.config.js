@@ -1,6 +1,18 @@
 // import colors from "vuetify/es5/util/colors";
 
 import colors from "vuetify/lib/util/colors";
+import { getPhotoCaption } from "./common/util";
+
+const axios = require('axios');
+const photoToSitemapImg = photo => {
+  if (!photo) return {};
+  return ({
+    url: photo.paths.h1080,
+    title: photo.title,
+    caption: getPhotoCaption(photo),
+    geoLocation: (photo.location ? photo.location.title : undefined)
+  })
+}
 
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
@@ -69,6 +81,7 @@ export default {
     "@nuxtjs/pwa",
 
     "nuxt-i18n",
+    '@nuxtjs/sitemap'
   ],
 
   i18n: {
@@ -97,6 +110,55 @@ export default {
   privateRuntimeConfig: {
     axios: {
       baseURL: process.env.BASE_URL,
+    },
+  },
+
+  sitemap: {
+    defaults: {
+      priority: 1,
+      changefreq: 'weekly'
+    },
+    i18n: false,
+    exclude: [
+      '/login',
+      '/dashboard',
+    ],
+    routes: async () => {
+      const photosRequest = axios.get('/api/photos')
+      const locationRequest = axios.get('/api/locations');
+      const albumsRequest = axios.get('/api/collections');
+      const postsRequest = axios.get('/api/posts')
+      const [photosResp, locationResp, albumsResp, postsResp] = await Promise.all([photosRequest, locationRequest, albumsRequest, postsRequest])
+      const photos = photosResp.data.map(p => ({
+        url: '/photography/' + p.filename.replace(".jpg", ""),
+        lastmod: p.date, priority: 0.5,
+        changefreq: 'never',
+        img: [photoToSitemapImg(p)]
+      }))
+      const locations = locationResp.data.map(l => ({
+        url: '/locations/' + l.link,
+        priority: 0.8,
+        img: [photoToSitemapImg(l.cover)]
+      }))
+      const albums = albumsResp.data.map(a => (
+        {
+          url: '/albums/' + a.link,
+          priority: 0.7,
+          img: [photoToSitemapImg(a.cover)]
+        }))
+      const posts = postsResp.data.map(p => (
+        {
+          url: '/newsletter/' + p.link,
+          lastmod: p.date, priority: 1.0,
+          changefreq: 'never',
+          img: [photoToSitemapImg(p.cover)]
+        }))
+      return [
+        ...photos,
+        ...locations,
+        ...albums,
+        ...posts
+      ]
     },
   },
 

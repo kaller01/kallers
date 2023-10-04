@@ -111,6 +111,7 @@
 
 <script>
 import photography from "./index.vue";
+import { getPhotoCaption } from "~/common/util"
 export default {
   layout: "fullscreen",
   async middleware({ store, route, app }) {
@@ -137,18 +138,8 @@ export default {
         minute: "numeric",
       });
     },
-    month() {
-      return new Date(this.photo.date).toLocaleDateString("en-SE", {
-        month: "long",
-      });
-    },
     description() {
-      return (
-        this.photo.description ||
-        (this.photo.location &&
-          `Photograph ${this.photo.filename} was photographed in ${this.photo.location.title} with a ${this.photo.lens} during ${this.month}.`) ||
-        `Photograph ${this.photo.filename} was photographed during ${this.month} with a ${this.photo.lens}.`
-      );
+      return getPhotoCaption(this.photo)
     },
   },
   components: { photography },
