@@ -2,6 +2,14 @@ const Photo = require("../../models/Photo");
 const Collection = require("../../models/Collection");
 const ObjectId = require("mongoose").Types.ObjectId;
 
+const populateSpecialCollections = async (collection) => {
+  if (collection.link == "prints-in-stock") {
+    const photos = await Photo.find({ prints: { $gt: 0 } });
+    collection.photos.push(...photos);
+    collection.cover = photos[0];
+  }
+}
+
 module.exports = {
   all: async (req, res) => {
     const collections = await Collection.find().populate("cover", "paths");
@@ -22,6 +30,7 @@ module.exports = {
     const photos = await Photo.find({ collections: collection._id });
     collection = collection.toObject();
     collection.photos = photos;
+    await populateSpecialCollections(collection);
     res.json(collection);
   },
   add: async (req, res) => {
