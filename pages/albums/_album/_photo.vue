@@ -94,7 +94,7 @@
                     <v-col cols="12">
                       <span class="headline"> Collections including </span>
                       <v-card
-                        :to="localePath('/album/' + collection.link)"
+                        :to="localePath('/albums/' + collection.link)"
                         v-for="collection in photo.collections"
                         v-bind:key="collection._id"
                         class="mb-2"

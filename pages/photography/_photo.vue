@@ -65,7 +65,7 @@
                     <v-col cols="12"> </v-col>
                     <v-col cols="12">
                       <span class="headline"> Collections including </span>
-                      <v-card :to="localePath('/album/' + collection.link)" v-for="collection in photo.collections"
+                      <v-card :to="localePath('/albums/' + collection.link)" v-for="collection in photo.collections"
                         v-bind:key="collection._id" class="mb-2">
                         <v-img :aspect-ratio="7 / 4" :src="collection.cover.paths.h400"
                           gradient="to top right, rgba(0,0,0,.3), rgba(0,0,0,.3)">
