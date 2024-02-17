@@ -30,17 +30,26 @@
                     <post-render :markdown="content.body"></post-render>
                 </template>
             </timeline-item-small>
+            <small-photo-preview v-if="content.type === 'SPHOTO'" :photo="getPhoto(content.args[0])" :location="content.args[1]">
+                <template v-slot:content>
+                    <post-render :markdown="content.body"></post-render>
+                </template>
+            </small-photo-preview>
         </div>
     </div>
 </template>
   
 <script>
 import TimelineItemSmall from './TimelineItemSmall.vue';
+import SmallPhotoPreview from './SmallPhotoPreview.vue';
 export default {
-    components: { TimelineItemSmall },
+    components: { TimelineItemSmall, SmallPhotoPreview },
     computed: {
         locations() {
             return this.$store.state.locations;
+        },
+        photos() {
+            return this.$store.state.photos;
         },
     },
     props: {
@@ -49,6 +58,9 @@ export default {
     methods: {
         getLocation: function (link) {
             return this.locations.find(x => x.link === link) || { title: link }
+        },
+        getPhoto: function (filename) {
+            return this.photos.find(x => x.filename == filename) || false
         },
         splitLayout(input) {
             if(!input) return [];

@@ -46,7 +46,7 @@ export default {
           {
             hid: "og:image",
             property: "og:image",
-            content: this.selectedPost.cover.paths.w1080,
+            content: this.selectedPost?.cover?.paths?.w1080,
           },
           {
             hid: "og:description",

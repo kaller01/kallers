@@ -2,7 +2,7 @@
     <div>
         <div v-for="segment in post">
             <div v-if="segment.type == 'HTML'" v-html="segment.data"></div>
-            <photo-preview v-if="segment.type == 'PHOTO' && getPhoto(segment.data)" :photo="getPhoto(segment.data)"/>
+            <photo-preview v-if="segment.type == 'PHOTO' && getPhoto(segment.data[0])" :photo="getPhoto(segment.data[0])"/>
         </div>
     </div>
 </template>
@@ -66,7 +66,7 @@ export default {
 
                 // Push the custom tag
                 const [, type, data] = match;
-                segments.push({ type, data });
+                segments.push({ type, data: data.split("|") });
 
                 lastIndex = match.index + match[0].length;
             }
