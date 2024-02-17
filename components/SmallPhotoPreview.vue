@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-row justify="start" no-gutters>
-            <v-col cols="3">
+            <v-col cols="5">
                 <v-card :to="localePath('/photography/'+ photo.filename.replace('.jpg', '').replace('.jpg', '').replace('.JPG',''))">
                     <img :src="photo.paths.w400" width="100%" />
                 </v-card>

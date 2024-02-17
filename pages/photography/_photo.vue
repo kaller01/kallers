@@ -15,7 +15,7 @@
                     {{ photo.title || photo.filename }}
                   </h1>
                   <v-spacer></v-spacer>
-                  <v-btn @click="open"><v-icon>mdi-open-in-new</v-icon></v-btn>
+                  <v-btn @click="open" v-if="isAdmin"><v-icon>mdi-open-in-new</v-icon></v-btn>
                 </v-card-title>
                 <v-card-text>
                   <v-row>
@@ -141,6 +141,12 @@ export default {
     description() {
       return getPhotoCaption(this.photo)
     },
+    isAdmin(){
+      if (process.browser && window.localStorage.getItem("auth")){
+        return true;
+      }
+      return false;
+    }
   },
   components: { photography },
   methods: {

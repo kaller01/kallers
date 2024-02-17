@@ -167,10 +167,10 @@ export default {
         //   name: "navs.prints",
         //   to: "/prints"
         // },
-        {
-          name: "navs.dashboard",
-          to: "/dashboard",
-        },
+        // {
+        //   name: "navs.dashboard",
+        //   to: "/dashboard",
+        // },
       ],
     };
   },
