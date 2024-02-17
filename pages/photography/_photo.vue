@@ -148,7 +148,13 @@ export default {
       window.open(this.photo.paths.original, '_blank')
     },
     exit() {
-      this.$router.go(-1);
+      console.log();
+      console.log(this.$router)
+      if(this.$router.history._startLocation.includes(this.photo.name)){
+        this.$router.push(this.localePath("/photography/"));
+      } else {
+        this.$router.go(-1);
+      }
     },
     prev() {
       //this.goto(this.photo.prev);
