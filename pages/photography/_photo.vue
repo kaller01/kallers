@@ -4,11 +4,11 @@
       <v-row class="ma-0 max" align="start" justify="center">
         <v-col cols="12" class="max">
           <v-row class="ma-0 max" align="start" justify="center">
-            <v-col cols="12" md="6" lg="8" xl="9" class="d-flex justify-center max">
+            <v-col cols="12" md="11" lg="8" xl="9" class="d-flex justify-center max">
               <v-img :src="photo.paths.h1080" :lazy-src="photo.paths.preview" class="pa-1 max" contain />
             </v-col>
 
-            <v-col cols="12" md="6" lg="4" xl="3" class="sidescroll">
+            <v-col cols="12" md="8" lg="6" xl="3" class="sidescroll">
               <v-card>
                 <v-card-title>
                   <h1>
@@ -148,13 +148,13 @@ export default {
       window.open(this.photo.paths.original, '_blank')
     },
     exit() {
-      this.$router.push(this.localePath("/photography/"));
+      this.$router.go(-1);
     },
     prev() {
-      this.goto(this.photo.prev);
+      //this.goto(this.photo.prev);
     },
     next() {
-      this.goto(this.photo.next);
+      //this.goto(this.photo.next);
     },
     goto: function (name) {
       name = name.replace(".jpg", "");

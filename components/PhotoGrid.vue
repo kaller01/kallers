@@ -6,12 +6,14 @@
       class="ma-0 pa-0"
     >
       <article v-for="photo in photos" v-bind:key="photo._id" class="pa-1">
-        <v-img
-          @click="test(photo.filename)"
+        <v-card
+        :to="localePath('/photography/' + photo.filename.replace('.jpg', ''))">
+          <v-img
           :src="photo.paths.w400"
           :lazy-src="photo.paths.preview"
           :aspect-ratio="photo.width / photo.height"
         />
+        </v-card>
       </article>
     </v-col>
   </v-row>
@@ -22,13 +24,7 @@ export default {
   name: "PhotoGrid",
   props: {
     masonry: Array,
-  },
-  methods: {
-    test: function (name) {
-      name = name.replace(".jpg", "");
-      this.$router.push(this.localePath("/photography/" + name));
-    },
-  },
+  }
 };
 </script>
 

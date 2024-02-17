@@ -19,8 +19,4 @@ body {
   margin: 0;
   background-color: #121212;
 }
-
-.test {
-  height: 100%;
-}
 </style>
