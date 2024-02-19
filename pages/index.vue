@@ -1,23 +1,10 @@
 <template>
   <div>
     <v-container fill-height fluid pa-0 mb-8>
-      <v-carousel
-        :height="windowHeight - 64"
-        cycle
-        :show-arrows="false"
-        hide-delimiter-background
-        delimiter-icon="mdi-minus"
-        v-model="model"
-      >
-        <v-carousel-item
-          v-for="photo in horizontalPhotos"
-          v-bind:key="photo._id"
-        >
-          <v-img
-            :src="photo.paths.h1080"
-            :lazy-src="photo.paths.preview"
-            :height="windowHeight - 64"
-          >
+      <v-carousel :height="windowHeight - 64" cycle :show-arrows="false" hide-delimiter-background
+        delimiter-icon="mdi-minus" v-model="model">
+        <v-carousel-item v-for="photo in horizontalPhotos" v-bind:key="photo._id">
+          <v-img :src="photo.paths.h1080" :lazy-src="photo.paths.preview" :height="windowHeight - 64">
             <v-overlay value="true" absolute> </v-overlay>
           </v-img>
         </v-carousel-item>
@@ -31,18 +18,29 @@
               LANDSCAPE PHOTOGRAPHY
             </div>
             <socials class="mt-4"></socials>
+            <event></event>
           </v-col>
         </v-row>
       </v-container>
     </v-container>
 
+    <v-container fluid>
+      <v-row>
+        <v-col cols="12" md="4" v-for="post in posts.slice(0, 3)">
+          <v-card class="pa-5 mb-3" :to="'/newsletter/' + post.link">
+            <div class="post-preview px-3" style="height: 40vh;">
+              <post :post="post" />
+            </div>
+            <nuxt-link :to="'/newsletter/' + post.link">{{ post.link }}</nuxt-link>
+          </v-card>
+        </v-col>
+
+      </v-row>
+    </v-container>
+
     <masonry-wall :items="photos" :column-width="500" :gap="8">
       <template #default="{ item }">
-        <v-img
-          :src="item.paths.w1080"
-          :lazy-src="item.paths.preview"
-          :aspect-ratio="item.width / item.height"
-        />
+        <v-img :src="item.paths.w1080" :lazy-src="item.paths.preview" :aspect-ratio="item.width / item.height" />
       </template>
     </masonry-wall>
 
@@ -70,6 +68,9 @@ export default {
     photos() {
       return this.$store.state.portfolio;
     },
+    posts() {
+      return this.$store.state.posts;
+    },
     horizontalPhotos() {
       return this.photos.filter(
         (photo) =>
@@ -91,7 +92,7 @@ export default {
   },
   methods: {
     onResize() {
-      if(window.innerWidth > window.innerHeight){
+      if (window.innerWidth > window.innerHeight) {
         this.windowHeight = window.innerHeight;
       }
     },
@@ -135,5 +136,15 @@ export default {
 <style scoped>
 .title {
   position: absolute;
+}
+
+.post-preview {
+  overflow: hidden;
+  --mask: linear-gradient(to bottom,
+      rgba(0, 0, 0, 1) 0, rgba(0, 0, 0, 1) 40%,
+      rgba(0, 0, 0, 0) 95%, rgba(0, 0, 0, 0) 0) 100% 50% / 100% 100% repeat-x;
+
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
 }
 </style>

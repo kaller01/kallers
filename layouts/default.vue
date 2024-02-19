@@ -28,12 +28,12 @@
     <v-app-bar
       fixed
       :hide-on-scroll="false"
-      height="80"
+      height="32"
       class="hidden-md-and-up"
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
-      <v-toolbar-title class="pr-2">Kaller Creations</v-toolbar-title>
+      <v-toolbar-title class="pr-2">Martin Kaller</v-toolbar-title>
     </v-app-bar>
     <v-navigation-drawer app v-model="drawer" temporary>
       <v-list nav>
@@ -51,7 +51,8 @@
       </v-list>
     </v-navigation-drawer>
     <v-main>
-      <div class="nav-spacer"></div>
+      <div class="hidden-sm-and-down" style="height: 64px;"></div>
+      <div class="hidden-md-and-up" style="height: 32px;"></div>
       <v-container fluid pa-0>
         <keep-alive>
           <nuxt />
@@ -63,21 +64,8 @@
       <v-card flat tile class="white--text pb-1 text-center">
         <nuxt-link :to="switchLocalePath('en')">English</nuxt-link>
         <nuxt-link :to="switchLocalePath('sv')">Swedish</nuxt-link>
-        <v-card-text class="pb-2">
-          <v-tooltip top v-for="icon in icons" :key="icon.link">
-            <template v-slot:activator="{ on }">
-              <v-btn
-                class="mx-4 white--text"
-                :href="icon.link"
-                target="_blank"
-                icon
-                v-on="on"
-              >
-                <v-icon size="24px">{{ icon.icon }}</v-icon>
-              </v-btn>
-            </template>
-            <span>{{ icon.type }}</span>
-          </v-tooltip>
+        <v-card-text class="pb-4">
+          <socials></socials>
         </v-card-text>
         <v-card-text class="white--text pt-0 pb-9">{{
           $t("footer.about")
@@ -89,8 +77,10 @@
 
 <script>
 import { mapMutations } from "vuex";
+import Socials from '~/components/Socials.vue';
 
 export default {
+  components: { Socials },
   computed: {
     photos() {
       return this.$store.state.photos;
@@ -101,43 +91,6 @@ export default {
       drawer: false,
       start: false,
       tab: "//contact",
-      icons: [
-        {
-          icon: "mdi-instagram",
-          text: "kallercreations",
-          link: "https://www.instagram.com/kallercreations/",
-          color: "purple darken-1",
-          type: "Instagram",
-        },
-        {
-          icon: "mdi-email-outline",
-          text: "fotograf@kallers.se",
-          link: "mailto:fotograf@kallers.se",
-          color: "amber darken-1",
-          type: "Email",
-        },
-        {
-          icon: "mdi-facebook",
-          text: "Kaller Creations",
-          link: "https://www.facebook.com/kallercreations/",
-          color: "primary",
-          type: "Facebook",
-        },
-        {
-          icon: "mdi-youtube",
-          text: "Martin Kaller",
-          link: "https://www.youtube.com/channel/UCOzKsFDGejQsLdklgMvm72A?view_as=subscriber",
-          color: "red",
-          type: "Youtube",
-        },
-        {
-          icon: "mdi-google-maps",
-          text: "Local guide",
-          link: "https://www.google.se/maps/contrib/106633097459000923158",
-          color: "green darken-1",
-          type: "Local guide",
-        },
-      ],
       navs: [
         {
           name: "navs.portfolio",

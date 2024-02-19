@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container fluid>
+    <v-container fluid class="pt-0 mt-0">
       <!-- This avoids ugly loading, pushes down content so it can't be seen loading, but it's there for SEO reasons.  -->
       <div class="spacer" v-show="!loadingDone"></div>
       <transition name="fade">

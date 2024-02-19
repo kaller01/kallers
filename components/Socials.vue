@@ -23,11 +23,11 @@ export default {
     return {
       icons: [
         {
-          icon: "mdi-instagram",
-          text: "kallercreations",
-          link: "https://www.instagram.com/kallercreations/",
-          color: "purple darken-1",
-          type: "Instagram",
+          icon: "mdi-youtube",
+          text: "Martin Kaller",
+          link: "https://www.youtube.com/channel/UCOzKsFDGejQsLdklgMvm72A?view_as=subscriber",
+          color: "red",
+          type: "Youtube",
         },
         {
           icon: "mdi-email-outline",
@@ -37,25 +37,11 @@ export default {
           type: "Email",
         },
         {
-          icon: "mdi-facebook",
-          text: "Kaller Creations",
-          link: "https://www.facebook.com/kallercreations/",
-          color: "primary",
-          type: "Facebook",
-        },
-        {
-          icon: "mdi-youtube",
-          text: "Martin Kaller",
-          link: "https://www.youtube.com/channel/UCOzKsFDGejQsLdklgMvm72A?view_as=subscriber",
-          color: "red",
-          type: "Youtube",
-        },
-        {
-          icon: "mdi-google-maps",
-          text: "Local guide",
-          link: "https://www.google.se/maps/contrib/106633097459000923158",
+          icon: "mdi-github",
+          text: "Github",
+          link: "https://github.com/kaller01",
           color: "green darken-1",
-          type: "Local guide",
+          type: "Github",
         },
       ],
     };
