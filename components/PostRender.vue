@@ -42,7 +42,7 @@ export default {
             markdown = markdown.replace(/\*(.+?)\*/g, '<em>$1</em>');
 
             // Parse images
-            markdown = markdown.replace(/!\[([^\]]+?)\]\(([^)]+?)\)/g, '<img src="$2" alt="$1">');
+            markdown = markdown.replace(/!\[([^\]]+?)\]\(([^)]+?)\)/g, '<img class="post-img" src="$2" alt="$1">');
 
             // Parse links
             markdown = markdown.replace(/\[([^\]]+?)\]\(([^)]+?)\)/g, '<a href="$2">$1</a>');
@@ -81,3 +81,9 @@ export default {
     }
 };
 </script>
+
+<style>
+    .post-img {
+        width: 100%;
+    }
+</style>

@@ -19,8 +19,7 @@
                                     <v-text-field label="Date" v-model="post.date"></v-text-field>
                                 </v-col>
                                 <v-col cols="12">
-                                    <v-select :items="post.photos" item-value="_id" label="Cover"
-                                        v-model="post.cover">
+                                    <v-select :items="post.photos" item-value="_id" label="Cover" v-model="post.cover">
                                         <template v-slot:selection="{ item }">
                                             <img :src="item.paths.preview" />{{ item.filename }}
                                         </template>
@@ -30,12 +29,14 @@
                                     </v-select>
                                 </v-col>
                                 <v-col cols="12">
-                                    <v-textarea v-model="post.content" label="Markdown" auto-grow></v-textarea>
+                                    <v-textarea v-model="post.content" label="Markdown" rows="16"></v-textarea>
                                 </v-col>
                             </v-row>
                         </v-col>
                         <v-col>
-                            <post :post="post"></post>
+                            <div class="post-preview px-3" style="height: 70vh;">
+                                <post :post="post" />
+                            </div>
                         </v-col>
                     </v-row>
                 </v-container>
@@ -73,5 +74,9 @@ export default {
 };
 </script>
   
-<style></style>
+<style scoped>
+.post-preview {
+    overflow: auto;
+}
+</style>
   
