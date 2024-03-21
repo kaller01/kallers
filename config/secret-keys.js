@@ -5,7 +5,6 @@ module.exports = {
     connect: process.env.DBLINK
   },
   photohost: {
-    //Shush no telling anyone!
     token: process.env.PHOTOTOKEN,
     host: process.env.PHOTOHOST
   },

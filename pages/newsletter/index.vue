@@ -1,3 +1,8 @@
+<script setup>
+const { data: posts, pending, error, refresh } = await useFetch('/api/posts');
+
+</script>
+
 <template>
     <div>
         <v-container>
@@ -5,7 +10,7 @@
                 <v-col xl="8" lg="10" md="12">
                     <v-card class="pa-5 mb-3" v-for="post in posts" :to="'/newsletter/' + post.link">
                         <div class="post-preview px-3" style="height: 80vh;">
-                            <post :post="post" />
+                            <Post :post="post" />
                         </div>
                         <nuxt-link :to="'/newsletter/' + post.link">{{ post.link }}</nuxt-link>
                     </v-card>
@@ -15,19 +20,6 @@
         </v-container>
     </div>
 </template>
-  
-<script>
-import Post from '~/components/Post.vue';
-
-export default {
-    components: { Post },
-    computed: {
-        posts() {
-            return this.$store.state.posts;
-        }
-    },
-};
-</script>
 
 <style scoped>
 .post-preview {
@@ -40,6 +32,3 @@ export default {
     mask: var(--mask);
 }
 </style>
-
-
-  
