@@ -24,9 +24,9 @@ const navs = [
     }
 ];
 
-let tab = "//contact";
-let start = false;
-let drawer = false;
+const route = useRoute();
+let tab = ref(route.path);
+let drawer = ref(false);
 
 </script>
 
@@ -39,7 +39,7 @@ let drawer = false;
 
             <v-toolbar-items>
                 <v-tabs centered grow height="64" v-model="tab">
-                    <v-tab v-for="nav in navs" :to="localePath(nav.to)" :key="nav.to" class="white--text" nuxt>
+                    <v-tab v-for="nav in navs" :to="localePath(nav.to)" nuxt :value="nav.to" :key="nav.to" class="white--text">
                         {{ $t(nav.name) }}</v-tab>
                 </v-tabs>
             </v-toolbar-items>
@@ -50,7 +50,7 @@ let drawer = false;
             <v-toolbar-title class="pr-2">Martin Kaller</v-toolbar-title>
         </v-app-bar>
         <v-navigation-drawer app v-model="drawer" temporary>
-            <v-list nav>
+            <!-- <v-list nav>
                 <v-list-item-group>
                     <v-list-item v-for="nav in navs" :to="localePath(nav.to)" :key="nav.to">
                         <v-list-item-title class="title font-weight-light">{{
@@ -58,7 +58,7 @@ let drawer = false;
                 }}</v-list-item-title>
                     </v-list-item>
                 </v-list-item-group>
-            </v-list>
+            </v-list> -->
         </v-navigation-drawer>
         <v-main>
             <!-- <div class="hidden-sm-and-down" style="height: 64px;"></div> -->
@@ -71,17 +71,17 @@ let drawer = false;
         </v-main>
 
         <v-footer padless class="mt-12 d-flex justify-center darken">
-      <v-card flat tile class="white--text pb-1 text-center">
-        <nuxt-link :to="switchLocalePath('en')">English</nuxt-link>
-        <nuxt-link :to="switchLocalePath('sv')">Swedish</nuxt-link>
-        <v-card-text class="pb-4">
-          <!-- <socials></socials> -->
-        </v-card-text>
-        <v-card-text class="white--text pt-0 pb-9">{{
-          $t("footer.about")
-        }}</v-card-text>
-      </v-card>
-    </v-footer>
+            <v-card flat tile class="white--text pb-1 text-center">
+                <nuxt-link :to="switchLocalePath('en')">English</nuxt-link>
+                <nuxt-link :to="switchLocalePath('sv')">Swedish</nuxt-link>
+                <v-card-text class="pb-4">
+                    <!-- <socials></socials> -->
+                </v-card-text>
+                <v-card-text class="white--text pt-0 pb-9">{{
+                    $t("footer.about")
+                    }}</v-card-text>
+            </v-card>
+        </v-footer>
     </v-app>
 
 </template>

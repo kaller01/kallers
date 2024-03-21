@@ -18,7 +18,6 @@ export default defineEventHandler(async (event) => {
             "cover",
             "paths"
         );
-        console.log(collection);
         const photos = await Photo.find({ collections: collection._id });
         const specialPhotos = await populateSpecialCollections(collection);
         photos.push(...specialPhotos);

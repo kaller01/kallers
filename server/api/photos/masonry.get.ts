@@ -4,8 +4,8 @@ export default defineEventHandler(async (event) => {
     try {
         const photos = await Photo.find({ show: { $ne: false } }).sort("-date");
 
-        const sizes = [1, 3, 4, 6];
-        const result: any = [];
+        const sizes = [3, 4, 6];
+        const result: any = {};
         sizes.forEach((n) => {
             const heightMap: any = [];
             const masonry: any = [];
@@ -16,9 +16,9 @@ export default defineEventHandler(async (event) => {
             photos.forEach((photo: any) => {
                 let i = heightMap.indexOf(Math.min(...heightMap));
                 heightMap[i] += photo.height / photo.width;
-                masonry[i].push(photo);
+                masonry[i].push(photo._id);
             });
-            result.push(masonry);
+            result[n] = masonry;
         });
 
         return result;

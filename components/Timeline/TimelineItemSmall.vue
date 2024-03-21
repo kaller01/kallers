@@ -10,7 +10,6 @@
     </div>
 </template>
 
-
 <style scoped>
 .timeline-item {
     display: flex;

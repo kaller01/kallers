@@ -1,18 +1,15 @@
 <script setup>
+
 const { post } = defineProps(['post'])
 
-const isSmAndDown = useDisplay().smAndDown.value;
-console.log(isSmAndDown);
+const display = ref(useDisplay());
 
+const photoStore = usePhotoStore();
+const locationStore = useLocationStore();
 
 const getLocation = (link) => {
     return "hej";
     return locations.value.find(x => x.link === link) || { title: link };
-};
-
-const getPhoto = (filename) => {
-    return "hola";
-    // return photos.value.find(x => x.filename == filename) || false;
 };
 
 const splitLayout = (input) => {
@@ -55,7 +52,7 @@ const splitLayout = (input) => {
         <h1 class="text-h2">{{ post.title }}</h1>
         <div v-for="content in splitLayout(post.content)" :key="content.type">
             <PostRender v-if="content.type === 'MARKDOWN'" :markdown="content.body" class="mb-2" />
-            <TimelineItem v-if="content.type === 'TIMELINE' && !isSmAndDown">
+            <TimelineItem v-if="content.type === 'TIMELINE' && !display.smAndDown">
                 <template v-slot:icon>
                     <nuxt-link :to="localePath('/locations/' + content.args[0])">
                         <v-icon class="pa-0">mdi-map-marker</v-icon>
@@ -66,12 +63,12 @@ const splitLayout = (input) => {
                 </template>
                 <template v-slot:content>
                     <h2>
-                        {{ getLocation(content.args[0]).title }}
+                        {{ locationStore.byName(content.args[0]).title }}
                     </h2>
-                    <post-render :markdown="content.body"></post-render>
+                    <PostRender :markdown="content.body"></PostRender>
                 </template>
             </TimelineItem>
-            <TimelineItemSmall v-else-if="content.type === 'TIMELINE' && isSmAndDown">
+            <TimelineItemSmall v-else-if="content.type === 'TIMELINE' && display.smAndDown">
                 <template v-slot:icon>
                     <nuxt-link :to="localePath('/locations/' + content.args[0])">
                         <v-icon class="pa-0" large>mdi-map-marker</v-icon>
@@ -79,17 +76,17 @@ const splitLayout = (input) => {
                 </template>
                 <template v-slot:content>
                     <h2 class="text-h3">
-                        {{ getLocation(content.args[0]).title }}
+                        {{ locationStore.byName(content.args[0]).title }}
                     </h2>
-                    <post-render :markdown="content.body"></post-render>
+                    <PostRender :markdown="content.body"></PostRender>
                 </template>
             </TimelineItemSmall>
-            <!-- <small-photo-preview v-else-if="content.type === 'SPHOTO'" :photo="getPhoto(content.args[0])"
-    :location="content.args[1]">
-    <template v-slot:content>
-                    <post-render :markdown="content.body"></post-render>
+            <SmallPhotoPreview v-else-if="content.type === 'SPHOTO'" :photo="photoStore.byName(content.args[0])"
+                :location="content.args[1]">
+                <template v-slot:content>
+                    <PostRender :markdown="content.body"></PostRender>
                 </template>
-</small-photo-preview> -->
+            </SmallPhotoPreview>
         </div>
     </div>
 </template>
