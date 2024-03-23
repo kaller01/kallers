@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
     try {
         const photos = await Photo.find({ show: { $ne: false } }).sort("-date");
 
-        const sizes = [3, 4, 6];
+        const sizes = [3];
         const result: any = {};
         sizes.forEach((n) => {
             const heightMap: any = [];

@@ -12,6 +12,11 @@
   const { data } = await useFetch('/api/locations');
   store.locations = data;
 }
+{
+  const store = useAlbumStore();
+  const { data } = await useFetch('/api/albums');
+  store.albums = data;
+}
 
 </script>
 

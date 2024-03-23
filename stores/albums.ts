@@ -1,21 +1,21 @@
 import { defineStore } from 'pinia'
 
-export const useLocationStore = defineStore('locations', {
+export const useAlbumStore = defineStore('albums', {
     state: () => ({
-        locations: {}
+        albums: {}
     }),
     getters: {
         list(state) {
-            return Object.values(state.locations);
+            return Object.values(state.albums);
         },
         byId(state) {
-            return (id: string) => state.locations[id];
+            return (id: string) => state.albums[id];
         },
         byName(state) {
             return (link: string) => state.list.find(p => p.link === link);
         },
         byPhoto(state) {
-            return (photo: string) => !!photo.location ? state.locations[photo.location._id] : undefined;
+            return (photo: any) => photo.collections.map(c => state.albums[c._id]);
         }
     }
 })

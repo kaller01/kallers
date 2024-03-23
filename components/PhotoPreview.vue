@@ -5,24 +5,9 @@ const open = () => {
     window.open(photo.paths.original, '_blank');
 };
 
-const date = new Date(photo.value.date).toLocaleDateString("en-SE", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-    hour: "numeric",
-    minute: "numeric"
-});
-
-const month = new Date(photo.value.date).toLocaleDateString("en-SE", {
-    month: "long"
-});
-
-const description = (
-    photo.value.description ||
-    (photo.value.location &&
-        `Photograph ${photo.value.filename} was photographed in ${photo.value.location.title} with a ${photo.value.lens} during ${month}.`) ||
-    `Photograph ${photo.value.filename} was photographed during ${month} with a ${photo.value.lens}.`
-);
+const date = getDateString(photo.value);
+const month = getMonthString(photo.value);
+const description = getPhotoDescription(photo.value);
 
 const display = ref(useDisplay());
 
