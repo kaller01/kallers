@@ -22,7 +22,7 @@
     width: 2px;
     margin: 0;
     padding: 0;
-    background-color: white;
+    background-color: black;
     /* Change to your desired line color */
     height: 100%;
     position: absolute;
@@ -33,10 +33,10 @@
     margin: 0;
     margin-top: 7px;
     padding: 0;
-    background-color: #1e1e1e;
+    background-color: white;
     /* Change to your desired line color */
     position: absolute;
-    left: -17px;
+    left: -11px;
     z-index: 1;
     border-radius: 10px;
 }

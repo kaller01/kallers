@@ -15,14 +15,12 @@ const cols = computed(() => props.cols ?? 3);
 
 <style scoped>
 .vertical-gallery {
-    /* column-count: 3; */
-    column-gap: 8px;
+    column-gap: 0px;
 }
 
 .horizontal-gallery {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
     list-style: none;
 }
 

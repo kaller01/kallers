@@ -15,39 +15,26 @@ const history = computed(() => {
     });
     return Array.from(uniqueDays).map(day => new Date(day)).sort((a, b) => b.getTime() - a.getTime());
 })
-console.log(history.value);
-
 
 </script>
 
 <template>
     <div>
         <v-container>
-            <v-row v-if="!display.xlAndUp">
-                <div class="d-flex align-center justify-center ml-3">
-                    <v-tooltip bottom>
-                        <template v-slot:activator="{ on }">
-                            <v-btn height="48px" class="mr-2 pa-0" :to="localePath('/locations/')" v-on="on">
-                                <v-icon class="pa-0">mdi-arrow-left</v-icon>
-                            </v-btn>
-                        </template>
-                        <span>Go back to locations</span>
-                    </v-tooltip>
-
-                    <v-tooltip bottom>
-                        <template v-slot:activator="{ on }">
-                            <v-btn v-on="on" @click="openInMaps()" height="48px" class="mr-2 pa-0" color="primary">
-                                <v-icon class="pa-0">mdi-google-maps</v-icon>
-                            </v-btn>
-                        </template>
-                        <span>Open {{ location.title }} in google maps</span>
-                    </v-tooltip>
-                </div>
-                <v-spacer v-show="!display.smAndDown"></v-spacer>
-            </v-row>
+            <div v-if="!display.xlAndUp" class="pa-0 align-center pb-3 d-flex">
+                <v-btn height="48px" class="pa-0" :to="localePath('/locations/')" v-on="on">
+                    <v-icon class="pa-0">mdi-arrow-left</v-icon>
+                </v-btn>
+                <v-col class="pa-0 ma-0">
+                    <LocationHeader :location="location" :style="{ 'height': '48px' }"></LocationHeader>
+                </v-col>
+                <v-btn v-on="on" @click="openInMaps()" height="48px" class="pa-0" color="primary">
+                    <v-icon class="pa-0">mdi-google-maps</v-icon>
+                </v-btn>
+            </div>
             <v-row ref="sidebar">
                 <v-col xl="8" order="2" order-xl="1">
-                    <LocationHeader :location="location" v-show="display.xlAndUp"></LocationHeader>
+                    <!-- <LocationHeader :location="location" v-show="display.xlAndUp"></LocationHeader> -->
                     <div>
                         <v-card dark class="pa-2">
                             <Masonry :photos="photos" :cols="display.xlAndUp ? 4 : 3" />
@@ -55,7 +42,7 @@ console.log(history.value);
                     </div>
                 </v-col>
                 <v-col cols="12" xl="4" order="1" order-xl="2">
-                    <LocationHeader :location="location" v-show="!display.xlAndUp" />
+                    <!-- <LocationHeader :location="location" v-show="!display.xlAndUp" /> -->
                     <LocationText :location="location" />
 
                     <v-card dark class="my-4" v-for="src in location.youtube" v-bind:key="src">

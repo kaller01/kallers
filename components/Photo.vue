@@ -5,15 +5,14 @@ const photo = computed(() => props.photo);
 
 
 <template>
-    <article class="flex">
-        <NuxtLink :to="localePath('/photography/' + photo.filename)" class="flex">
-            <img :src="photo.paths.w400" />
+    <article class="flex pa-1 ma-0">
+        <NuxtLink :to="localePath('/photography/' + photo.filename.split('.')[0])" class="flex pa-0 ma-0">
+            <img :src="photo.paths.h400" />
         </NuxtLink>
     </article>
 </template>
 
 <style scoped>
-
 img {
     object-fit: cover;
     width: 100%;
@@ -21,6 +20,7 @@ img {
 }
 
 .flex {
+    display: flex;
     flex: 1 1 auto;
 }
 </style>

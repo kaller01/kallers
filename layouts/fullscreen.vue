@@ -1,12 +1,11 @@
 <style>
 body {
     margin: 0;
-    background-color: #121212;
 }
 </style>
 
 <template>
-    <v-app theme="dark" class="ma-0 fill-height">
+    <v-app class="ma-0 fill-height">
         <v-main class="ma-0 fill-height">
             <v-container fluid class="fill-height ma-0 pa-0">
                 <keep-alive>

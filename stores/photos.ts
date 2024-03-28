@@ -16,7 +16,7 @@ export const usePhotoStore = defineStore('photos', {
             return (ids: string[]) => ids.map(id => state.photos[id]);
         },
         byName(state) {
-            return (filename: string) => state.list.find(p => p.filename === filename);
+            return (filename: string) => state.list.find(p => p.filename.startsWith(filename));
         }
     }
 })

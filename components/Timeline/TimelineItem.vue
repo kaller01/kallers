@@ -33,7 +33,7 @@
     width: 2px;
     margin: 0;
     padding: 0;
-    background-color: white;
+    background-color: black;
     /* Change to your desired line color */
     height: 100%;
     position: absolute;
@@ -44,7 +44,7 @@
     margin: 0;
     margin-top: 4px;
     padding: 0;
-    background-color: #1e1e1e;
+    background-color: white;
     /* Change to your desired line color */
     position: absolute;
     left: 71px;

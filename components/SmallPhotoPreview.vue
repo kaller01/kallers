@@ -47,7 +47,7 @@ export default {
   <div>
     <v-row justify="start" no-gutters>
       <v-col cols="5">
-        <v-card :to="localePath('/photography/' + photo.filename.replace('.jpg', '').replace('.JPG', ''))">
+        <v-card :to="localePath('/photography/' + photo.filename)">
           <img :src="photo.paths.w400" width="100%" />
         </v-card>
       </v-col>
