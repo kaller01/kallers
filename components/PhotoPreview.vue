@@ -1,3 +1,19 @@
+<script setup>
+const props = defineProps(['photo'])
+const photo = computed(() => props.photo);
+const open = () => {
+    window.open(photo.paths.original, '_blank');
+};
+
+const date = getDateString(photo.value);
+const month = getMonthString(photo.value);
+const description = getPhotoDescription(photo.value);
+
+const display = ref(useDisplay());
+
+</script>
+
+
 <template>
     <v-row class="my-2">
         <v-col cols="12" md="8">
@@ -24,10 +40,10 @@
                     </span>
                 </v-col>
 
-                <v-col cols="12" class="text-body2" v-show="!$vuetify.breakpoint.smAndDown">
+                <v-col cols="12" class="text-body2" v-if="!display.smAndDown">
                     {{ description }}
                 </v-col>
-                <v-col cols="12" class="caption" v-show="$vuetify.breakpoint.smAndDown">
+                <v-col cols="12" class="caption" v-if="display.smAndDown">
                     {{ description }}
                 </v-col>
 
@@ -36,43 +52,3 @@
         </v-col>
     </v-row>
 </template>
-  
-<script>
-export default {
-    props: {
-        photo: Object,
-    },
-    methods: {
-        open: function () {
-            window.open(this.photo.paths.original, '_blank')
-        }
-    },
-    computed: {
-        date() {
-            return new Date(this.photo.date).toLocaleDateString("en-SE", {
-                day: "2-digit",
-                month: "long",
-                year: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-            });
-        },
-        month() {
-            return new Date(this.photo.date).toLocaleDateString("en-SE", {
-                month: "long",
-            });
-        },
-        description() {
-            return (
-                this.photo.description ||
-                (this.photo.location &&
-                    `Photograph ${this.photo.filename} was photographed in ${this.photo.location.title} with a ${this.photo.lens} during ${this.month}.`) ||
-                `Photograph ${this.photo.filename} was photographed during ${this.month} with a ${this.photo.lens}.`
-            );
-        },
-    }
-};
-</script>
-  
-<style></style>
-  

@@ -1,181 +1,73 @@
-<template>
-  <v-app dark>
-    <v-app-bar height="64" fixed class="hidden-sm-and-down darken">
-      <v-toolbar-title class="font-weight-light">Martin Kaller</v-toolbar-title>
+<script setup>
+import Navbar from '~/components/Navbar.vue';
 
-      <v-spacer></v-spacer>
+const localePath = useLocalePath()
 
-      <v-toolbar-items>
-        <v-tabs centered grow height="64" v-model="tab">
-          <v-tab
-            v-for="nav in navs"
-            :to="localePath(nav.to)"
-            :key="nav.to"
-            class="white--text"
-            nuxt
-          >
-            {{ $t(nav.name) }}</v-tab
-          >
-        </v-tabs>
-        <!-- <v-btn to="/" text>Portfolio</v-btn>
-        <v-btn to="/photography" text>Photography</v-btn>
-        <v-btn to="/locations" text>Locations</v-btn>
-        <v-btn to="/contact" text>Contact</v-btn>
-        <v-btn to="/admin" text>Dashboard</v-btn>-->
-      </v-toolbar-items>
-    </v-app-bar>
+const display = ref(useDisplay());
 
-    <v-app-bar
-      fixed
-      :hide-on-scroll="false"
-      height="32"
-      class="hidden-md-and-up"
-    >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-spacer></v-spacer>
-      <v-toolbar-title class="pr-2">Martin Kaller</v-toolbar-title>
-    </v-app-bar>
-    <v-navigation-drawer app v-model="drawer" temporary>
-      <v-list nav>
-        <v-list-item-group>
-          <v-list-item
-            v-for="nav in navs"
-            :to="localePath(nav.to)"
-            :key="nav.to"
-          >
-            <v-list-item-title class="title font-weight-light">{{
-              $t(nav.name)
-            }}</v-list-item-title>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
-    <v-main>
-      <div class="hidden-sm-and-down" style="height: 64px;"></div>
-      <div class="hidden-md-and-up" style="height: 32px;"></div>
-      <v-container fluid pa-0>
-        <keep-alive>
-          <nuxt />
-        </keep-alive>
-      </v-container>
-    </v-main>
-
-    <v-footer padless class="mt-12 d-flex justify-center darken">
-      <v-card flat tile class="white--text pb-1 text-center">
-        <nuxt-link :to="switchLocalePath('en')">English</nuxt-link>
-        <nuxt-link :to="switchLocalePath('sv')">Swedish</nuxt-link>
-        <v-card-text class="pb-4">
-          <socials></socials>
-        </v-card-text>
-        <v-card-text class="white--text pt-0 pb-9">{{
-          $t("footer.about")
-        }}</v-card-text>
-      </v-card>
-    </v-footer>
-  </v-app>
-</template>
-
-<script>
-import { mapMutations } from "vuex";
-import Socials from '~/components/Socials.vue';
-
-export default {
-  components: { Socials },
-  computed: {
-    photos() {
-      return this.$store.state.photos;
-    },
-  },
-  data() {
-    return {
-      drawer: false,
-      start: false,
-      tab: "//contact",
-      navs: [
-        {
-          name: "navs.portfolio",
-          to: "/",
-        },
-        {
-          name: "navs.newsletter",
-          to: "/newsletter",
-        },
-        {
-          name: "navs.photography",
-          to: "/photography",
-        },
-        {
-          name: "navs.locations",
-          to: "/locations",
-        },
-        {
-          name: "navs.album",
-          to: "/albums",
-        },
-        // {
-        //   name: "navs.contact",
-        //   to: "/contact"
-        // },
-        // {
-        //   name: "navs.prints",
-        //   to: "/prints"
-        // },
-        // {
-        //   name: "navs.dashboard",
-        //   to: "/dashboard",
-        // },
-      ],
-    };
-  },
-  head() {
-    return this.$nuxtI18nHead({ addSeoAttributes: true });
-  },
-  created() {
-    this.tab = "/" + this.$nuxt.$route.path;
-  },
-};
 </script>
 
+<template>
+    <v-app>
+        <slot name="header">
+
+        </slot>
+        <div class="background">
+            <Navbar></Navbar>
+            <v-main class="pa-lg-12 pa-2">
+                <keep-alive>
+                    <slot />
+                </keep-alive>
+            </v-main>
+        </div>
+
+        <v-footer padless class="pa-0 pt-12 d-flex justify-center darken elevation-5">
+            <v-card tile class="white--text pb-1 text-center elevation-5">
+                <v-card-text class="pb-4">
+                    <!-- <socials></socials> -->
+                </v-card-text>
+                <v-card-text class="white--text pt-0 pb-9">{{
+                    $t("footer.about")
+                }}</v-card-text>
+            </v-card>
+        </v-footer>
+    </v-app>
+
+</template>
+
 <style>
-.darken {
-  background: #1e1e1e !important;
-}
-
-.navDrawer {
-  position: fixed !important;
-}
-
-.nav-spacer {
-  height: 64px;
-}
-
-.v-list-item-title {
-  color: red !important;
-}
 body::-webkit-scrollbar {
-  width: 3px;
+    width: 3px;
 }
+
 body::-webkit-scrollbar * {
-  background: transparent;
+    background: transparent;
 }
+
 body::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.8) !important;
+    background: rgba(255, 255, 255, 0.8) !important;
 }
-/* body {
-  background-color: #383838;
-}
-#app {
-  background-color: #383838;
-} */
+
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s;
+    transition: opacity 0.3s;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
+
+.fade-enter,
+.fade-leave-to
+
+/* .fade-leave-active below version 2.1.8 */
+    {
+    opacity: 0;
+}
+
+.background {
+    background: white;
+    z-index: 1;
+    position: relative;
 }
 
 a {
-  color:#58a6ff;
+    color: #58a6ff;
 }
 </style>
